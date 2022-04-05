@@ -14,7 +14,7 @@ class Database
 
   /**
    * Crée et retourne l'objet SPDO
-   * @return SPDO $instance
+   * @return PDO $instance
    */
   public static function getInstance()
   {
@@ -62,7 +62,7 @@ class Database
   /**
    * getLastInsertId
    * return the last id inserted
-   * @return void
+   * @return int
    */
   public function getLastInsertId()
   {
