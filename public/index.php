@@ -10,4 +10,4 @@ $path = str_replace("index.php", "", $path);
 define("ROOT", $path);
 define("ASSETS", $path . "assets/");
 
-$app = new App();
+// $app = new App();

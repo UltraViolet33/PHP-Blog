@@ -1,5 +1,7 @@
 <?php
 
+namespace App\core;
+
 class App
 {
     protected $controller = "home";
@@ -16,7 +18,7 @@ class App
         $url = $this->parseURL();
 
         //check if the file exists
-    
+
         if (file_exists("../app/controller/" . strtolower($url[0]) . ".php")) {
             $this->controller = ($url[0]);
             unset($url[0]);
