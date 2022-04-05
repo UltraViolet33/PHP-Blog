@@ -1,10 +1,9 @@
 <?php
 
-
 require_once('../app/core/controller.php');
 
-class Logout{
-
+class Logout
+{
 
     public function index()
     {
