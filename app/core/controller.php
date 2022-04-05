@@ -31,4 +31,14 @@ class Controller
         }
         return false;
     }
+
+    public function checkLogin()
+    {
+        if(!empty($_SESSION['user']))
+        {
+            return true;
+        }
+
+        return false;
+    }
 }

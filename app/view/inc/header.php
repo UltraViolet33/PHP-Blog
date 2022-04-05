@@ -24,9 +24,18 @@
                     <li class="nav-item">
                         <a href="#" class="nav-link text-white">Categories</a>
                     </li>
-                    <li class="nav-item">
-                        <a href="<?= ROOT ?>login" class="nav-link text-white">Se connecter</a>
-                    </li>
+                    <?php if (isset($data['user'])) : ?>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link text-white"><?= $data['user']['userName'] ?></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?= ROOT ?>logout" class="nav-link text-white">Se déconnecter</a>
+                        </li>
+                    <?php else : ?>
+                        <li class="nav-item">
+                            <a href="<?= ROOT ?>login" class="nav-link text-white">Se connecter</a>
+                        </li>
+                    <?php endif ?>
                 </ul>
             </div>
         </div>

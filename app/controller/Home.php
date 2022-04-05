@@ -7,6 +7,11 @@ class Home extends Controller
 
     public function index()
     {
-        $this->view("home");
+        $data = [];
+        if($this->checkLogin())
+        {
+            $data['user'] = $_SESSION['user'];
+        }
+        $this->view("home", $data);
     }
 }
