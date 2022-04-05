@@ -20,6 +20,7 @@
                 </div>
                 <input type="submit" class="btn btn-primary" name="login" value="Valider">
             </form>
+            <?= checkError() ?>
         </div>
     </div>
 </div>

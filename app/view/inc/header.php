@@ -26,7 +26,7 @@
                     </li>
                     <?php if (isset($data['user'])) : ?>
                         <li class="nav-item">
-                            <a href="#" class="nav-link text-white"><?= $data['user']['userName'] ?></a>
+                            <a href="<?= ROOT ?>profil" class="nav-link text-white"><?= $data['user']['userName'] ?></a>
                         </li>
                         <li class="nav-item">
                             <a href="<?= ROOT ?>logout" class="nav-link text-white">Se déconnecter</a>
