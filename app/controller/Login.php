@@ -2,11 +2,11 @@
 
 require_once('../app/core/controller.php');
 
-class Home extends Controller
+class Login extends Controller
 {
 
     public function index()
     {
-        $this->view("home");
+        $this->view("login");
     }
 }

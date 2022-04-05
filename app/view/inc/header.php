@@ -24,6 +24,9 @@
                     <li class="nav-item">
                         <a href="#" class="nav-link text-white">Categories</a>
                     </li>
+                    <li class="nav-item">
+                        <a href="<?= ROOT ?>login" class="nav-link text-white">Se connecter</a>
+                    </li>
                 </ul>
             </div>
         </div>

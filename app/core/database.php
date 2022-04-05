@@ -1,8 +1,5 @@
 <?php
 
-namespace App\core;
-use \PDO;
-
 class Database
 {
   private $PDOInstance = null;
@@ -72,5 +69,3 @@ class Database
     return $this->PDOInstance->lastInsertId();
   }
 }
-
-
