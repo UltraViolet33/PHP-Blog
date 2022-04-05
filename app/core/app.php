@@ -16,10 +16,7 @@ class App
         $url = $this->parseURL();
 
         //check if the file exists
-        $url[0] = strtolower($url[0]);
-        $url[0] = ucfirst($url[0]);
-        
-        var_dump($url[0]);
+    
         if (file_exists("../app/controller/" . strtolower($url[0]) . ".php")) {
             $this->controller = ($url[0]);
             unset($url[0]);
