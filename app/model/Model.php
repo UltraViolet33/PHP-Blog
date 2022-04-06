@@ -17,4 +17,11 @@ class Model
         $result = $this->db->read($query, $data);
         return $result;
     }
+
+    public function selectLimit()
+    {
+        $query = "SELECT * FROM $this->table LIMIT 10";
+        $result = $this->db->read($query);
+        return $result;
+    }
 }

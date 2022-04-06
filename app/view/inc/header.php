@@ -22,7 +22,7 @@
                         <a href="#" class="nav-link text-white">Articles</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link text-white">Categories</a>
+                        <a href="<?= ROOT ?>category" class="nav-link text-white">Categories</a>
                     </li>
                     <?php if (isset($data['user'])) : ?>
                         <li class="nav-item">
