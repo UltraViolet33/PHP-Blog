@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
         <div class="col-12">
             <h1 class="text-center">
-                Se connecter
+               Réinitialiser Mot de passe
             </h1>
         </div>
     </div>
@@ -11,18 +11,17 @@
         <div class="col-6">
             <form action="" method="POST">
                 <div class="mb-3">
-                    <label for="email" class="form-label">Email : </label>
-                    <input type="email" value="<?= isset($_POST['email']) ? $_POST['email'] : ""; ?>" name='email' class="form-control">
+                    <label for="user-resetPwd1" class="form-label">Mot de passe : </label>
+                    <input type="password" name='user-resetPwd1' class="form-control">
                 </div>
                 <div class="mb-3">
-                    <label for="password" class="form-label">Mot de passe : </label>
-                    <input type="password" name='password' class="form-control">
+                    <label for="user-resetPwd2" class="form-label">Confirmez  le mot de passe : </label>
+                    <input type="password" name='user-resetPwd2' class="form-control">
                 </div>
-                <input type="submit" class="btn btn-primary" name="login" value="Valider">
+                <input type="submit" class="btn btn-primary" name="user-resetPwd" value="Valider">
             </form>
             <?= checkError() ?>
         </div>
-        <a href="<?=ROOT?>resetpassword" class="text-center">Mot de passe oublié ?</a>
     </div>
 </div>
 <?php $this->view("inc/footer", $data); ?>

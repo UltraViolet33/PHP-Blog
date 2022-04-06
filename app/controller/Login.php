@@ -41,5 +41,6 @@ class Login extends Controller
     {
         $_SESSION['user']['idUser'] = $user->id;
         $_SESSION['user']['userName'] = $user->username;
+        $_SESSION['user']['email'] = $user->email;
     }
 }

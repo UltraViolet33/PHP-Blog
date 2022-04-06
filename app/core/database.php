@@ -29,13 +29,13 @@ class Database
    * read on the BDD
    * @return array
    */
-  public function read($query, $data = array())
+  public function read($query, $data = array(), $method = PDO::FETCH_OBJ)
   {
     $statement = $this->PDOInstance->prepare($query);
     $result = $statement->execute($data);
 
     if ($result) {
-      $data = $statement->fetchAll(PDO::FETCH_OBJ);
+      $data = $statement->fetchAll($method);
       if (is_array($data) && count($data) > 0) {
         return $data;
       }
