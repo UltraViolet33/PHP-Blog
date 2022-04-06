@@ -39,7 +39,7 @@ class ResetPassword extends Controller
 
     private function sendEmail($token, $email)
     {
-        $link = 'test?token?' . $token;
+        $link = 'http://blog.test/resetpassword/update?token=' . $token;
         $to = $email;
         $subject = "Réinitialiser mot de passe";
         $message = '<h1>Réinitialisation de votre mot de passe</h1> <p>veuillez suivre ce lien : <a href="' . $link . '">Reset Password</a></p>';
