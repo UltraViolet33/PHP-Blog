@@ -18,9 +18,15 @@ class CategoryModel extends Model
         }
     }
 
-    public function selectAllCategories()
+    public function countCategories()
     {
-        return $this->selectLimit();
+        return $this->count();
+    }
+
+    public function getLimitCategories($limit, $offset)
+    {
+        $query = "SELECT * FROM category LIMIT $limit OFFSET $offset";
+        $limitCategories = $this->db->read($query);
+        return $limitCategories;
     }
 }
-    

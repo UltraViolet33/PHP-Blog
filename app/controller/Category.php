@@ -1,6 +1,7 @@
 <?php
 
 require_once('../app/core/Controller.php');
+require_once('../app/helpers/Paginate.php');
 
 class Category extends Controller
 {
@@ -14,10 +15,12 @@ class Category extends Controller
 
     public function index()
     {
-        // $this->categoryModel->insertCategories();
-        $allCategories = $this->categoryModel->selectAllCategories();
-        // var_dump($allCategories);
-        $data['categories'] = $allCategories;
+        $paginateCategories = new Paginate($this->categoryModel, 10);
+        $limitCategories = $paginateCategories->getItems();
+
+        $data['nextLink'] = $paginateCategories->nextLink();
+        $data['previousLink'] = $paginateCategories->previousLink();
+        $data['limitCategories'] = $limitCategories;
         $this->view("categories/listCategories", $data);
     }
 }

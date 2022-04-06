@@ -18,6 +18,14 @@ class Model
         return $result;
     }
 
+    public function count()
+    {
+        $query = "SELECT COUNT(id) FROM $this->table";
+        $result = $this->db->read("SELECT COUNT(id) FROM $this->table");
+        $result =  $this->db->read($query, [], PDO::FETCH_NUM);
+        return $result[0][0];
+    }
+
     public function selectLimit()
     {
         $query = "SELECT * FROM $this->table LIMIT 10";
