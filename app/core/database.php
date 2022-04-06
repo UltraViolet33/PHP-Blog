@@ -24,6 +24,12 @@ class Database
     return self::$instance;
   }
 
+
+  public static function getNewInstance()
+  {
+    return new Database();
+  }
+
   /**
    * read
    * read on the BDD

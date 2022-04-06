@@ -8,7 +8,6 @@ class Login extends Controller
     {
         $_SESSION['error'] = "";
 
-
         if (isset($_POST['login'])) {
             var_dump($_POST);
             $userManager = $this->loadModel("User");

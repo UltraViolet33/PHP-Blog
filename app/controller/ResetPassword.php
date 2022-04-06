@@ -1,8 +1,6 @@
 <?php
 
-
 require_once('../app/core/Controller.php');
-
 
 class ResetPassword extends Controller
 {
@@ -22,7 +20,6 @@ class ResetPassword extends Controller
             if (empty($_POST['user-resetEmail'])) {
                 $_SESSION['error'] .= "Email manquant";
             } else {
-                // $userModel = $this->loadModel('user');
                 $emailExist = $this->userModel->checkEmailExist($_POST['user-resetEmail']);
                 var_dump($emailExist[0]);
                 if ($emailExist[0] == "1") {
@@ -48,7 +45,6 @@ class ResetPassword extends Controller
         $message = '<h1>Réinitialisation de votre mot de passe</h1> <p>veuillez suivre ce lien : <a href="' . $link . '">Reset Password</a></p>';
 
         $headers = [];
-
         $headers[] = "MIME-Vsersion: 1.0";
         $headers[] = "Content-type: text/html; charset-iso-8859-1";
         $headers[] = 'To' . $to . '<' . $to . '>';
@@ -77,9 +73,8 @@ class ResetPassword extends Controller
             {
                 if($_POST['user-resetPwd1'] === $_POST['user-resetPwd2'])
                 {
-
                     $this->userModel->updatePassword($_POST['user-resetPwd1'], $_GET['token']);
-
+                    header("Location:".ROOT."login");
                 }
                 else
                 {
@@ -99,12 +94,9 @@ class ResetPassword extends Controller
             die;
         }
         $token = $_GET['token'];
-
         $token = (string) $token;
-        // var_dump($token);
         $dateReset = $this->userModel->getDateReset($token);
         $dateReset = strtotime("+ 3 hours", strtotime(($dateReset)));
-        // var_dump($dateReset);
         $dateToday = time();
 
         // if ($dateReset < $dateToday) {

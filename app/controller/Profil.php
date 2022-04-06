@@ -27,10 +27,7 @@ class Profil extends Controller
         if (!$this->checkLogin()) {
             header("Location:login");
         }
-
-
-
+        
         $this->view('updateProfil');
-
     }
 }
