@@ -16,7 +16,8 @@ class Category extends Controller
     {
         // $this->categoryModel->insertCategories();
         $allCategories = $this->categoryModel->selectAllCategories();
-        var_dump($allCategories);
-        $this->view("categories/listCategories");
+        // var_dump($allCategories);
+        $data['categories'] = $allCategories;
+        $this->view("categories/listCategories", $data);
     }
 }
