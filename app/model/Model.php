@@ -18,6 +18,20 @@ class Model
         return $result;
     }
 
+    /** pour classe pagination */
+    public function count()
+    {
+        $query = "SELECT COUNT(id) FROM $this->table";
+        return $query;
+    }
+
+    public function limitItems(){
+        $query = "SELECT * FROM $this->table";
+        return $query;
+    }
+    /**fin essai clsse pagination */
+
+    
     public function countAll()
     {
         $query = "SELECT COUNT(id) FROM $this->table";

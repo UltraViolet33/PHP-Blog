@@ -2,6 +2,7 @@
 
 require_once('../app/core/Controller.php');
 require_once('../app/helpers/Paginate.php');
+require_once('../app/helpers/Pagination.php');
 
 class Post extends Controller
 {
@@ -18,6 +19,13 @@ class Post extends Controller
     {
         $paginatePosts = new Paginate($this->postModel, 12, 'post');
         $limitPosts = $paginatePosts->getItems();
+
+        /**classe Pagination essai pour remplacer la classe paginate */
+        $queryCount = $this->postModel->count();
+        $queryItems = $this->postModel->limitItems();
+        $pagination = new Pagination($queryCount,$queryItems, 12, "post");
+        $pagination->getItems();
+        /**fin essai classe Pagination */
 
         $categoryModel = $this->loadModel("CategoryModel");
 
@@ -52,7 +60,6 @@ class Post extends Controller
 
     public function category($id)
     {
-
         // modifier et utiliser la Classe Paginate pour récupérer et afficher les posts en fonction des categories
         $categoryModel = $this->loadModel("CategoryModel");
         $category = $categoryModel->find($id);
