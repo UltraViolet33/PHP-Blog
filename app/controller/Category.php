@@ -5,7 +5,6 @@ require_once('../app/helpers/Paginate.php');
 
 class Category extends Controller
 {
-
     private $categoryModel;
 
     public function __construct()

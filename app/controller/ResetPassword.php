@@ -59,7 +59,6 @@ class ResetPassword extends Controller
 
     public function update()
     {
-     
         $this->checkToken();
 
         if(isset($_POST['user-resetPwd']))

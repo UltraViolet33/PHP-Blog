@@ -36,6 +36,10 @@ class Login extends Controller
         $this->view("login");
     }
 
+    /**
+     * user to $_SESSION
+     * @param object $user
+     */
     private function userToSession($user)
     {
         $_SESSION['user']['idUser'] = $user->id;

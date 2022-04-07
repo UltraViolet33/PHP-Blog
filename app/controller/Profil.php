@@ -22,6 +22,9 @@ class Profil extends Controller
         $this->view("profil", $data);
     }
 
+    /**
+     * display update page for admin
+     */
     public function update()
     {
         if (!$this->checkLogin()) {

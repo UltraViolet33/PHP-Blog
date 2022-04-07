@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <h5 class="card-title"><?= $post->name ?></h5>
                     <p><?= $post->created_at ?></p>
-                    <p class="card-text">Content</p>
+                    <p class="card-text"><?= $post->content ?></p>
                     <a href="#" class="btn btn-primary">Lire l'article</a>
                 </div>
             </div>
