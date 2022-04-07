@@ -16,7 +16,7 @@ class Post extends Controller
      */
     public function index()
     {
-        $paginatePosts = new Paginate($this->postModel, 10, 'post');
+        $paginatePosts = new Paginate($this->postModel, 12, 'post');
         $limitPosts = $paginatePosts->getItems();
 
         $data['nextLink'] = $paginatePosts->nextLink();

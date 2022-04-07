@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" class="h-100">
+<html lang="fr" class="">
 
 <head>
     <meta charset="UTF-8">
@@ -9,7 +9,8 @@
     <title>Blog</title>
 </head>
 
-<body class="d-flex flex-column h-100">
+
+<body class="d-flex flex-column min-vh-100 ">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
         <div class="container-fluid ">
             <a href="home" class="navbar-brand text-white">Accueil</a>
