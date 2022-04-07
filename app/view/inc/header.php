@@ -19,14 +19,14 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a href="#" class="nav-link text-white">Articles</a>
+                        <a href="<?= ROOT ?>post" class="nav-link text-white">Articles</a>
                     </li>
                     <li class="nav-item">
                         <a href="<?= ROOT ?>category" class="nav-link text-white">Categories</a>
                     </li>
-                    <?php if (isset($data['user'])) : ?>
+                    <?php if (isset($_SESSION['user'])) : ?>
                         <li class="nav-item">
-                            <a href="<?= ROOT ?>profil" class="nav-link text-white"><?= $data['user']['userName'] ?></a>
+                            <a href="<?= ROOT ?>profil" class="nav-link text-white"><?= $_SESSION['user']['userName'] ?></a>
                         </li>
                         <li class="nav-item">
                             <a href="<?= ROOT ?>logout" class="nav-link text-white">Se déconnecter</a>

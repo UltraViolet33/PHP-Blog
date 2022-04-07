@@ -17,16 +17,4 @@ class CategoryModel extends Model
             $this->db->write($query);
         }
     }
-
-    public function countCategories()
-    {
-        return $this->count();
-    }
-
-    public function getLimitCategories($limit, $offset)
-    {
-        $query = "SELECT * FROM category LIMIT $limit OFFSET $offset";
-        $limitCategories = $this->db->read($query);
-        return $limitCategories;
-    }
 }

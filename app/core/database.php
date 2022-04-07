@@ -9,7 +9,9 @@ class Database
   private function __construct()
   {
     $string = DB_TYPE . ":host=" . DB_HOST . ";dbname=" . DB_NAME;
-    $this->PDOInstance  = new PDO($string, DB_USER, DB_PASS);
+    $this->PDOInstance  = new PDO($string, DB_USER, DB_PASS, [
+      PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+    ]);
   }
 
   /**
@@ -56,12 +58,14 @@ class Database
    */
   public function write($query, $data = array())
   {
+    echo "test";
     $statement = $this->PDOInstance->prepare($query);
     $result = $statement->execute($data);
 
     if ($result) {
       return true;
     }
+    echo "joh";
     return false;
   }
 
