@@ -19,7 +19,11 @@ class Post extends Controller
         $paginatePosts = new Paginate($this->postModel, 12, 'post');
         $limitPosts = $paginatePosts->getItems();
 
+        $categoryModel = $this->loadModel("CategoryModel");
+
         foreach ($limitPosts as $post) {
+            $post->categories = [];
+            $post->categories = $categoryModel->getCategoriesFromPost($post->id)[0]->name;
             $post->created_at = $this->dateToString($post->created_at);
             $post->content = $this->getExtractContent($post->content);
         }
@@ -40,6 +44,8 @@ class Post extends Controller
             header("Location: " . ROOT . "post");
         }
         $post[0]->created_at = $this->dateToString($post[0]->created_at);
+        $categoryModel = $this->loadModel("CategoryModel");
+        $post[0]->categories = $categoryModel->getCategoriesFromPost($post[0]->id)[0]->name;
         $data['post'] = $post[0];
         $this->view("posts/detailsPost", $data);
     }
@@ -61,6 +67,8 @@ class Post extends Controller
             die;
         }
         foreach ($posts as $post) {
+            $post->categories = [];
+            $post->categories = $categoryModel->getCategoriesFromPost($post->id)[0]->name;
             $post->created_at = $this->dateToString($post->created_at);
             $post->content = $this->getExtractContent($post->content);
         }

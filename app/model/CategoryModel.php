@@ -18,7 +18,6 @@ class CategoryModel extends Model
         }
     }
 
-
     public function insertPostCategory()
     {
         for($i=269; $i<320; $i++)
@@ -27,6 +26,13 @@ class CategoryModel extends Model
             $query = "INSERT INTO post_category(post_id, category_id) VALUES($i, $categoryId)";
             $this->db->write($query);
         }
+    }
+
+    public function getCategoriesFromPost($idPost)
+    {
+        $query = "SELECT c.* FROM category c JOIN post_category pc ON c.id = pc.category_id WHERE pc.post_id = $idPost";
+        $categories = $this->db->read($query);
+        return $categories;
     }
 
    
