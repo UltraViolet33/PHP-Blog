@@ -15,7 +15,7 @@ class Paginate
         $this->categoryModel = $categoryModel;
         $this->totalItems = (int) $this->categoryModel->countCategories();
         $this->perPage = $perPage;
-        // $this->numberPage = (int)ceil($this->totalItems / $this->perPage);
+        $this->numberPage = (int)ceil($this->totalItems / $this->perPage);
     }
 
     public function getItems()
@@ -34,7 +34,16 @@ class Paginate
     {
         // $this->currentPage = 1;
         if (isset($_GET['page'])) {
-            $this->currentPage = (int)$_GET['page'];
+            if (!filter_var($_GET['page'], FILTER_VALIDATE_INT)) {
+                header("Location: " . ROOT . "category");
+                die;
+            }
+
+            if ($_GET['page'] <= 1 || $_GET['page'] > $this->numberPage) {
+                header("Location: " . ROOT . "category");
+                die;
+            }
+            $this->currentPage = $_GET['page'];
         }
         return  $this->currentPage;
     }
@@ -43,18 +52,24 @@ class Paginate
     public function nextLink()
     {
         $this->currentPage = $this->getCurrentPage();
+        if ($this->currentPage >= $this->numberPage) {
+            return "";
+        }
         $nextpage = $this->currentPage + 1;
         $link = ROOT . "category?page=$nextpage";
-        $linkHTML = "<a href='$link'>Page suivante</a>";
+        $linkHTML = "<a class='btn btn-primary ms-auto' href='$link'>Page suivante</a>";
         return $linkHTML;
     }
 
     public function previousLink()
     {
+        if ($this->currentPage <= 1) {
+            return "";
+        }
         $this->currentPage = $this->getCurrentPage();
         $nextpage = $this->currentPage - 1;
         $link = ROOT . "category?page=$nextpage";
-        $linkHTML = "<a href='$link'>Page précédente</a>";
+        $linkHTML = "<a class='btn btn-primary' href='$link'>Page précédente</a>";
         return $linkHTML;
     }
 }
