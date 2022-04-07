@@ -1,8 +1,8 @@
 <?php $this->view("inc/header", $data); ?>
-<h1>Posts</h1>
-<div class="row">
+<h1 class="text-center">Les articles</h1>
+<div class="row justify-content-center">
     <?php foreach ($data['limitPosts'] as $post) : ?>
-        <div class="col my-3">
+        <div class="col-8 col-md-5  col-lg-4 col-xl-3 m-3">
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title"><?= validateData($post->name) ?></h5>
