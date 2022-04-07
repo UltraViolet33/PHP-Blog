@@ -5,10 +5,10 @@
         <div class="col my-3">
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
-                    <h5 class="card-title"><?= $post->name ?></h5>
-                    <p><?= $post->created_at ?></p>
-                    <p class="card-text"><?= $post->content ?></p>
-                    <a href="#" class="btn btn-primary">Lire l'article</a>
+                    <h5 class="card-title"><?= validateData($post->name) ?></h5>
+                    <p><?= validateData($post->created_at) ?></p>
+                    <p class="card-text"><?= validateData($post->content) ?></p>
+                    <a href="<?= ROOT?>post/details/<?= $post->id ?>" class="btn btn-primary">Lire l'article</a>
                 </div>
             </div>
         </div>

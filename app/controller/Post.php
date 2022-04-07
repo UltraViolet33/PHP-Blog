@@ -30,6 +30,21 @@ class Post extends Controller
     }
 
     /**
+     * display details page for post
+     * @param int $id
+     */
+    public function details($id)
+    {
+        $post = $this->postModel->find($id);
+        if (!$post) {
+            header("Location: " . ROOT . "post");
+        }
+        $post[0]->created_at = $this->dateToString($post[0]->created_at);
+        $data['post'] = $post[0];
+        $this->view("posts/detailsPost", $data);
+    }
+
+    /**
      * convert date MySQL to dd/mm/yyyy
      * @param string $date
      * @return string
