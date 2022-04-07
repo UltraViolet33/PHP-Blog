@@ -17,4 +17,17 @@ class CategoryModel extends Model
             $this->db->write($query);
         }
     }
+
+
+    public function insertPostCategory()
+    {
+        for($i=269; $i<320; $i++)
+        {
+            $categoryId = rand(4, 28);
+            $query = "INSERT INTO post_category(post_id, category_id) VALUES($i, $categoryId)";
+            $this->db->write($query);
+        }
+    }
+
+   
 }
