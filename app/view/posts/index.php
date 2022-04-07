@@ -6,6 +6,7 @@
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title"><?= $post->name ?></h5>
+                    <p><?= $post->created_at ?></p>
                     <p class="card-text">Content</p>
                     <a href="#" class="btn btn-primary">Lire l'article</a>
                 </div>
