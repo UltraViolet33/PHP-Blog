@@ -34,7 +34,12 @@ class PostModel extends Model
     public function getPostFromCategory($idCategory)
     {
         $query = "SELECT p.* FROM post p JOIN post_category pc ON p.id = pc.post_id WHERE pc.category_id = $idCategory";
-        $posts = $this->db->read($query);
-        return $posts;
+        return $query;
+    }
+
+    public function countPostFronCat($idCategory)
+    {
+        $query = "SELECT COUNT(p.id) FROM post p JOIN post_category pc ON p.id = pc.post_id WHERE pc.category_id = $idCategory";
+        return $query;
     }
 }

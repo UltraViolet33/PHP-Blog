@@ -28,7 +28,7 @@ class Pagination
         $offset = $this->getOffset();
         $query = $this->queryItems . " LIMIT $this->perPage OFFSET $offset";
         $items = $this->db->read($query);
-        // var_dump($items);
+       return $items;
     }
 
 
@@ -41,6 +41,7 @@ class Pagination
 
     private function getCurrentPage()
     {
+        echo $this->numberPages;
         if (isset($_GET['page'])) {
             if (!filter_var($_GET['page'], FILTER_VALIDATE_INT)) {
                 echo "Location: " . ROOT . "{$this->item}";
@@ -60,8 +61,40 @@ class Pagination
 
     private function getNumberPages()
     {
+        echo "igf";
         $totalItems =  $this->db->read($this->queryCount, [], null);
         $totalItems = $totalItems[0][0];
+        if($totalItems == 0)
+        {
+            header("Location: " . ROOT . "{$this->item}");
+            die;
+        }
         $this->numberPages = (int)ceil($totalItems / $this->perPage);
+        var_dump($this->numberPages);
+    }
+
+    public function nextLink()
+    {
+        $this->currentPage = $this->getCurrentPage();
+        echo $this->numberPages;
+        if ($this->currentPage >= $this->numberPages) {
+            return null;
+        }
+        $nextpage = $this->currentPage + 1;
+        $link = ROOT . "{$this->item}?page=$nextpage";
+        $linkHTML = "<a class='btn btn-primary ms-auto' href='$link'>Page suivante</a>";
+        return $linkHTML;
+    }
+
+    public function previousLink()
+    {
+        if ($this->currentPage <= 1) {
+            return null;
+        }
+        $this->currentPage = $this->getCurrentPage();
+        $nextpage = $this->currentPage - 1;
+        $link = ROOT . "{$this->item}?page=$nextpage";
+        $linkHTML = "<a class='btn btn-primary' href='$link'>Page précédente</a>";
+        return $linkHTML;
     }
 }
