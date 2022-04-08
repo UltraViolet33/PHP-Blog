@@ -6,6 +6,9 @@ class User extends Model
 {
     protected $table = "user";
 
+    /**
+     * get the user data to check the login from
+     */
     public function getUser($email, $password)
     {
         $data['email'] = $email;
@@ -15,11 +18,17 @@ class User extends Model
         return $user;
     }
 
+    /**
+     * find a user in  the bdd
+     */
     public function getAllDataUser($idUser)
     {
         return $this->find($idUser);
     }
 
+    /**
+     * check if a email exists in the bdd
+     */
     public function checkEmailExist($email)
     {
         $query = "SELECT COUNT(id) FROM user WHERE email = :email";
@@ -28,6 +37,9 @@ class User extends Model
         return $result[0];
     }
 
+    /**
+     * update password token and date token to reset pwd
+     */
     public function setResetPwd($token, $email)
     {
         $query = "UPDATE user SET password_reset_date = NOW(), password_reset_token = :token WHERE email = :email";
@@ -36,6 +48,9 @@ class User extends Model
         $check =  $this->db->write($query, $data);
     }
 
+    /**
+     * get the date reset token
+     */
     public function getDateReset($token)
     {
         $query = "SELECT password_reset_date FROM user WHERE password_reset_token = '$token'";
@@ -45,6 +60,9 @@ class User extends Model
     }
 
 
+    /**
+     * update the password in the bdd
+     */
     public function updatePassword($password, $token)
     {
         $password = hash('sha1', $password);

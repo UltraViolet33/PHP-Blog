@@ -22,10 +22,8 @@ class Category extends Controller
 
         $queryCount = $this->categoryModel->count();
         $queryItems = $this->categoryModel->limitItems();
-
-        $paginateCategories = new Pagination($queryCount,$queryItems, 12, "category");
+        $paginateCategories = new Pagination($queryCount, $queryItems, 12, "category");
         $limitCategories = $paginateCategories->getItems();
-
         $data['nextLink'] = $paginateCategories->nextLink();
         $data['previousLink'] = $paginateCategories->previousLink();
         $data['limitCategories'] = $limitCategories;

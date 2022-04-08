@@ -22,7 +22,7 @@
             </form>
             <?= checkError() ?>
         </div>
-        <a href="<?=ROOT?>resetpassword" class="text-center">Mot de passe oublié ?</a>
+        <a href="<?= ROOT ?>resetpassword" class="text-center">Mot de passe oublié ?</a>
     </div>
 </div>
 <?php $this->view("inc/footer", $data); ?>

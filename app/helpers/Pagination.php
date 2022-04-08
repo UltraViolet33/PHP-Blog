@@ -28,7 +28,7 @@ class Pagination
         $offset = $this->getOffset();
         $query = $this->queryItems . " LIMIT $this->perPage OFFSET $offset";
         $items = $this->db->read($query);
-       return $items;
+        return $items;
     }
 
 
@@ -41,16 +41,13 @@ class Pagination
 
     private function getCurrentPage()
     {
-        echo $this->numberPages;
         if (isset($_GET['page'])) {
             if (!filter_var($_GET['page'], FILTER_VALIDATE_INT)) {
-                echo "Location: " . ROOT . "{$this->item}";
                 header("Location: " . ROOT . "{$this->item}");
                 die;
             }
 
             if ($_GET['page'] <= 1 || $_GET['page'] > $this->numberPages) {
-                echo "Location: " . ROOT . "{$this->item}";
                 header("Location: " . ROOT . "{$this->item}");
                 die;
             }
@@ -61,22 +58,18 @@ class Pagination
 
     private function getNumberPages()
     {
-        echo "igf";
         $totalItems =  $this->db->read($this->queryCount, [], null);
         $totalItems = $totalItems[0][0];
-        if($totalItems == 0)
-        {
+        if ($totalItems == 0) {
             header("Location: " . ROOT . "{$this->item}");
             die;
         }
         $this->numberPages = (int)ceil($totalItems / $this->perPage);
-        var_dump($this->numberPages);
     }
 
     public function nextLink()
     {
         $this->currentPage = $this->getCurrentPage();
-        echo $this->numberPages;
         if ($this->currentPage >= $this->numberPages) {
             return null;
         }

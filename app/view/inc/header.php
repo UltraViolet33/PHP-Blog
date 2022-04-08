@@ -32,6 +32,11 @@
                         <li class="nav-item">
                             <a href="<?= ROOT ?>logout" class="nav-link text-white">Se déconnecter</a>
                         </li>
+                        <?php if ($_SESSION['user']['isAdmin'] == 1) : ?>
+                            <li class="nav-item">
+                                <a href="<?= ROOT ?>admin" class="nav-link text-white">Partie Admin</a>
+                            </li>
+                        <?php endif ?>
                     <?php else : ?>
                         <li class="nav-item">
                             <a href="<?= ROOT ?>login" class="nav-link text-white">Se connecter</a>

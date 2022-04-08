@@ -10,6 +10,9 @@ class Model
         $this->db = Database::getNewInstance();
     }
 
+    /**
+     * find an item in the bdd
+     */
     public function find($id)
     {
         $query = "SELECT * FROM $this->table WHERE id = :id";

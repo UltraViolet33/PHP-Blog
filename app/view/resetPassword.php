@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
         <div class="col-12">
             <h1 class="text-center">
-               Réinitialiser Mot de passe
+                Réinitialiser Mot de passe
             </h1>
         </div>
     </div>

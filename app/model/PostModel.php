@@ -6,6 +6,9 @@ class PostModel extends Model
 {
     protected $table = "post";
 
+    /**
+     * insert post in the bdd
+     */
     public function insertPosts()
     {
         $content = " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus et ullamcorper sem. Curabitur vel varius magna. Sed a nunc hendrerit, ultricies lorem sit amet, auctor eros. Fusce pharetra sit amet purus id euismod. Donec ultricies diam ut iaculis luctus. Integer sed augue nisi. Sed id dapibus nulla. Sed porta nisl tellus, non imperdiet mi molestie id. Vivamus finibus felis ut dolor cursus, eget rutrum nisl suscipit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nunc aliquam, quam nec accumsan tincidunt, urna ipsum lacinia turpis, eget porttitor turpis sem at quam. Proin tincidunt commodo nisl, a varius nunc elementum eget.
@@ -17,8 +20,6 @@ class PostModel extends Model
         for ($i = 1; $i < 50; $i++) {
             $int = mt_rand(1262055681, 1562055681);
             $date = date("Y-m-d H:i:s", $int);
-
-            // $query = "INSERT INTO post(name, slug, content, created_at) VALUES('post', 'post, 'stjytdyjtujkg', NOW())";
             $query = "INSERT INTO post(name, slug, content, created_at) VALUES('post{$i}', 'post-{$i}', '{$content}', '{$date}')";
             $this->db->write($query);
         }

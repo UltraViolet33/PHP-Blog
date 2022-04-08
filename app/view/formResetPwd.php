@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
         <div class="col-12">
             <h1 class="text-center">
-               Réinitialiser Mot de passe
+                Réinitialiser Mot de passe
             </h1>
         </div>
     </div>
@@ -15,7 +15,7 @@
                     <input type="password" name='user-resetPwd1' class="form-control">
                 </div>
                 <div class="mb-3">
-                    <label for="user-resetPwd2" class="form-label">Confirmez  le mot de passe : </label>
+                    <label for="user-resetPwd2" class="form-label">Confirmez le mot de passe : </label>
                     <input type="password" name='user-resetPwd2' class="form-control">
                 </div>
                 <input type="submit" class="btn btn-primary" name="user-resetPwd" value="Valider">

@@ -18,10 +18,6 @@
                     <label for="email" class="form-label">Email : </label>
                     <input type="email" value="<?= isset($_POST['email']) ? $_POST['email'] : ""; ?>" name='email' class="form-control">
                 </div>
-                <!-- <div class="mb-3">
-                    <label for="password" class="form-label">Mot de passe : </label>
-                    <input type="password" name='password' class="form-control">
-                </div> -->
                 <input type="submit" class="btn btn-primary" name="updateProfil" value="Valider">
             </form>
             <?= checkError() ?>

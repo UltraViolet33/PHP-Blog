@@ -18,12 +18,10 @@ class Post extends Controller
     public function index()
     {
 
-        /**classe Pagination essai pour remplacer la classe paginate */
         $queryCount = $this->postModel->count();
         $queryItems = $this->postModel->limitItems();
-        $paginatePosts = new Pagination($queryCount,$queryItems, 12, "post");
+        $paginatePosts = new Pagination($queryCount, $queryItems, 12, "post");
         $limitPosts = $paginatePosts->getItems();
-        /**fin essai classe Pagination */
 
         $categoryModel = $this->loadModel("CategoryModel");
 
@@ -34,8 +32,8 @@ class Post extends Controller
             $post->content = $this->getExtractContent($post->content);
         }
         $data['limitPosts'] = $limitPosts;
-     $data['nextLink'] = $paginatePosts->nextLink();
-         $data['previousLink'] = $paginatePosts->previousLink();
+        $data['nextLink'] = $paginatePosts->nextLink();
+        $data['previousLink'] = $paginatePosts->previousLink();
         $this->view("posts/index", $data);
     }
 
@@ -58,7 +56,6 @@ class Post extends Controller
 
     public function category($id)
     {
-        // modifier et utiliser la Classe Paginate pour récupérer et afficher les posts en fonction des categories
         $categoryModel = $this->loadModel("CategoryModel");
         $category = $categoryModel->find($id);
         if (!$category) {
@@ -75,22 +72,18 @@ class Post extends Controller
         $queryCount = $this->postModel->countPostFronCat($id);
         $queryItems = $this->postModel->getPostFromCategory($id);
 
-
-        $paginatePosts = new Pagination($queryCount,$queryItems, 12, "post/category");
+        $paginatePosts = new Pagination($queryCount, $queryItems, 12, "post/category");
         $limitPosts = $paginatePosts->getItems();
-        /**fin essai classe Pagination */
 
-        // $categoryModel = $this->loadModel("CategoryModel");
-
-         foreach ($limitPosts as $post) {
+        foreach ($limitPosts as $post) {
             $post->categories = [];
-             $post->categories = $categoryModel->getCategoriesFromPost($post->id)[0]->name;
+            $post->categories = $categoryModel->getCategoriesFromPost($post->id)[0]->name;
             $post->created_at = $this->dateToString($post->created_at);
             $post->content = $this->getExtractContent($post->content);
-         }
-         $data['limitPosts'] = $limitPosts;
-         $data['nextLink'] = null;
-         $data['previousLink'] = null;
+        }
+        $data['limitPosts'] = $limitPosts;
+        $data['nextLink'] = null;
+        $data['previousLink'] = null;
         $this->view("posts/index", $data);
     }
 
