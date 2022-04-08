@@ -36,6 +36,12 @@
                             <li class="nav-item">
                                 <a href="<?= ROOT ?>admin" class="nav-link text-white">Partie Admin</a>
                             </li>
+                            <li class="nav-item">
+                                <a href="<?= ROOT ?>admin/posts" class="nav-link text-white">ArticlesAdmin</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= ROOT ?>admin/categories" class="nav-link text-white">CategoriesAdmin</a>
+                            </li>
                         <?php endif ?>
                     <?php else : ?>
                         <li class="nav-item">

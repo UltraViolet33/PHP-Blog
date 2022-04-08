@@ -28,4 +28,24 @@ class Category extends Controller
         $data['limitCategories'] = $limitCategories;
         $this->view("categories/listCategories", $data);
     }
+
+
+
+    public function getPaginatedCategories()
+    {
+        $queryCount = $this->categoryModel->count();
+        $queryItems = $this->categoryModel->limitItems();
+        $paginateCategories = new Pagination($queryCount, $queryItems, 12, "category");
+        $limitCategories = $paginateCategories->getItems();
+        $data['nextLink'] = $paginateCategories->nextLink();
+        $data['previousLink'] = $paginateCategories->previousLink();
+        $data['limitCategories'] = $limitCategories;
+        return $data;
+    }
+
+
+    public function delete($id)
+    {
+        $this->categoryModel->delete($id);
+    }
 }

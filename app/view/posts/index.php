@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <h5 class="card-title"><?= validateData($post->name) ?></h5>
                     <p><?= validateData($post->created_at) ?></p>
-                    <p>Categorie : <?= $post->categories ?></p>
+             
                     <p class="card-text"><?= validateData($post->content) ?></p>
                     <a href="<?= ROOT ?>post/details/<?= $post->id ?>" class="btn btn-primary">Lire l'article</a>
                 </div>

@@ -7,11 +7,11 @@ class Admin extends Controller
 
     private $postController;
 
-
     public function __construct()
     {
         $this->checkAdminLogin();
         $this->postController  = $this->loadController("post");
+        $this->categoryController = $this->loadController("category");
     }
 
     public function index()
@@ -19,13 +19,12 @@ class Admin extends Controller
         $this->view("admin/index");
     }
 
-
     public function posts($method = null, $id = null)
     {
         if ($method == "delete") {
             if ($_POST['token'] == $_SESSION['token']) {
                 $this->deletePost($id);
-                header("Location: " .ROOT. "admin/posts");
+                header("Location: " . ROOT . "admin/posts");
             } else {
                 header("Location: " . ROOT . "login") .
                     die;
@@ -35,12 +34,34 @@ class Admin extends Controller
         $this->view("admin/posts", $posts);
     }
 
-
     /**
      * delete one post
      */
     public function deletePost($id)
     {
         $this->postController->delete($id);
+    }
+
+
+
+    public function categories($method = null, $id = null)
+    {
+        if ($method == "delete") {
+            if ($_POST['token'] == $_SESSION['token']) {
+                $this->deleteCategory($id);
+                header("Location: " . ROOT . "admin/categories");
+            } else {
+                header("Location: " . ROOT . "login") .
+                    die;
+            }
+        }
+        $categories = $this->categoryController->getPaginatedCategories("admin/categories");
+        $this->view('admin/categories', $categories);
+    }
+
+
+    public function deleteCategory($id)
+    {
+        $this->categoryController->delete($id);
     }
 }

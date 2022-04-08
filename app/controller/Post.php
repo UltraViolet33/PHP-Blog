@@ -26,7 +26,7 @@ class Post extends Controller
 
         foreach ($limitPosts as $post) {
             $post->categories = [];
-            $post->categories = $categoryModel->getCategoriesFromPost($post->id)[0]->name;
+            // $post->categories = $categoryModel->getCategoriesFromPost($post->id)[0]->name;
             $post->created_at = $this->dateToString($post->created_at);
             $post->content = $this->getExtractContent($post->content);
         }
@@ -48,7 +48,7 @@ class Post extends Controller
         }
         $post[0]->created_at = $this->dateToString($post[0]->created_at);
         $categoryModel = $this->loadModel("CategoryModel");
-        $post[0]->categories = $categoryModel->getCategoriesFromPost($post[0]->id)[0]->name;
+        // $post[0]->categories = $categoryModel->getCategoriesFromPost($post[0]->id)[0]->name;
         $data['post'] = $post[0];
         $this->view("posts/detailsPost", $data);
     }
@@ -56,6 +56,8 @@ class Post extends Controller
     public function category($id)
     {
         $categoryModel = $this->loadModel("CategoryModel");
+
+
         $category = $categoryModel->find($id);
         if (!$category) {
             header("Location: " . ROOT . "category/index");
@@ -76,7 +78,9 @@ class Post extends Controller
 
         foreach ($limitPosts as $post) {
             $post->categories = [];
-            $post->categories = $categoryModel->getCategoriesFromPost($post->id)[0]->name;
+          
+
+            // $post->categories = $categoryModel->getCategoriesFromPost($post->id)[0]->name;
             $post->created_at = $this->dateToString($post->created_at);
             $post->content = $this->getExtractContent($post->content);
         }
@@ -120,11 +124,11 @@ class Post extends Controller
         $paginatePosts = new Pagination($queryCount, $queryItems, 12, $path);
         $limitPosts = $paginatePosts->getItems();
 
-        $categoryModel = $this->loadModel("CategoryModel");
+        // $categoryModel = $this->loadModel("CategoryModel");
 
         foreach ($limitPosts as $post) {
             $post->categories = [];
-            $post->categories = $categoryModel->getCategoriesFromPost($post->id)[0]->name;
+            // $post->categories = $categoryModel->getCategoriesFromPost($post->id)[0]->name;
             $post->created_at = $this->dateToString($post->created_at);
             $post->content = $this->getExtractContent($post->content);
         }
@@ -140,7 +144,6 @@ class Post extends Controller
 
     public function delete($id)
     {
-     
         $this->postModel->delete($id);
     }
 
