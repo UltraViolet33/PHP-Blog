@@ -32,6 +32,15 @@ class Controller
         return false;
     }
 
+    public function loadController($controller)
+    {
+        if (file_exists("../app/controller/" .  strtolower($controller) . ".php")) {
+            include "../app/controller/" . strtolower($controller) . ".php";
+            return $a = new $controller();
+        }
+        return false;
+    }
+
     public function checkLogin()
     {
         if (!empty($_SESSION['user'])) {
@@ -39,5 +48,14 @@ class Controller
         }
 
         return false;
+    }
+
+    public function checkAdminLogin()
+    {
+        if(empty($_SESSION['user']) || $_SESSION['user']['isAdmin'] != 1)
+        {
+            header("Location: ".ROOT."login");
+            die;
+        }
     }
 }

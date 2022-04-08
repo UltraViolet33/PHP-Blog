@@ -1,7 +1,6 @@
 <?php
 
 require_once('../app/core/Controller.php');
-require_once('../app/helpers/Paginate.php');
 require_once('../app/helpers/Pagination.php');
 
 class Post extends Controller
@@ -111,4 +110,32 @@ class Post extends Controller
         }
         return substr($content, 0, 50) . "...";
     }
+
+
+    public function getPaginatedPosts($path)
+    {
+
+        $queryCount = $this->postModel->count();
+        $queryItems = $this->postModel->limitItems();
+        $paginatePosts = new Pagination($queryCount, $queryItems, 12, $path);
+        $limitPosts = $paginatePosts->getItems();
+
+        $categoryModel = $this->loadModel("CategoryModel");
+
+        foreach ($limitPosts as $post) {
+            $post->categories = [];
+            $post->categories = $categoryModel->getCategoriesFromPost($post->id)[0]->name;
+            $post->created_at = $this->dateToString($post->created_at);
+            $post->content = $this->getExtractContent($post->content);
+        }
+        $data['limitPosts'] = $limitPosts;
+        $data['nextLink'] = $paginatePosts->nextLink();
+        $data['previousLink'] = $paginatePosts->previousLink();
+
+        return $data;
+
+    }
+
+
+  
 }

@@ -1,7 +1,6 @@
 <?php
 
 require_once('../app/core/Controller.php');
-require_once('../app/helpers/Paginate.php');
 require_once('../app/helpers/Pagination.php');
 
 class Category extends Controller
