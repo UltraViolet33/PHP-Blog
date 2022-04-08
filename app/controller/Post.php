@@ -137,5 +137,13 @@ class Post extends Controller
     }
 
 
+
+    public function delete($id)
+    {
+     
+        $this->postModel->delete($id);
+    }
+
+
   
 }

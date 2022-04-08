@@ -46,5 +46,12 @@ class Login extends Controller
         $_SESSION['user']['userName'] = $user->username;
         $_SESSION['user']['email'] = $user->email;
         $_SESSION['user']['isAdmin'] = $user->isAdmin;
+
+        if ($_SESSION['user']['isAdmin'] == 1) {
+
+            if (!isset($_SESSION['token'])) {
+                $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(6));
+            }
+        }
     }
 }

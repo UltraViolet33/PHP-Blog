@@ -47,4 +47,11 @@ class Model
         $query = "SELECT * FROM $this->table LIMIT $limit OFFSET $offset";
         return $this->db->read($query);
     }
+
+
+    public function delete($id){
+        $query = "DELETE FROM $this->table WHERE id = :id";
+        $data['id'] = $id;
+        $this->db->write($query, $data);
+    }
 }
