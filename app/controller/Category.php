@@ -18,7 +18,6 @@ class Category extends Controller
      */
     public function index()
     {
-
         $queryCount = $this->categoryModel->count();
         $queryItems = $this->categoryModel->limitItems();
         $paginateCategories = new Pagination($queryCount, $queryItems, 12, "category");
@@ -29,8 +28,9 @@ class Category extends Controller
         $this->view("categories/listCategories", $data);
     }
 
-
-
+    /**
+     * get the paginated categories
+     */
     public function getPaginatedCategories()
     {
         $queryCount = $this->categoryModel->count();
@@ -43,18 +43,25 @@ class Category extends Controller
         return $data;
     }
 
-
+    /**
+     * delete one category
+     */
     public function delete($id)
     {
         $this->categoryModel->delete($id);
     }
 
-
+    /**
+     * get all the categories
+     */
     public function getAllCategories()
     {
         return $this->categoryModel->getAllCategories();
     }
 
+    /**
+     * get one category
+     */
     public function getOneCategory($id)
     {
         return $this->categoryModel->find($id);

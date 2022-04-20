@@ -2,8 +2,8 @@
 
 class Database
 {
-  private $PDOInstance = null;
 
+  private $PDOInstance = null;
   private static $instance = null;
 
   private function __construct()
@@ -14,9 +14,9 @@ class Database
     ]);
   }
 
+
   /**
-   * Crée et retourne l'objet SPDO
-   * @return PDO $instance
+   * get the pdo instance
    */
   public static function getInstance()
   {
@@ -26,16 +26,13 @@ class Database
     return self::$instance;
   }
 
-
   public static function getNewInstance()
   {
     return new Database();
   }
 
   /**
-   * read
    * read on the BDD
-   * @return array
    */
   public function read($query, $data = array(), $method = PDO::FETCH_OBJ)
   {
@@ -52,27 +49,20 @@ class Database
   }
 
   /**
-   * write
    * write on the BDD
-   * @return bool
    */
   public function write($query, $data = array())
   {
-    echo "test";
     $statement = $this->PDOInstance->prepare($query);
     $result = $statement->execute($data);
-
     if ($result) {
       return true;
     }
-    echo "joh";
     return false;
   }
 
   /**
-   * getLastInsertId
    * return the last id inserted
-   * @return int
    */
   public function getLastInsertId()
   {

@@ -27,10 +27,28 @@ class Profil extends Controller
      */
     public function update()
     {
+        $userModel = $this->loadModel('user');
         if (!$this->checkLogin()) {
             header("Location:login");
         }
-        
-        $this->view('updateProfil');
+
+        if (!empty($_POST)) {
+            if (!empty($_POST['username'] && !empty($_POST['email']))) {
+                $username = $_POST['username'];
+                $email = $_POST['email'];
+                $id = $_SESSION['user']['idUser'];
+                $userModel->updateUser($username, $email, $id);
+                header('Location: profil');
+                return;
+            } else {
+                $_SESSION['error'] = "Veuillez remplir tous les champs !<br>";
+            }
+        }
+
+        $user = $userModel->getAllDataUser($_SESSION['user']['idUser']);
+        $data['profil'] = $user[0];
+        $data['user'] = $_SESSION['user'];
+        extract($data);
+        $this->view('updateProfil', $data);
     }
 }

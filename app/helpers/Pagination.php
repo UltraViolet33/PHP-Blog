@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * pagination class to get the paginated items (posts or category) from the bdd
+ */
+
 class Pagination
 {
 
@@ -22,7 +26,9 @@ class Pagination
         $this->getCurrentPage();
     }
 
-
+    /**
+     * get the items to paginate from the bdd
+     */
     public function getItems()
     {
         $offset = $this->getOffset();
@@ -31,14 +37,18 @@ class Pagination
         return $items;
     }
 
-
+    /**
+     * get the offset for the sql query
+     */
     private function getOffset()
     {
         $this->offset =  $this->perPage * ($this->getCurrentPage() - 1);
         return $this->offset;
     }
 
-
+    /**
+     * get the current page from the url
+     */
     private function getCurrentPage()
     {
         if (isset($_GET['page'])) {
@@ -56,6 +66,9 @@ class Pagination
         return  $this->currentPage;
     }
 
+    /**
+     * get the number of page for pagination
+     */
     private function getNumberPages()
     {
         $totalItems =  $this->db->read($this->queryCount, [], null);
@@ -67,6 +80,9 @@ class Pagination
         $this->numberPages = (int)ceil($totalItems / $this->perPage);
     }
 
+    /**
+     * generate link to go to the next page
+     */
     public function nextLink()
     {
         $this->currentPage = $this->getCurrentPage();
@@ -79,6 +95,9 @@ class Pagination
         return $linkHTML;
     }
 
+    /**
+     * generate link to go to the previous page
+     */
     public function previousLink()
     {
         if ($this->currentPage <= 1) {

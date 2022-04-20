@@ -11,17 +11,18 @@ class ResetPassword extends Controller
         $this->userModel = $this->loadModel('user');
     }
 
+    /**
+     * check form to reset password
+     */
     public function index()
     {
         $_SESSION['error'] = "";
 
         if (isset($_POST['user-reset'])) {
-            var_dump($_POST);
             if (empty($_POST['user-resetEmail'])) {
                 $_SESSION['error'] .= "Email manquant";
             } else {
                 $emailExist = $this->userModel->checkEmailExist($_POST['user-resetEmail']);
-                var_dump($emailExist[0]);
                 if ($emailExist[0] == "1") {
                     $string = implode('', array_merge(range('A', 'Z'), range('a', 'z'), range('0', '9')));
                     $token = substr(str_shuffle($string), 0, 20);
@@ -33,10 +34,12 @@ class ResetPassword extends Controller
                 }
             }
         }
-
         $this->view("resetPassword");
     }
 
+    /**
+     * send an email
+     */
     private function sendEmail($token, $email)
     {
         $link = 'http://blog.test/resetpassword/update?token=' . $token;
@@ -56,36 +59,32 @@ class ResetPassword extends Controller
         return $result;
     }
 
-
+    /**
+     * update the password
+     */
     public function update()
     {
         $this->checkToken();
 
-        if(isset($_POST['user-resetPwd']))
-        {
+        if (isset($_POST['user-resetPwd'])) {
             $_SESSION['error'] = "";
-            var_dump($_POST);
-            if(empty($_POST['user-resetPwd2']) || empty($_POST['user-resetPwd1']))
-            {
+            if (empty($_POST['user-resetPwd2']) || empty($_POST['user-resetPwd1'])) {
                 $_SESSION['error'] .= "Veuillez remplir tous les champs";
-            }else
-            {
-                if($_POST['user-resetPwd1'] === $_POST['user-resetPwd2'])
-                {
+            } else {
+                if ($_POST['user-resetPwd1'] === $_POST['user-resetPwd2']) {
                     $this->userModel->updatePassword($_POST['user-resetPwd1'], $_GET['token']);
-                    header("Location:".ROOT."login");
-                }
-                else
-                {
+                    header("Location:" . ROOT . "login");
+                } else {
                     $_SESSION['error'] .= "Les mots de passe ne correspondent pas </br>";
                 }
             }
         }
-
         $this->view('formResetPwd');
     }
 
-
+    /**
+     * check the token to reset password
+     */
     private function checkToken()
     {
         if (empty($_GET['token'])) {

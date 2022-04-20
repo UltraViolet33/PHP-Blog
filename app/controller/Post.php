@@ -16,17 +16,12 @@ class Post extends Controller
      */
     public function index()
     {
-
         $queryCount = $this->postModel->count();
         $queryItems = $this->postModel->limitItems();
         $paginatePosts = new Pagination($queryCount, $queryItems, 12, "post");
         $limitPosts = $paginatePosts->getItems();
 
-        $categoryModel = $this->loadModel("CategoryModel");
-
         foreach ($limitPosts as $post) {
-            $post->categories = [];
-            // $post->categories = $categoryModel->getCategoriesFromPost($post->id)[0]->name;
             $post->created_at = $this->dateToString($post->created_at);
             $post->content = $this->getExtractContent($post->content);
         }
@@ -38,7 +33,6 @@ class Post extends Controller
 
     /**
      * display details page for post
-     * @param int $id
      */
     public function details($id)
     {
@@ -47,23 +41,21 @@ class Post extends Controller
             header("Location: " . ROOT . "post");
         }
         $post[0]->created_at = $this->dateToString($post[0]->created_at);
-        $categoryModel = $this->loadModel("CategoryModel");
-        // $post[0]->categories = $categoryModel->getCategoriesFromPost($post[0]->id)[0]->name;
         $data['post'] = $post[0];
         $this->view("posts/detailsPost", $data);
     }
 
+    /**
+     * display posts from categories
+     */
     public function category($id)
     {
         $categoryModel = $this->loadModel("CategoryModel");
-
-
         $category = $categoryModel->find($id);
         if (!$category) {
             header("Location: " . ROOT . "category/index");
             die;
         }
-
         $posts = $this->postModel->getPostFromCategory($id);
         if (!$posts) {
             header("Location: " . ROOT . "category/index");
@@ -72,18 +64,14 @@ class Post extends Controller
 
         $queryCount = $this->postModel->countPostFronCat($id);
         $queryItems = $this->postModel->getPostFromCategory($id);
-
         $paginatePosts = new Pagination($queryCount, $queryItems, 12, "post/category");
         $limitPosts = $paginatePosts->getItems();
 
         foreach ($limitPosts as $post) {
-            $post->categories = [];
-          
-
-            // $post->categories = $categoryModel->getCategoriesFromPost($post->id)[0]->name;
             $post->created_at = $this->dateToString($post->created_at);
             $post->content = $this->getExtractContent($post->content);
         }
+
         $data['limitPosts'] = $limitPosts;
         $data['nextLink'] = null;
         $data['previousLink'] = null;
@@ -92,8 +80,6 @@ class Post extends Controller
 
     /**
      * convert date MySQL to dd/mm/yyyy
-     * @param string $date
-     * @return string
      */
     private function dateToString($date)
     {
@@ -104,8 +90,6 @@ class Post extends Controller
 
     /**
      * get an extract of a post content
-     * @param string $content
-     * @return string
      */
     private function getExtractContent($content)
     {
@@ -116,37 +100,32 @@ class Post extends Controller
     }
 
 
+    /**
+     * get the paginated posts
+     */
     public function getPaginatedPosts($path)
     {
-
         $queryCount = $this->postModel->count();
         $queryItems = $this->postModel->limitItems();
         $paginatePosts = new Pagination($queryCount, $queryItems, 12, $path);
         $limitPosts = $paginatePosts->getItems();
 
-        // $categoryModel = $this->loadModel("CategoryModel");
-
         foreach ($limitPosts as $post) {
-            $post->categories = [];
-            // $post->categories = $categoryModel->getCategoriesFromPost($post->id)[0]->name;
             $post->created_at = $this->dateToString($post->created_at);
             $post->content = $this->getExtractContent($post->content);
         }
+
         $data['limitPosts'] = $limitPosts;
         $data['nextLink'] = $paginatePosts->nextLink();
         $data['previousLink'] = $paginatePosts->previousLink();
-
         return $data;
-
     }
 
-
-
+    /**
+     * delete one post
+     */
     public function delete($id)
     {
         $this->postModel->delete($id);
     }
-
-
-  
 }

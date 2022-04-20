@@ -16,9 +16,12 @@ class Admin extends Controller
 
     public function index()
     {
-        $this->view("admin/index");
+        $this->posts();
     }
 
+    /**
+     * display posts
+     */
     public function posts($method = null, $id = null)
     {
         if ($method == "delete") {
@@ -26,8 +29,8 @@ class Admin extends Controller
                 $this->deletePost($id);
                 header("Location: " . ROOT . "admin/posts");
             } else {
-                header("Location: " . ROOT . "login") .
-                    die;
+                header("Location: " . ROOT . "login");
+                return;
             }
         } elseif ($method == "update") {
             $this->updatePost($id);
@@ -46,6 +49,9 @@ class Admin extends Controller
         $this->postController->delete($id);
     }
 
+    /**
+     * Update one post
+     */
     public function updatePost($idPost)
     {
         $categories = $this->categoryController->getAllCategories();
@@ -56,6 +62,9 @@ class Admin extends Controller
         $this->view("admin/editPost", $data);
     }
 
+    /**
+     * display categories
+     */
     public function categories($method = null, $id = null)
     {
         if ($method == "delete") {
@@ -74,16 +83,19 @@ class Admin extends Controller
         $this->view('admin/categories', $categories);
     }
 
+    /**
+     * update one category
+     */
     private function updateCategory($id)
     {
         $category = $this->categoryController->getOneCategory($id);
-        
-
         $data['category'] = $category[0];
         $this->view("admin/editCategory", $data);
     }
 
-
+    /**
+     * delete one category
+     */
     public function deleteCategory($id)
     {
         $this->categoryController->delete($id);

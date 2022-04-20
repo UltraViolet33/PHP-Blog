@@ -13,7 +13,7 @@
 <body class="d-flex flex-column min-vh-100 ">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
         <div class="container-fluid ">
-            <a href="home" class="navbar-brand text-white">Accueil</a>
+            <a href="<?= ROOT ?>post" class="navbar-brand text-white">Accueil</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -30,12 +30,9 @@
                             <a href="<?= ROOT ?>profil" class="nav-link text-white"><?= $_SESSION['user']['userName'] ?></a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?= ROOT ?>logout" class="nav-link text-white">Se déconnecter</a>
+                            <a href="<?= ROOT ?>logout" onclick="return confirm()" class="nav-link text-white">Se déconnecter</a>
                         </li>
                         <?php if ($_SESSION['user']['isAdmin'] == 1) : ?>
-                            <li class="nav-item">
-                                <a href="<?= ROOT ?>admin" class="nav-link text-white">Partie Admin</a>
-                            </li>
                             <li class="nav-item">
                                 <a href="<?= ROOT ?>admin/posts" class="nav-link text-white">ArticlesAdmin</a>
                             </li>

@@ -72,4 +72,13 @@ class User extends Model
         $result =  $this->db->write($query, $data);
         return $result;
     }
+
+    public function updateUser($username, $email, $id)
+    {
+        $query = "UPDATE user SET username = :username, email = :email WHERE id = :id";
+        $data['username'] = $username;
+        $data['email'] = $email;
+        $data['id'] = $id;
+        $check = $this->db->write($query, $data);
+    }
 }

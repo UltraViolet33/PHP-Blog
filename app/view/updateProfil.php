@@ -12,11 +12,11 @@
             <form action="" method="POST">
                 <div class="mb-3">
                     <label for="username" class="form-label">Nom utilisateur : </label>
-                    <input type="text" value="<?= isset($_POST['username']) ? $_POST['username'] : ""; ?>" name='username' class="form-control">
+                    <input type="text" value="<?= validateData($profil->username) ?>" name='username' class="form-control">
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email : </label>
-                    <input type="email" value="<?= isset($_POST['email']) ? $_POST['email'] : ""; ?>" name='email' class="form-control">
+                    <input type="email" value="<?= $profil->email ?>" name='email' class="form-control">
                 </div>
                 <input type="submit" class="btn btn-primary" name="updateProfil" value="Valider">
             </form>

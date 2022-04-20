@@ -4,16 +4,17 @@ require_once('../app/core/controller.php');
 
 class Login extends Controller
 {
+    /**
+     * check the login form
+     */
     public function index()
     {
         $_SESSION['error'] = "";
 
         if (isset($_POST['login'])) {
-            var_dump($_POST);
             $userManager = $this->loadModel("User");
 
             if (empty($_POST['email'])) {
-
                 $_SESSION['error'] = "Email manquant</br>";
             }
 
@@ -27,7 +28,7 @@ class Login extends Controller
                 if ($data && is_object($data[0])) {
                     $this->userToSession($data[0]);
                     header("Location: home");
-                    die;
+                    return;
                 } else {
                     $_SESSION['error'] .= "Mot de passe ou email invalide <br>";
                 }
@@ -38,7 +39,6 @@ class Login extends Controller
 
     /**
      * user to $_SESSION
-     * @param object $user
      */
     private function userToSession($user)
     {
@@ -48,7 +48,6 @@ class Login extends Controller
         $_SESSION['user']['isAdmin'] = $user->isAdmin;
 
         if ($_SESSION['user']['isAdmin'] == 1) {
-
             if (!isset($_SESSION['token'])) {
                 $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(6));
             }
