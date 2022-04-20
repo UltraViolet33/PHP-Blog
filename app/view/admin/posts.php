@@ -19,7 +19,7 @@
                     <td><a href="<?= ROOT ?>post/details/<?= $post->id ?>" class="btn btn-primary"><?= validateData($post->name) ?></a></td>
                     <td><?= validateData($post->created_at) ?></td>
              
-                    <td><a class="btn btn-primary">Modifier</a></td>
+                    <td><a href="<?=ROOT?>admin/posts/update/<?=$post->id?>" class="btn btn-primary">Modifier</a></td>
                     <td>
                         <form onsubmit="return confirm('Voulez vous supprimer cet article ?')" action="<?= ROOT ?>admin/posts/delete/<?= $post->id ?>" method="POST">
                             <input hidden="hidden" name="token" value="<?=$_SESSION['token'] ?>">

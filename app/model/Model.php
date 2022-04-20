@@ -56,4 +56,10 @@ class Model
         $data['id'] = $id;
         $this->db->write($query, $data);
     }
+
+    protected function getAllItems()
+    {
+        $query = "SELECT * FROM $this->table";
+        return $this->db->read($query);
+    }
 }

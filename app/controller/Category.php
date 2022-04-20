@@ -48,4 +48,10 @@ class Category extends Controller
     {
         $this->categoryModel->delete($id);
     }
+
+
+    public function getAllCategories()
+    {
+        return $this->categoryModel->getAllCategories();
+    }
 }

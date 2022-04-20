@@ -29,7 +29,11 @@ class Admin extends Controller
                 header("Location: " . ROOT . "login") .
                     die;
             }
+        } elseif ($method == "update") {
+            $this->updatePost($id);
+            return;
         }
+
         $posts = $this->postController->getPaginatedPosts("admin/posts");
         $this->view("admin/posts", $posts);
     }
@@ -42,7 +46,20 @@ class Admin extends Controller
         $this->postController->delete($id);
     }
 
-
+    public function updatePost($idPost)
+    {
+        if(!empty($_POST))
+        {
+            echo "ok";
+            die;
+        }
+        $categories = $this->categoryController->getAllCategories();
+        $data['categories'] = $categories;
+        $post = $this->postController->postModel->find($idPost);
+        $data['post'] = $post[0];
+        extract($data);
+        $this->view("admin/editPost", $data);
+    }
 
     public function categories($method = null, $id = null)
     {

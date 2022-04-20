@@ -33,4 +33,11 @@ class CategoryModel extends Model
         $categories = $this->db->read($query);
         return $categories;
     }
+
+    public function getAllCategories()
+    {
+        $query = "SELECT name, id FROM $this->table";
+        $categories = $this->db->read($query);
+        return $categories;
+    }
 }
