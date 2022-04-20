@@ -48,11 +48,6 @@ class Admin extends Controller
 
     public function updatePost($idPost)
     {
-        if(!empty($_POST))
-        {
-            echo "ok";
-            die;
-        }
         $categories = $this->categoryController->getAllCategories();
         $data['categories'] = $categories;
         $post = $this->postController->postModel->find($idPost);
@@ -71,9 +66,21 @@ class Admin extends Controller
                 header("Location: " . ROOT . "login") .
                     die;
             }
+        } elseif ($method == "update") {
+            $this->updateCategory($id);
+            return;
         }
         $categories = $this->categoryController->getPaginatedCategories("admin/categories");
         $this->view('admin/categories', $categories);
+    }
+
+    private function updateCategory($id)
+    {
+        $category = $this->categoryController->getOneCategory($id);
+        
+
+        $data['category'] = $category[0];
+        $this->view("admin/editCategory", $data);
     }
 
 

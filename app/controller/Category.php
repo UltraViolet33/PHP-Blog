@@ -54,4 +54,9 @@ class Category extends Controller
     {
         return $this->categoryModel->getAllCategories();
     }
+
+    public function getOneCategory($id)
+    {
+        return $this->categoryModel->find($id);
+    }
 }
