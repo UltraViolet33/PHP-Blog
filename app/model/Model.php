@@ -2,6 +2,7 @@
 
 class Model
 {
+
     protected $table = null;
     protected $db;
 
@@ -21,21 +22,25 @@ class Model
         return $result;
     }
 
-    /** pour classe pagination */
+    /**  return a sql query (for pagination class) */
     public function count()
     {
         $query = "SELECT COUNT(id) FROM $this->table";
         return $query;
     }
 
+    /**
+     * return a sql query (for pagination class)
+     */
     public function limitItems()
     {
         $query = "SELECT * FROM $this->table";
         return $query;
     }
-    /**fin essai clsse pagination */
 
-
+    /**
+     * count the items in a table
+     */
     public function countAll()
     {
         $query = "SELECT COUNT(id) FROM $this->table";
