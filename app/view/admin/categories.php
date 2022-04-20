@@ -18,8 +18,8 @@
                     <td><a class="btn btn-primary">Modifier</a></td>
                     <td>
                         <form onsubmit="return confirm('Voulez vous supprimer cette catégorie ?')" action="<?= ROOT ?>admin/categories/delete/<?= $category->id ?>" method="POST">
-                            <input hidden="hidden" name="token" value="<?=$_SESSION['token'] ?>">
-                            <button  type="submit" name="deleteCategories" class="btn btn-warning">Supprimer</button>
+                            <input hidden="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+                            <button type="submit" name="deleteCategories" class="btn btn-warning">Supprimer</button>
                         </form>
                     </td>
                 </tr>

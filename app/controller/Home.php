@@ -10,6 +10,8 @@ class Home extends Controller
         if ($this->checkLogin()) {
             $data['user'] = $_SESSION['user'];
         }
+
+
         $this->view("home", $data);
     }
 }

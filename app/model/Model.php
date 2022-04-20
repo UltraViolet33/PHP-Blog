@@ -28,13 +28,14 @@ class Model
         return $query;
     }
 
-    public function limitItems(){
+    public function limitItems()
+    {
         $query = "SELECT * FROM $this->table";
         return $query;
     }
     /**fin essai clsse pagination */
 
-    
+
     public function countAll()
     {
         $query = "SELECT COUNT(id) FROM $this->table";
@@ -49,7 +50,8 @@ class Model
     }
 
 
-    public function delete($id){
+    public function delete($id)
+    {
         $query = "DELETE FROM $this->table WHERE id = :id";
         $data['id'] = $id;
         $this->db->write($query, $data);

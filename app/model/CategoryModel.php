@@ -20,8 +20,7 @@ class CategoryModel extends Model
 
     public function insertPostCategory()
     {
-        for($i=269; $i<320; $i++)
-        {
+        for ($i = 269; $i < 320; $i++) {
             $categoryId = rand(4, 28);
             $query = "INSERT INTO post_category(post_id, category_id) VALUES($i, $categoryId)";
             $this->db->write($query);
@@ -34,6 +33,4 @@ class CategoryModel extends Model
         $categories = $this->db->read($query);
         return $categories;
     }
-
-   
 }
