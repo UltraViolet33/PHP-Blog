@@ -1,5 +1,5 @@
 <?php $this->view("inc/header", $data); ?>
-<h1 class="text-center">Les articles</h1>
+<h1 class="text-center">Les Catégories</h1>
 <div class="row justify-content-center">
     <table class="table">
         <thead>

@@ -129,4 +129,12 @@ class Post extends Controller
     {
         $this->postModel->delete($id);
     }
+
+    /**
+     * update post
+     */
+    public function update($id, $name, $content)
+    {
+        $this->postModel->updatePost($id, $name, $content);
+    }
 }

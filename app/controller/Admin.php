@@ -54,8 +54,14 @@ class Admin extends Controller
      */
     public function updatePost($idPost)
     {
-        $categories = $this->categoryController->getAllCategories();
-        $data['categories'] = $categories;
+        if (!empty($_POST)) {
+            if (empty($_POST['name']) || empty($_POST['content'])) {
+                $_SESSION['error'] = "Veuillez renseigner les informations <br>";
+            } else {
+                $this->postController->update($idPost, $_POST['name'], $_POST['content']);
+                header("Location: " . ROOT . "admin/posts");
+            }
+        }
         $post = $this->postController->postModel->find($idPost);
         $data['post'] = $post[0];
         $this->view("admin/editPost", $data);
