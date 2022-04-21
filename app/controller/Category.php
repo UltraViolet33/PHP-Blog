@@ -74,4 +74,12 @@ class Category extends Controller
     {
         return $this->categoryModel->updateCategory($id, $name);
     }
+
+    /**
+     * insert a category
+     */
+    public function insert($name)
+    {
+        return $this->categoryModel->insertCategory($name);
+    }
 }

@@ -48,7 +48,15 @@ class CategoryModel extends Model
         return $categories;
     }
 
-
+    /**
+     * insert a category in the BDD
+     */
+    public function insertCategory($name)
+    {
+        $query = "INSERT INTO category(name) VALUES (:name)";
+        $data['name'] = $name;
+        $check = $this->db->write($query, $data);
+    }
 
     /**
      * update category

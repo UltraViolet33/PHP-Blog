@@ -83,9 +83,28 @@ class Admin extends Controller
         } elseif ($method == "update") {
             $this->updateCategory($id);
             return;
+        } elseif ($method == "create") {
+            $this->createCategory();
+            return;
         }
         $categories = $this->categoryController->getPaginatedCategories("admin/categories");
         $this->view('admin/categories', $categories);
+    }
+
+    /**
+     * create a category
+     */
+    private function createCategory()
+    {
+        if (!empty($_POST)) {
+            if (empty($_POST['name'])) {
+                $_SESSION['error'] = "Veuillez renseigner un nom pour la categorie <br>";
+            } else {
+                $this->categoryController->insert($_POST['name']);
+                header("Location: " . ROOT . "admin/categories");
+            }
+        }
+        $this->view("admin/addCategory");
     }
 
     /**
