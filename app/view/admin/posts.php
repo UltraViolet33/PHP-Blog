@@ -7,7 +7,6 @@
                 <th scope="col">#</th>
                 <th scope="col">Titre</th>
                 <th scope="col">Date</th>
-                <!-- <th scope="col">Categories</th> -->
                 <th scope="col">Modifier</th>
                 <th scope="col">Supprimer</th>
             </tr>
@@ -18,12 +17,11 @@
                     <th scope="row"><?= $post->id ?></th>
                     <td><a href="<?= ROOT ?>post/details/<?= $post->id ?>" class="btn btn-primary"><?= validateData($post->name) ?></a></td>
                     <td><?= validateData($post->created_at) ?></td>
-             
-                    <td><a href="<?=ROOT?>admin/posts/update/<?=$post->id?>" class="btn btn-primary">Modifier</a></td>
+                    <td><a href="<?= ROOT ?>admin/posts/update/<?= $post->id ?>" class="btn btn-primary">Modifier</a></td>
                     <td>
                         <form onsubmit="return confirm('Voulez vous supprimer cet article ?')" action="<?= ROOT ?>admin/posts/delete/<?= $post->id ?>" method="POST">
-                            <input hidden="hidden" name="token" value="<?=$_SESSION['token'] ?>">
-                            <button  type="submit" name="deletePost" class="btn btn-warning">Supprimer</button>
+                            <input hidden="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+                            <button type="submit" name="deletePost" class="btn btn-warning">Supprimer</button>
                         </form>
                     </td>
                 </tr>

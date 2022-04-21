@@ -25,6 +25,7 @@ class Post extends Controller
             $post->created_at = $this->dateToString($post->created_at);
             $post->content = $this->getExtractContent($post->content);
         }
+        
         $data['limitPosts'] = $limitPosts;
         $data['nextLink'] = $paginatePosts->nextLink();
         $data['previousLink'] = $paginatePosts->previousLink();

@@ -27,7 +27,7 @@ class Login extends Controller
                 $data = $userManager->getUser($email, $_POST['password']);
                 if ($data && is_object($data[0])) {
                     $this->userToSession($data[0]);
-                    header("Location: home");
+                    header("Location: post");
                     return;
                 } else {
                     $_SESSION['error'] .= "Mot de passe ou email invalide <br>";

@@ -58,7 +58,6 @@ class Admin extends Controller
         $data['categories'] = $categories;
         $post = $this->postController->postModel->find($idPost);
         $data['post'] = $post[0];
-        extract($data);
         $this->view("admin/editPost", $data);
     }
 

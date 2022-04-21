@@ -48,7 +48,6 @@ class Profil extends Controller
         $user = $userModel->getAllDataUser($_SESSION['user']['idUser']);
         $data['profil'] = $user[0];
         $data['user'] = $_SESSION['user'];
-        extract($data);
         $this->view('updateProfil', $data);
     }
 }
