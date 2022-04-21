@@ -1,5 +1,6 @@
 <?php $this->view("inc/header", $data); ?>
 <h1 class="text-center">Les articles</h1>
+<a href="<?= ROOT ?>admin/posts/create" class="btn btn-primary">Ajouter un article</a>
 <div class="row justify-content-center">
     <table class="table">
         <thead>

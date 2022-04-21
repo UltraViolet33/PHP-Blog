@@ -35,12 +35,30 @@ class Admin extends Controller
         } elseif ($method == "update") {
             $this->updatePost($id);
             return;
+        } elseif ($method == "create") {
+            $this->createPost();
+            return;
         }
 
         $posts = $this->postController->getPaginatedPosts("admin/posts");
         $this->view("admin/posts", $posts);
     }
 
+    /**
+     * create a post
+     */
+    private function createPost()
+    {
+        if (!empty($_POST)) {
+            if (empty($_POST['name']) || empty($_POST['content'])) {
+                $_SESSION['error'] = "Veuillez renseigner les informations <br>";
+            } else {
+                $this->postController->insert($_POST['name'], $_POST['content']);
+                header("Location: " . ROOT . "admin/posts");
+            }
+        }
+        $this->view("admin/addPost");
+    }
     /**
      * delete one post
      */

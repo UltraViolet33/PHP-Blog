@@ -55,4 +55,15 @@ class PostModel extends Model
         $data['content'] = $content;
         $this->db->write($query, $data);
     }
+
+    /**
+     * insert a post
+     */
+    public function insertPost($name, $content)
+    {
+        $query = "INSERT INTO post (name, content, created_at) VALUES(:name, :content, NOW())";
+        $data['name'] = $name;
+        $data['content'] = $content;
+        $check = $this->db->write($query, $data);
+    }
 }

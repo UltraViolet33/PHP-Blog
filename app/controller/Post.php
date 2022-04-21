@@ -137,4 +137,12 @@ class Post extends Controller
     {
         $this->postModel->updatePost($id, $name, $content);
     }
+
+    /**
+     * insert a post
+     */
+    public function insert($name, $content)
+    {
+        $this->postModel->insertPost($name, $content);
+    }
 }
