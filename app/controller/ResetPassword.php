@@ -29,6 +29,8 @@ class ResetPassword extends Controller
                     $email = $_POST['user-resetEmail'];
                     $this->userModel->setResetPwd($token, $email);
                     $this->sendEmail($token, $email);
+                    header("Location:" . ROOT . "login");
+                    return;
                 } else {
                     $_SESSION['error'] .= "Email inconnu";
                 }
@@ -42,7 +44,7 @@ class ResetPassword extends Controller
      */
     private function sendEmail($token, $email)
     {
-        $link = 'http://blog.test/resetpassword/update?token=' . $token;
+        $link = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . '/resetpassword/update?token=' . $token;
         $to = $email;
         $subject = "Réinitialiser mot de passe";
         $message = '<h1>Réinitialisation de votre mot de passe</h1> <p>veuillez suivre ce lien : <a href="' . $link . '">Reset Password</a></p>';
@@ -54,7 +56,6 @@ class ResetPassword extends Controller
         $headers[] = "Mon site web <blog.test>";
 
         mail($to, $subject, $message, implode("\r\n", $headers));
-
         $result = "Mail envoyé";
         return $result;
     }
@@ -65,7 +66,6 @@ class ResetPassword extends Controller
     public function update()
     {
         $this->checkToken();
-
         if (isset($_POST['user-resetPwd'])) {
             $_SESSION['error'] = "";
             if (empty($_POST['user-resetPwd2']) || empty($_POST['user-resetPwd1'])) {
@@ -97,9 +97,9 @@ class ResetPassword extends Controller
         $dateReset = strtotime("+ 3 hours", strtotime(($dateReset)));
         $dateToday = time();
 
-        // if ($dateReset < $dateToday) {
-        //     header("Location:" . ROOT . "resetpassword");
-        //     die;
-        // }
+        if ($dateReset < $dateToday) {
+            header("Location:" . ROOT . "resetpassword");
+            die;
+        }
     }
 }

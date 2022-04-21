@@ -59,7 +59,6 @@ class User extends Model
         return $result[0]->password_reset_date;
     }
 
-
     /**
      * update the password in the bdd
      */
