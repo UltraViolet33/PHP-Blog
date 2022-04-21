@@ -47,4 +47,17 @@ class CategoryModel extends Model
         $categories = $this->db->read($query);
         return $categories;
     }
+
+
+
+    /**
+     * update category
+     */
+    Public function updateCategory($id, $name)
+    {
+        $query = "UPDATE category SET name = :name WHERE id = :id";
+        $data['id'] = $id;
+        $data['name'] = $name;
+        $this->db->write($query, $data);
+    }
 }

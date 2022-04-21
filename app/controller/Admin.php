@@ -87,6 +87,14 @@ class Admin extends Controller
      */
     private function updateCategory($id)
     {
+        if (!empty($_POST)) {
+            if (empty($_POST['name'])) {
+                $_SESSION['error'] = "Veuillez renseigner un nom pour la categorie <br>";
+            } else {
+                $this->categoryController->update($id, $_POST['name']);
+                header("Location: " . ROOT . "admin/categories");
+            }
+        }
         $category = $this->categoryController->getOneCategory($id);
         $data['category'] = $category[0];
         $this->view("admin/editCategory", $data);

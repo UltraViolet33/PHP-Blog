@@ -14,7 +14,7 @@
                     <label for="name" class="form-label">Titre : </label>
                     <input type="text" value="<?= validateData($category->name) ?>" name='name' class="form-control">
                 </div>
-                <input type="submit" class="btn btn-primary" name="editPost" value="Valider">
+                <input type="submit" class="btn btn-primary" name="editCategory" value="Valider">
             </form>
             <?= checkError() ?>
         </div>

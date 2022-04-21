@@ -66,4 +66,12 @@ class Category extends Controller
     {
         return $this->categoryModel->find($id);
     }
+
+    /**
+     * update category
+     */
+    public function update($id, $name)
+    {
+        return $this->categoryModel->updateCategory($id, $name);
+    }
 }
