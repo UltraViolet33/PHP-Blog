@@ -22,7 +22,9 @@ class Model
         return $result;
     }
 
-    /**  return a sql query (for pagination class) */
+    /**  
+     * return a sql query (for pagination class) 
+     */
     public function count()
     {
         $query = "SELECT COUNT(id) FROM $this->table";
@@ -48,13 +50,18 @@ class Model
         return $result[0][0];
     }
 
+    /**
+     * get limited items
+     */
     public function getLimitItems($limit, $offset)
     {
         $query = "SELECT * FROM $this->table LIMIT $limit OFFSET $offset";
         return $this->db->read($query);
     }
 
-
+    /**
+     * delete an item
+     */
     public function delete($id)
     {
         $query = "DELETE FROM $this->table WHERE id = :id";
@@ -62,6 +69,9 @@ class Model
         $this->db->write($query, $data);
     }
 
+    /**
+     * get all the items
+     */
     protected function getAllItems()
     {
         $query = "SELECT * FROM $this->table";

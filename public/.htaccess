@@ -11,3 +11,9 @@ RewriteRule .* - [E=REQUEST_SCHEME:http]
 
 RewriteCond %{HTTPS} on
 RewriteRule .* - [E=REQUEST_SCHEME:https]
+
+
+<Files .htaccess>
+order allow,deny
+deny from all
+</Files>

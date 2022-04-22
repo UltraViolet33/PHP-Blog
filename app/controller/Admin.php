@@ -28,6 +28,7 @@ class Admin extends Controller
             if ($_POST['token'] == $_SESSION['token']) {
                 $this->deletePost($id);
                 header("Location: " . ROOT . "admin/posts");
+                return;
             } else {
                 header("Location: " . ROOT . "login");
                 return;
@@ -55,6 +56,7 @@ class Admin extends Controller
             } else {
                 $this->postController->insert($_POST['name'], $_POST['content']);
                 header("Location: " . ROOT . "admin/posts");
+                return;
             }
         }
         $this->view("admin/addPost");
@@ -78,6 +80,7 @@ class Admin extends Controller
             } else {
                 $this->postController->update($idPost, $_POST['name'], $_POST['content']);
                 header("Location: " . ROOT . "admin/posts");
+                return;
             }
         }
         $post = $this->postController->postModel->find($idPost);
@@ -94,9 +97,10 @@ class Admin extends Controller
             if ($_POST['token'] == $_SESSION['token']) {
                 $this->deleteCategory($id);
                 header("Location: " . ROOT . "admin/categories");
+                return;
             } else {
-                header("Location: " . ROOT . "login") .
-                    die;
+                header("Location: " . ROOT . "login");
+                return;
             }
         } elseif ($method == "update") {
             $this->updateCategory($id);
@@ -120,6 +124,7 @@ class Admin extends Controller
             } else {
                 $this->categoryController->insert($_POST['name']);
                 header("Location: " . ROOT . "admin/categories");
+                return;
             }
         }
         $this->view("admin/addCategory");
@@ -136,6 +141,7 @@ class Admin extends Controller
             } else {
                 $this->categoryController->update($id, $_POST['name']);
                 header("Location: " . ROOT . "admin/categories");
+                return;
             }
         }
         $category = $this->categoryController->getOneCategory($id);

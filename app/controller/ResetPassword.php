@@ -74,6 +74,7 @@ class ResetPassword extends Controller
                 if ($_POST['user-resetPwd1'] === $_POST['user-resetPwd2']) {
                     $this->userModel->updatePassword($_POST['user-resetPwd1'], $_GET['token']);
                     header("Location:" . ROOT . "login");
+                    return;
                 } else {
                     $_SESSION['error'] .= "Les mots de passe ne correspondent pas </br>";
                 }
@@ -89,7 +90,7 @@ class ResetPassword extends Controller
     {
         if (empty($_GET['token'])) {
             header("Location:" . ROOT . " login");
-            die;
+            return;
         }
         $token = $_GET['token'];
         $token = (string) $token;
@@ -99,7 +100,7 @@ class ResetPassword extends Controller
 
         if ($dateReset < $dateToday) {
             header("Location:" . ROOT . "resetpassword");
-            die;
+            return;
         }
     }
 }

@@ -53,7 +53,7 @@ class Controller
     {
         if (empty($_SESSION['user']) || $_SESSION['user']['isAdmin'] != 1) {
             header("Location: " . ROOT . "login");
-            die;
+            return;
         }
     }
 }

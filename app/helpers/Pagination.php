@@ -54,12 +54,12 @@ class Pagination
         if (isset($_GET['page'])) {
             if (!filter_var($_GET['page'], FILTER_VALIDATE_INT)) {
                 header("Location: " . ROOT . "{$this->item}");
-                die;
+                return;
             }
 
             if ($_GET['page'] <= 1 || $_GET['page'] > $this->numberPages) {
                 header("Location: " . ROOT . "{$this->item}");
-                die;
+                return;
             }
             $this->currentPage = $_GET['page'];
         }
@@ -75,7 +75,7 @@ class Pagination
         $totalItems = $totalItems[0][0];
         if ($totalItems == 0) {
             header("Location: " . ROOT . "{$this->item}");
-            die;
+            return;
         }
         $this->numberPages = (int)ceil($totalItems / $this->perPage);
     }

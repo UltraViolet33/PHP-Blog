@@ -45,7 +45,7 @@ class User extends Model
         $query = "UPDATE user SET password_reset_date = NOW(), password_reset_token = :token WHERE email = :email";
         $data['token'] = $token;
         $data['email'] = $email;
-        $check =  $this->db->write($query, $data);
+        $this->db->write($query, $data);
     }
 
     /**
@@ -78,6 +78,6 @@ class User extends Model
         $data['username'] = $username;
         $data['email'] = $email;
         $data['id'] = $id;
-        $check = $this->db->write($query, $data);
+        $this->db->write($query, $data);
     }
 }

@@ -25,7 +25,7 @@ class Post extends Controller
             $post->created_at = $this->dateToString($post->created_at);
             $post->content = $this->getExtractContent($post->content);
         }
-        
+
         $data['limitPosts'] = $limitPosts;
         $data['nextLink'] = $paginatePosts->nextLink();
         $data['previousLink'] = $paginatePosts->previousLink();
@@ -40,6 +40,7 @@ class Post extends Controller
         $post = $this->postModel->find($id);
         if (!$post) {
             header("Location: " . ROOT . "post");
+            return;
         }
         $post[0]->created_at = $this->dateToString($post[0]->created_at);
         $data['post'] = $post[0];
@@ -55,12 +56,12 @@ class Post extends Controller
         $category = $categoryModel->find($id);
         if (!$category) {
             header("Location: " . ROOT . "category/index");
-            die;
+            return;
         }
         $posts = $this->postModel->getPostFromCategory($id);
         if (!$posts) {
             header("Location: " . ROOT . "category/index");
-            die;
+            return;
         }
 
         $queryCount = $this->postModel->countPostFronCat($id);

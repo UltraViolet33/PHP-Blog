@@ -12,7 +12,8 @@ class Profil extends Controller
     public function index()
     {
         if (!$this->checkLogin()) {
-            header("Location:login");
+            header("Location: " . ROOT . "login");
+            return;
         }
 
         $userModel = $this->loadModel('user');
@@ -29,7 +30,8 @@ class Profil extends Controller
     {
         $userModel = $this->loadModel('user');
         if (!$this->checkLogin()) {
-            header("Location:login");
+            header("Location: " . ROOT . "login");
+            return;
         }
 
         if (!empty($_POST)) {
@@ -38,7 +40,7 @@ class Profil extends Controller
                 $email = $_POST['email'];
                 $id = $_SESSION['user']['idUser'];
                 $userModel->updateUser($username, $email, $id);
-                header('Location: profil');
+                header("Location: " . ROOT . "profil");
                 return;
             } else {
                 $_SESSION['error'] = "Veuillez remplir tous les champs !<br>";
