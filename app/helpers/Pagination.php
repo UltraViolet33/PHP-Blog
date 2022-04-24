@@ -32,7 +32,12 @@ class Pagination
     public function getItems()
     {
         $offset = $this->getOffset();
-        $query = $this->queryItems . " LIMIT $this->perPage OFFSET $offset";
+        if ($this->item === "post" || $this->item === "admin/posts") {
+            $query = $this->queryItems . " ORDER BY created_at DESC LIMIT $this->perPage OFFSET $offset";
+        } else {
+            $query = $this->queryItems . " LIMIT $this->perPage OFFSET $offset";
+        }
+
         $items = $this->db->read($query);
         return $items;
     }
