@@ -71,7 +71,7 @@ class Pagination
      */
     private function getNumberPages()
     {
-        $totalItems =  $this->db->read($this->queryCount, [], null);
+        $totalItems =  $this->db->read($this->queryCount, [], PDO::FETCH_BOTH);
         $totalItems = $totalItems[0][0];
         if ($totalItems == 0) {
             header("Location: " . ROOT . "{$this->item}");

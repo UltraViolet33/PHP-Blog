@@ -1,5 +1,5 @@
 <?php $this->view("inc/header", $data); ?>
-<div class="d-flex flex-column justify-content-center h-100">
+<div class="d-flex flex-column justify-content-center h-100 my-5">
     <div class="row justify-content-center">
         <div class="col-12">
             <h1 class="text-center">
@@ -14,7 +14,7 @@
                     <label for="name" class="form-label">Titre : </label>
                     <input type="text" value="<?= validateData($post->name) ?>" name='name' class="form-control">
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <label for="content">Contenu : </label>
                     <textarea class="form-control" rows="10" name="content"><?= validateData($post->content) ?></textarea>
                 </div>
