@@ -51,15 +51,20 @@ class Admin extends Controller
     private function createPost()
     {
         if (!empty($_POST)) {
-            if (empty($_POST['name']) || empty($_POST['content'])) {
+
+            if (empty($_POST['name']) || empty($_POST['content']) || !isset($_POST['categories'])) {
                 $_SESSION['error'] = "Veuillez renseigner les informations <br>";
             } else {
-                $this->postController->insert($_POST['name'], $_POST['content']);
+                $this->postController->insert($_POST['name'], $_POST['content'], $_POST['categories']);
                 header("Location: " . ROOT . "admin/posts");
                 return;
             }
         }
-        $this->view("admin/addPost");
+
+        $allCategories = $this->categoryController->getAllCategories();
+        $data['allCategories'] = $allCategories;
+
+        $this->view("admin/addPost", $data);
     }
     /**
      * delete one post

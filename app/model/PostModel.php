@@ -48,11 +48,23 @@ class PostModel extends Model
     /**
      * insert a post
      */
-    public function insertPost($name, $content)
+    public function insertPost($name, $content, $categories)
     {
+        $idPost = [];
         $query = "INSERT INTO post (name, content, created_at) VALUES(:name, :content, NOW())";
         $data['name'] = $name;
         $data['content'] = $content;
         $this->db->write($query, $data);
+        $idPost = $this->db->getLastInsertId();
+
+        $data = [];
+
+        $queryPostCategories = "INSERT INTO post_category (post_id, category_id) VALUES (:post_id, :category_id)";
+        $data['post_id']  = $idPost;
+        for ($i = 0; $i < count($categories); $i++) {
+            $data['category_id'] = $categories[$i];
+            $this->db->write($queryPostCategories, $data);
+            $data['category_id'] = null;
+        }
     }
 }

@@ -142,8 +142,17 @@ class Post extends Controller
     /**
      * insert a post
      */
-    public function insert($name, $content)
+    public function insert($name, $content, $categories)
     {
-        $this->postModel->insertPost($name, $content);
+        $this->postModel->insertPost($name, $content, $categories);
+    }
+
+    /**
+     * 404 not found
+     */
+    public function notFound()
+    {
+        http_response_code(404);
+        $this->view("404");
     }
 }

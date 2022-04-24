@@ -20,7 +20,8 @@ class App
             $this->controller = ($url[0]);
             unset($url[0]);
         } else {
-            $this->controller = "Page404";
+            $this->controller = "post";
+            $this->method = "notFound";
         }
 
         require("../app/controller/" . $this->controller . ".php");
