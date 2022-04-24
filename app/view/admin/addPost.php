@@ -14,6 +14,14 @@
                     <label for="name" class="form-label">Titre : </label>
                     <input type="text" value="<?= isset($_POST['name']) ? $_POST['name'] : ""; ?>" name='name' class="form-control">
                 </div>
+                <div class="mb-3">
+                    <label for="categories[]">Catégorie(s)</label>
+                    <select class="form-select" name="categories[]" multiple="multiple">
+                        <?php foreach($allCategories as $category): ?>
+                            <option value="<?= $category->id ?>"><?= $category->name ?></option>
+                            <?php endforeach; ?>
+                    </select>
+                </div>
                 <div class="form-group mb-3">
                     <label for="content">Contenu : </label>
                     <textarea class="form-control" rows="10" name="content"><?= isset($_POST['content']) ? $_POST['content'] : ""; ?></textarea>
