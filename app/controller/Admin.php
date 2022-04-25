@@ -88,7 +88,24 @@ class Admin extends Controller
                 return;
             }
         }
+        $categories = $this->categoryController->getCategoriesPost($idPost);
+
+        $data['categories'] = $categories;
         $post = $this->postController->postModel->find($idPost);
+
+        $allCategories = $this->categoryController->getAllCategories();
+
+        foreach ($allCategories as $category) {
+            foreach ($categories as $categoryPost) {
+                if ($category->id == $categoryPost->id) {
+                    $category->post = 1;
+                    break;
+                } else {
+                    $category->post = 0;
+                }
+            }
+        }
+        $data['allCategories'] = $allCategories;
         $data['post'] = $post[0];
         $this->view("admin/editPost", $data);
     }

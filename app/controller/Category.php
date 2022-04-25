@@ -82,4 +82,9 @@ class Category extends Controller
     {
         return $this->categoryModel->insertCategory($name);
     }
+
+    public function getCategoriesPost($idPost)
+    {
+        return $this->categoryModel->getCategoriesFromPost($idPost);
+    }
 }
