@@ -1,6 +1,6 @@
 <?php
 
-include "../vendor/autoload.php";
+// include "../vendor/autoload.php";
 include "../app/core/config.php";
 include "../app/core/functions.php";
 include "../app/core/Controller.php";

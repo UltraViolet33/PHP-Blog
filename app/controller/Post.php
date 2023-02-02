@@ -1,20 +1,19 @@
 <?php
 
-require_once('../app/core/Controller.php');
-require_once('../app/helpers/Pagination.php');
+require_once "../app/core/Controller.php";
+require_once "../app/helpers/Pagination.php";
 
 class Post extends Controller
 {
+    private $postModel;
 
     public function __construct()
     {
         $this->postModel = $this->loadModel("PostModel");
     }
 
-    /**
-     * display post index page
-     */
-    public function index()
+
+    public function index(): void
     {
         $queryCount = $this->postModel->count();
         $queryItems = $this->postModel->limitItems();
@@ -31,6 +30,7 @@ class Post extends Controller
         $data['previousLink'] = $paginatePosts->previousLink();
         $this->view("posts/index", $data);
     }
+
 
     /**
      * display details page for post
