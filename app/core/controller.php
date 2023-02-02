@@ -2,12 +2,8 @@
 
 class Controller
 {
-    /**
-     * view
-     * load a view file
-     * @return void
-     */
-    public function view($path, $data = [])
+
+    public function view(string $path, array $data = []): void
     {
         extract($data);
 
@@ -18,12 +14,8 @@ class Controller
         }
     }
 
-    /**
-     * loadModel
-     * load a model file
-     * @return object
-     */
-    public function loadModel($model)
+
+    public function loadModel(string $model): object|bool
     {
         if (file_exists("../app/model/" .  strtolower($model) . ".php")) {
             include "../app/model/" . strtolower($model) . ".php";
@@ -32,7 +24,8 @@ class Controller
         return false;
     }
 
-    public function loadController($controller)
+
+    public function loadController(string $controller): object|bool
     {
         if (file_exists("../app/controller/" .  strtolower($controller) . ".php")) {
             include "../app/controller/" . strtolower($controller) . ".php";
@@ -41,15 +34,14 @@ class Controller
         return false;
     }
 
-    public function checkLogin()
+
+    public function checkLogin(): bool
     {
-        if (!empty($_SESSION['user'])) {
-            return true;
-        }
-        return false;
+        return !empty($_SESSION['user']);
     }
 
-    public function checkAdminLogin()
+
+    public function checkAdminLogin(): void
     {
         if (empty($_SESSION['user']) || $_SESSION['user']['isAdmin'] != 1) {
             header("Location: " . ROOT . "login");

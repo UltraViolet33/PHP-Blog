@@ -1,6 +1,6 @@
 <?php
 
-define("WEBSITE_TITLE", "");
+// define("WEBSITE_TITLE", "");
 
 //database
 define("DB_NAME", "blog");

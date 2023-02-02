@@ -2,9 +2,10 @@
 
 class App
 {
+
     protected $controller = "post";
     protected $method = "index";
-    protected $params;
+    protected array $params;
 
     /**
      * __construct
@@ -24,7 +25,8 @@ class App
             $this->method = "notFound";
         }
 
-        require("../app/controller/" . $this->controller . ".php");
+        require_once "../app/controller/" . $this->controller . ".php";
+
         $this->controller = new $this->controller;
 
         if (isset($url[1])) {
@@ -43,7 +45,7 @@ class App
      * parseURL
      * @return array
      */
-    private function parseURL()
+    private function parseURL(): array
     {
         $url = isset($_GET['url']) ? $_GET['url'] : "post";
         return explode("/", filter_var(trim($url, "/"), FILTER_SANITIZE_URL));
