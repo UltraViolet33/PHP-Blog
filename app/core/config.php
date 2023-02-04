@@ -1,11 +1,11 @@
 <?php
 
-define("WEBSITE_TITLE", "");
+// define("WEBSITE_TITLE", "");
 
 //database
 define("DB_NAME", "blog");
 define("DB_USER", "root");
-define("DB_PASS", "root");
+define("DB_PASS", "");
 define("DB_TYPE", 'mysql');
 define("DB_HOST", "localhost");
 

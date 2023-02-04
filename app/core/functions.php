@@ -1,23 +1,15 @@
 <?php
 
-/**
- * show
- * show the data in a readable format
- * @return void
- */
-function show($data)
+
+function show(mixed $data): void
 {
     echo "<pre>";
     print_r($data);
     echo "</pre>";
 }
 
-/**
- * checkError
- * check if there is an error and display it
- * @return void
- */
-function checkError()
+
+function checkError(): void
 {
     $msgError = "";
     if (isset($_SESSION['error']) && $_SESSION['error'] != "") {
@@ -29,13 +21,8 @@ function checkError()
     echo $msgError;
 }
 
-/**
- * validateData
- * validate $date before insert into the BDD
- * @param  mixed $data
- * @return mixed
- */
-function validateData($data)
+
+function validateData(mixed $data): mixed
 {
     $data = trim($data);
     $data = htmlspecialchars($data);

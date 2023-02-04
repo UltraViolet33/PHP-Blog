@@ -2,19 +2,21 @@
 
 class Database
 {
-  private $PDOInstance = null;
 
+  private $PDOInstance = null;
   private static $instance = null;
 
   private function __construct()
   {
     $string = DB_TYPE . ":host=" . DB_HOST . ";dbname=" . DB_NAME;
-    $this->PDOInstance  = new PDO($string, DB_USER, DB_PASS);
+    $this->PDOInstance  = new PDO($string, DB_USER, DB_PASS, [
+      PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+    ]);
   }
 
+
   /**
-   * Crée et retourne l'objet SPDO
-   * @return SPDO $instance
+   * get the pdo instance
    */
   public static function getInstance()
   {
@@ -24,18 +26,21 @@ class Database
     return self::$instance;
   }
 
+  public static function getNewInstance()
+  {
+    return new Database();
+  }
+
   /**
-   * read
    * read on the BDD
-   * @return array
    */
-  public function read($query, $data = array())
+  public function read($query, $data = array(), $method = PDO::FETCH_OBJ)
   {
     $statement = $this->PDOInstance->prepare($query);
     $result = $statement->execute($data);
 
     if ($result) {
-      $data = $statement->fetchAll(PDO::FETCH_OBJ);
+      $data = $statement->fetchAll($method);
       if (is_array($data) && count($data) > 0) {
         return $data;
       }
@@ -44,15 +49,12 @@ class Database
   }
 
   /**
-   * write
    * write on the BDD
-   * @return bool
    */
   public function write($query, $data = array())
   {
     $statement = $this->PDOInstance->prepare($query);
     $result = $statement->execute($data);
-
     if ($result) {
       return true;
     }
@@ -60,9 +62,7 @@ class Database
   }
 
   /**
-   * getLastInsertId
    * return the last id inserted
-   * @return void
    */
   public function getLastInsertId()
   {

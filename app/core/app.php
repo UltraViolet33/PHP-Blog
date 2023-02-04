@@ -2,9 +2,10 @@
 
 class App
 {
-    protected $controller = "home";
+
+    protected $controller = "post";
     protected $method = "index";
-    protected $params;
+    protected array $params;
 
     /**
      * __construct
@@ -16,15 +17,16 @@ class App
         $url = $this->parseURL();
 
         //check if the file exists
-    
         if (file_exists("../app/controller/" . strtolower($url[0]) . ".php")) {
             $this->controller = ($url[0]);
             unset($url[0]);
         } else {
-            $this->controller = "Page404";
+            $this->controller = "post";
+            $this->method = "notFound";
         }
 
-        require("../app/controller/" . $this->controller . ".php");
+        require_once "../app/controller/" . $this->controller . ".php";
+
         $this->controller = new $this->controller;
 
         if (isset($url[1])) {
@@ -35,7 +37,7 @@ class App
             }
         }
 
-        $this->params = (count($url) > 0) ? $url : ["home"];
+        $this->params = (count($url) > 0) ? $url : ["post"];
         call_user_func_array([$this->controller, $this->method], $this->params);
     }
 
@@ -43,9 +45,9 @@ class App
      * parseURL
      * @return array
      */
-    private function parseURL()
+    private function parseURL(): array
     {
-        $url = isset($_GET['url']) ? $_GET['url'] : "home";
+        $url = isset($_GET['url']) ? $_GET['url'] : "post";
         return explode("/", filter_var(trim($url, "/"), FILTER_SANITIZE_URL));
     }
 }
