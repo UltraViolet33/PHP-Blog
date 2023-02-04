@@ -5,7 +5,7 @@
             <h1 class="text-center">Profil : <?= $data['profil']["username"]  ?></h1>
             <p>Nom : <?= $data['profil']["username"] ?></p>
             <p>Email: <?= $data['profil']["email"] ?></p>
-            <a href="<?= ROOT ?>profil/update" class="btn btn-primary">Modifier</a>
+            <a href="<?= ROOT ?>user/update" class="btn btn-primary">Modifier</a>
         </div>
     </div>
 </div>
