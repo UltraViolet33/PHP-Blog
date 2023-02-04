@@ -62,6 +62,14 @@ class Database implements DatabaseInterface
     return [];
   }
 
+  public function readSingleRow(string $query, array $data): array
+  {
+    $statement = $this->PDOInstance->prepare($query);
+    $statement->execute($data);
+    $data = $statement->fetch(PDO::FETCH_ASSOC);
+    return $data ? $data : [];
+  }
+
 
   /**
    * readOneRow

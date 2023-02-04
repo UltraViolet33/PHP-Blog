@@ -2,6 +2,7 @@
 
 namespace App\core;
 
+use App\helpers\Session;
 use App\models\Table;
 
 abstract class Controller
@@ -74,26 +75,25 @@ abstract class Controller
         $errors = "";
         $htmlError = "";
 
-        if (isset($_SESSION['error']) && is_array($_SESSION['error'])) {
-            foreach ($_SESSION['error'] as $nameError => $error) {
-                foreach ($error as $msgError) {
-                    $errors .= "$msgError<br>";
-                }
+        $errors = Session::get("error");
+
+        if (!$errors) {
+            die;
+        }
+
+        if (is_array($errors)) {
+            foreach ($errors as $error) {
+                $htmlError .= "$error[0]<br>";
             }
-
-            
+        } else {
+            $htmlError = $errors;
         }
 
-        if (isset($_SESSION["error"]) && !is_array($_SESSION["error"])) {
-            $errors = $_SESSION["error"];
-        }
+        echo  '<div class="bg-danger p-3">
+                    <span style="font-size:24px" >' . $htmlError . '</span>
+                </div>';
 
-        $htmlError .= '<div class="bg-danger p-3">
-        <span style="font-size:24px" >' . $errors . '</span>
-    </div>';
-
-        unset($_SESSION['error']);
-        echo $htmlError;
+        Session::unsetKey("error");
     }
 
 

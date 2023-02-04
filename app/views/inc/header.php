@@ -1,3 +1,6 @@
+<?php
+
+use App\helpers\Session; ?>
 <!DOCTYPE html>
 <html lang="fr" class="">
 
@@ -26,11 +29,12 @@
                         <a href="<?= ROOT ?>category" class="nav-link text-white">Categories</a>
                     </li>
                     <?php if (isset($_SESSION['user'])) : ?>
+
                         <li class="nav-item">
-                            <a href="<?= ROOT ?>profil" class="nav-link text-white"><?= $_SESSION['user']['userName'] ?></a>
+                            <a href="<?= ROOT ?>profil" class="nav-link text-white"><?= Session::get("user")["username"] ?></a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?= ROOT ?>logout" onclick="return confirm()" class="nav-link text-white">Se déconnecter</a>
+                            <a href="<?= ROOT ?>user/logout" onclick="return confirm()" class="nav-link text-white">Se déconnecter</a>
                         </li>
                         <?php if ($_SESSION['user']['isAdmin'] == 1) : ?>
                             <li class="nav-item">

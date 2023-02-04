@@ -16,7 +16,7 @@ class User extends Table
     public function selectUser(array $data): array
     {
         $sql = "SELECT id, username, email, isAdmin FROM user WHERE email = :email AND password = :password limit 1";
-        $user =  $this->db->read($sql, $data);
+        $user =  $this->db->readSingleRow($sql, $data);
         return $user;
     }
 

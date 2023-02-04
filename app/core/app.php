@@ -35,7 +35,7 @@ class App
      */
     private function parseURL(): array
     {
-        $url = isset($_GET['url']) ? $_GET['url'] : "book";
+        $url = isset($_GET['url']) ? $_GET['url'] : "post";
         return explode("/", filter_var(trim($url, "/"), FILTER_SANITIZE_URL));
     }
 

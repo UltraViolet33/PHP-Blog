@@ -7,6 +7,6 @@ class Logout
     public function index()
     {
         unset($_SESSION['user']);
-        header('Location: post');
+        header('Location: /post');
     }
 }

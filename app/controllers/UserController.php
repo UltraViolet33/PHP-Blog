@@ -24,12 +24,20 @@ class UserController extends Controller
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if ($this->checkUserLoginData()) {
                 http_response_code(200);
-                header("Location: /posts");
+                header("Location: /post");
                 return;
             }
         }
 
         $this->view("login");
+    }
+
+
+    public function logout(): void
+    {
+        Session::unsetKey("user");
+        header("Location: /post");
+        return;
     }
 
 
