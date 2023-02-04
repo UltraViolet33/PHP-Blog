@@ -1,10 +1,14 @@
 <?php
 
-require_once('../app/model/model.php');
-
-class PostModel extends Model
+namespace App\models;
+// require_once('../app/model/model.php');
+use App\models\Table;
+class Post extends Table
 {
-    protected $table = "post";
+    // protected $table = "post";
+
+    protected string $table = "posts";
+    protected string $id = "id";
 
     /**
      * get posts from the BDD

@@ -1,33 +1,37 @@
 <?php
 
-require_once "../app/core/Controller.php";
-require_once "../app/helpers/Pagination.php";
+namespace App\controllers;
 
-class Post extends Controller
+use App\core\Controller;
+use App\models\Post;
+
+class PostController extends Controller
 {
     private $postModel;
 
     public function __construct()
     {
-        $this->postModel = $this->loadModel("PostModel");
+        // $this->postModel = $this->loadModel("PostModel");
+        $this->model = new Post();
     }
 
 
     public function index(): void
     {
-        $queryCount = $this->postModel->count();
-        $queryItems = $this->postModel->limitItems();
-        $paginatePosts = new Pagination($queryCount, $queryItems, 12, "post");
-        $limitPosts = $paginatePosts->getItems();
+        // $queryCount = $this->postModel->count();
+        // $queryItems = $this->postModel->limitItems();
+        // $paginatePosts = new Pagination($queryCount, $queryItems, 12, "post");
+        // $limitPosts = $paginatePosts->getItems();
 
-        foreach ($limitPosts as $post) {
-            $post->created_at = $this->dateToString($post->created_at);
-            $post->content = $this->getExtractContent($post->content);
-        }
+        // foreach ($limitPosts as $post) {
+        //     $post->created_at = $this->dateToString($post->created_at);
+        //     $post->content = $this->getExtractContent($post->content);
+        // }
 
-        $data['limitPosts'] = $limitPosts;
-        $data['nextLink'] = $paginatePosts->nextLink();
-        $data['previousLink'] = $paginatePosts->previousLink();
+        // $data['limitPosts'] = $limitPosts;
+        // $data['nextLink'] = $paginatePosts->nextLink();
+        // $data['previousLink'] = $paginatePosts->previousLink();
+        $data = [];
         $this->view("posts/index", $data);
     }
 
@@ -126,10 +130,19 @@ class Post extends Controller
     /**
      * delete one post
      */
-    public function delete($id)
+    // public function delete2($id)
+    // {
+    //     $this->postModel->delete($id);
+    // }
+
+      /**
+     * delete one post
+     */
+    public function delete(): void
     {
-        $this->postModel->delete($id);
+        // $this->postModel->delete($id);
     }
+
 
     /**
      * update post
@@ -155,4 +168,16 @@ class Post extends Controller
         http_response_code(404);
         $this->view("404");
     }
+
+    public function add(): void
+    {
+
+    }
+
+    public function edit(int $id): void
+    {
+
+    }
+
+    
 }

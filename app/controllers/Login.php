@@ -1,12 +1,10 @@
 <?php
 
-require_once('../app/core/controller.php');
+require_once '../app/core/controller.php';
 
 class Login extends Controller
 {
-    /**
-     * check the login form
-     */
+
     public function index()
     {
         $_SESSION['error'] = "";
