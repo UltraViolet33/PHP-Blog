@@ -62,8 +62,10 @@ class UserController extends Controller
 
     private function checkEmailAndPasswordForLogin(): bool
     {
-        $loginData = ["email" => $_POST["email"], 
-                    "password" => hash('sha1', $_POST["password"])];
+        $loginData = [
+            "email" => $_POST["email"],
+            "password" => hash('sha1', $_POST["password"])
+        ];
 
         $user = $this->model->selectUser($loginData);
         if (count($user) > 0) {
@@ -85,6 +87,19 @@ class UserController extends Controller
 
     public function index(): void
     {
+        $this->isUserLoggedIn();
+        $user = Session::get("user");
+        $data["profil"] =  $this->model->find($user["id"]);
+        $this->view("profil", $data);
+    }
+
+    public function isUserLoggedIn(): void
+    {
+        if (!Session::get("user")) {
+            header("Location: /user/login");
+            http_response_code(401);
+            return;
+        }
     }
 
     public function add(): void

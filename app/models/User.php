@@ -7,7 +7,7 @@ class User extends Table
 {
     // protected $table = "post";
 
-    protected string $table = "users";
+    protected string $table = "user";
     protected string $id = "id";
 
     /**
@@ -20,13 +20,21 @@ class User extends Table
         return $user;
     }
 
+
+    public function find(int $id): array 
+    {
+        $sql = "SELECT id, username, email, isAdmin FROM user WHERE id = :id limit 1";
+        $user =  $this->db->readSingleRow($sql, ["id" => $id]);
+        return $user;
+    }
+
     /**
      * find a user in  the bdd
      */
-    public function getAllDataUser($idUser)
-    {
-        return $this->find($idUser);
-    }
+    // public function getAllDataUser(int $id): array
+    // {
+    //     return $this->find($id);
+    // }
 
     /**
      * check if a email exists in the bdd

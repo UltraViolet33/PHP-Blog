@@ -31,7 +31,7 @@ use App\helpers\Session; ?>
                     <?php if (isset($_SESSION['user'])) : ?>
 
                         <li class="nav-item">
-                            <a href="<?= ROOT ?>profil" class="nav-link text-white"><?= Session::get("user")["username"] ?></a>
+                            <a href="<?= ROOT ?>user" class="nav-link text-white"><?= Session::get("user")["username"] ?></a>
                         </li>
                         <li class="nav-item">
                             <a href="<?= ROOT ?>user/logout" onclick="return confirm()" class="nav-link text-white">Se déconnecter</a>

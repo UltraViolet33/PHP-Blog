@@ -35,9 +35,15 @@ class Table
      * @param int $id
      * @return stdClass
      */
-    protected function selectOneItem(int $id): stdClass
+    // protected function selectOneItem(int $id): stdClass
+    // {
+    //     $query = "SELECT * FROM $this->table WHERE $this->id = :id";
+    //     return $this->db->readOneRow($query, ['id' => $id]);
+    // }
+
+    protected function find(int $id): array
     {
         $query = "SELECT * FROM $this->table WHERE $this->id = :id";
-        return $this->db->readOneRow($query, ['id' => $id]);
+        return $this->db->readSingleRow($query, ["id" => $id]);
     }
 }
