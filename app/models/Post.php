@@ -1,8 +1,9 @@
 <?php
 
 namespace App\models;
-// require_once('../app/model/model.php');
 use App\models\Table;
+
+
 class Post extends Table
 {
     // protected $table = "post";

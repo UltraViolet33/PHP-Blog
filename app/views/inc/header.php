@@ -42,7 +42,7 @@
                         <?php endif ?>
                     <?php else : ?>
                         <li class="nav-item">
-                            <a href="<?= ROOT ?>login" class="nav-link text-white">Se connecter</a>
+                            <a href="<?= ROOT ?>user/login" class="nav-link text-white">Se connecter</a>
                         </li>
                     <?php endif ?>
                 </ul>

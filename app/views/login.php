@@ -12,7 +12,7 @@
             <form method="POST">
                 <div class="mb-3">
                     <label for="email" class="form-label">Email : </label>
-                    <input type="email" value="<?= isset($_POST['email']) ? validateData($_POST['email']) : ""; ?>" name='email' class="form-control">
+                    <input type="email" value="<?= isset($_POST['email']) ? $this->validateData($_POST['email']) : ""; ?>" name='email' class="form-control">
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Mot de passe : </label>
@@ -20,7 +20,7 @@
                 </div>
                 <input type="submit" class="btn btn-primary" name="login" value="Valider">
             </form>
-            <?= checkError() ?>
+            <?=$this->checkError() ?>
         </div>
         <a href="<?= ROOT ?>resetpassword" class="text-center">Mot de passe oublié ?</a>
     </div>

@@ -1,19 +1,21 @@
 <?php
 
-require_once('../app/model/model.php');
+namespace App\models;
+use App\models\Table;
 
-class User extends Model
+class User extends Table
 {
-    protected $table = "user";
+    // protected $table = "post";
+
+    protected string $table = "users";
+    protected string $id = "id";
 
     /**
      * get the user data to check the login from
      */
-    public function getUser($email, $password)
+    public function selectUser(array $data): array
     {
-        $data['email'] = $email;
-        $data['password'] = hash('sha1', $password);
-        $sql = "SELECT * FROM user WHERE email = :email AND password = :password limit 1";
+        $sql = "SELECT id, username, email, isAdmin FROM user WHERE email = :email AND password = :password limit 1";
         $user =  $this->db->read($sql, $data);
         return $user;
     }

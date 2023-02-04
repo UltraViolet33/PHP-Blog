@@ -7,26 +7,26 @@ use App\models\Table;
 abstract class Controller
 {
     const VIEW_PATH  = ROOT_PATH . "app" . DIRECTORY_SEPARATOR . "views";
-    
-    protected Table $model;
-    
-    
+
+    // protected $model;
+
+
     /**
      * index
      *
      * @return void
      */
     abstract public function index(): void;
-    
-    
+
+
     /**
      * add
      *
      * @return void
      */
     abstract public function add(): void;
-    
-    
+
+
     /**
      * edit
      *
@@ -35,7 +35,7 @@ abstract class Controller
      */
     abstract public function edit(int $id): void;
 
-    
+
     /**
      * delete
      *
@@ -58,7 +58,6 @@ abstract class Controller
         if (file_exists(Controller::VIEW_PATH . DIRECTORY_SEPARATOR . $path . ".php")) {
 
             include Controller::VIEW_PATH . DIRECTORY_SEPARATOR . $path . ".php";
-
         } else {
             include Controller::VIEW_PATH . DIRECTORY_SEPARATOR . "404.php";
         }
@@ -82,10 +81,16 @@ abstract class Controller
                 }
             }
 
-            $htmlError .= '<div class="bg-danger p-3">
-                                <span style="font-size:24px" >' . $errors . '</span>
-                            </div>';
+            
         }
+
+        if (isset($_SESSION["error"]) && !is_array($_SESSION["error"])) {
+            $errors = $_SESSION["error"];
+        }
+
+        $htmlError .= '<div class="bg-danger p-3">
+        <span style="font-size:24px" >' . $errors . '</span>
+    </div>';
 
         unset($_SESSION['error']);
         echo $htmlError;

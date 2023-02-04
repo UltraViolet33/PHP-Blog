@@ -1,8 +1,10 @@
 <?php
 
-require_once '../app/core/controller.php';
+namespace App\controllers;
 
-class Login extends Controller
+use App\models\Post;
+
+class LoginController
 {
 
     public function index()
