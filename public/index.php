@@ -17,6 +17,8 @@ define('ROOT_PATH', $rootPath);
 define("ROOT", $path);
 define("ASSETS", $path . "assets/");
 
+
+
 // include "../app/init.php";
 // define("ROOT", $path);
 // define("ASSETS", $path . "assets/");

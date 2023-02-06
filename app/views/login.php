@@ -16,11 +16,15 @@
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Mot de passe : </label>
-                    <input type="password" name='password' class="form-control">
+                    <input type="password" name='password' class="form-control" id="password">
+                </div>
+                <div class="mb-3">
+                    <input class="form-check-input" type="checkbox" id="toggle-password">
+                    <label class="form-label">Show password</label>
                 </div>
                 <input type="submit" class="btn btn-primary" name="login" value="Valider">
             </form>
-            <?=$this->checkError() ?>
+            <?= $this->checkError() ?>
         </div>
         <a href="<?= ROOT ?>resetpassword" class="text-center">Mot de passe oublié ?</a>
     </div>

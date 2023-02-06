@@ -78,7 +78,7 @@ abstract class Controller
         $errors = Session::get("error");
 
         if (!$errors) {
-            die;
+            return;
         }
 
         if (is_array($errors)) {
