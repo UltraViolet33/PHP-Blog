@@ -1,18 +1,16 @@
 <?php
 
 namespace App\models;
+
 use App\models\Table;
 
 class User extends Table
 {
-    // protected $table = "post";
 
     protected string $table = "user";
     protected string $id = "id";
 
-    /**
-     * get the user data to check the login from
-     */
+
     public function selectUser(array $data): array
     {
         $sql = "SELECT id, username, email, isAdmin FROM user WHERE email = :email AND password = :password limit 1";
@@ -21,35 +19,21 @@ class User extends Table
     }
 
 
-    public function find(int $id): array 
+    public function find(int $id): array
     {
         $sql = "SELECT id, username, email, isAdmin FROM user WHERE id = :id limit 1";
         $user =  $this->db->readSingleRow($sql, ["id" => $id]);
         return $user;
     }
 
-    /**
-     * find a user in  the bdd
-     */
-    // public function getAllDataUser(int $id): array
-    // {
-    //     return $this->find($id);
-    // }
 
-    /**
-     * check if a email exists in the bdd
-     */
-    public function checkEmailExist($email)
+    public function checkIfEmailExists(array $data)
     {
-        $query = "SELECT COUNT(id) FROM user WHERE email = :email";
-        $data['email'] = $email;
-        $result =  $this->db->read($query, $data, PDO::FETCH_NUM);
-        return $result[0];
+        $query = "SELECT * FROM user WHERE email = :email AND id != :id";
+        return $this->db->read($query, $data);
     }
 
-    /**
-     * update password token and date token to reset pwd
-     */
+
     public function setResetPwd($token, $email)
     {
         $query = "UPDATE user SET password_reset_date = NOW(), password_reset_token = :token WHERE email = :email";
@@ -58,9 +42,7 @@ class User extends Table
         $this->db->write($query, $data);
     }
 
-    /**
-     * get the date reset token
-     */
+
     public function getDateReset($token)
     {
         $query = "SELECT password_reset_date FROM user WHERE password_reset_token = '$token'";
@@ -82,12 +64,9 @@ class User extends Table
         return $result;
     }
 
-    public function updateUser($username, $email, $id)
+    public function update(array $data): bool
     {
         $query = "UPDATE user SET username = :username, email = :email WHERE id = :id";
-        $data['username'] = $username;
-        $data['email'] = $email;
-        $data['id'] = $id;
-        $this->db->write($query, $data);
+        return $this->db->write($query, $data);
     }
 }

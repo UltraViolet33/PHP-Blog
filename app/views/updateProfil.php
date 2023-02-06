@@ -9,18 +9,18 @@
     </div>
     <div class="row justify-content-center align-items-center">
         <div class="col-6">
-            <form action="" method="POST">
+            <form method="POST">
                 <div class="mb-3">
                     <label for="username" class="form-label">Nom utilisateur : </label>
-                    <input type="text" value="<?= validateData($profil->username) ?>" name='username' class="form-control">
+                    <input type="text" value="<?= $this->validateData($profil["username"]) ?>" name='username' class="form-control">
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email : </label>
-                    <input type="email" value="<?= $profil->email ?>" name='email' class="form-control">
+                    <input type="email" value="<?= $this->validateData($profil["email"]) ?>" name='email' class="form-control">
                 </div>
                 <input type="submit" class="btn btn-primary" name="updateProfil" value="Valider">
             </form>
-            <?= checkError() ?>
+            <?= $this->checkError() ?>
         </div>
     </div>
 </div>

@@ -108,6 +108,42 @@ class UserController extends Controller
 
     public function edit(int $id): void
     {
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            if ($this->checkEditUserData()) {
+                if (!$this->model->checkIfEmailExists(["id" => $id, "email" => $_POST["email"]])) {
+                    $data = ["id" => $id, "email" => $_POST["email"], "username" => $_POST["username"]];
+                    $this->model->update($data);
+                    http_response_code(200);
+                    header("Location: user/profil");
+                    return;
+                }
+                Session::set("error", "email already exists");
+            }
+        }
+
+        $this->isUserLoggedIn();
+        $user = Session::get("user");
+        $data["profil"] =  $this->model->find($user["id"]);
+        $this->view("updateProfil", $data);
+    }
+
+
+    private function checkEditUserData(): bool
+    {
+        $data = ["username", "email"];
+        if (!$this->checkDataForm($data)) {
+            Session::set("error", $this->v->errors());
+            return false;
+        }
+
+        $this->v->rule("email", "email");
+
+        if (!$this->v->validate()) {
+            Session::set("error", $this->v->errors());
+            return false;
+        }
+
+        return true;
     }
 
     public function delete(): void
