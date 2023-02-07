@@ -114,7 +114,7 @@ class UserController extends Controller
                     $data = ["id" => $id, "email" => $_POST["email"], "username" => $_POST["username"]];
                     $this->model->update($data);
                     http_response_code(200);
-                    header("Location: user/profil");
+                    header("Location: /user/profil");
                     return;
                 }
                 Session::set("error", "email already exists");
