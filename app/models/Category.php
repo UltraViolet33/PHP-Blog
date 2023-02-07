@@ -1,12 +1,15 @@
 <?php
 
-require_once('../app/model/model.php');
+namespace App\models;
+use App\models\Table;
 
-class CategoryModel extends Model
+class Category extends Table
 {
 
-    protected $table = "category";
 
+    protected string $table = "category";
+
+    
     /**
      * get the categories for a post
      */

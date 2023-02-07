@@ -52,11 +52,11 @@ class Database implements DatabaseInterface
     return [];
   }
 
-  public function readSingleRow(string $query, array $data = []): array
+  public function readSingleRow(string $query, array $data = [], int $method = PDO::FETCH_ASSOC): array
   {
     $statement = $this->PDOInstance->prepare($query);
     $statement->execute($data);
-    $data = $statement->fetch(PDO::FETCH_ASSOC);
+    $data = $statement->fetch($method);
     return $data ? $data : [];
   }
 

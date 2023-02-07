@@ -46,4 +46,16 @@ class Table
         $query = "SELECT * FROM $this->table WHERE $this->id = :id";
         return $this->db->readSingleRow($query, ["id" => $id]);
     }
+
+    
+    public function getQueryCount(): string
+    {
+        return "SELECT COUNT(id) FROM $this->table";
+    }
+
+
+    public function getQueryEverything(): string
+    {
+        return "SELECT * FROM $this->table";
+    }
 }

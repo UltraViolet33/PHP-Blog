@@ -1,11 +1,11 @@
 <?php $this->view("inc/header", $data); ?>
 <h1>Categories</h1>
 <div class="row">
-    <?php foreach ($data['limitCategories'] as $category) : ?>
+    <?php foreach ($categories as $category) : ?>
         <div class="col-8 col-md-5  col-lg-4 col-xl-3 m-3">
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
-                    <h5 class="card-title"><?= validateData($category->name) ?></h5>
+                    <h5 class="card-title"><?= $this->validateData($category->name) ?></h5>
                     <a href="<?= ROOT ?>post/category/<?= $category->id ?>" class="btn btn-primary">Voir les articles</a>
                 </div>
             </div>

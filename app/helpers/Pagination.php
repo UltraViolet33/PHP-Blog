@@ -1,35 +1,36 @@
 <?php
 
-/**
- * pagination class to get the paginated items (posts or category) from the bdd
- */
+namespace App\helpers;
+
+use App\core\Database;
+use PDO;
 
 class Pagination
 {
 
-    private $queryCount;
-    private $perPage;
-    private $db;
-    private $numberPages;
-    private $item;
-    private $currentPage = 1;
-    private $queryItems;
+    private string $queryCount;
+    private int $perPage;
+    private Database $db;
+    private string $item;
+    private string $queryItems;
+    private int $numberPages;
+    private int $currentPage = 1;
 
-    public function __construct($queryCount, $queryItems, $perPage, $item)
+    public function __construct(string $queryCount, string $queryItems, int $perPage, string $item)
     {
+        $this->db = Database::connect();
+
         $this->queryCount = $queryCount;
         $this->perPage = $perPage;
         $this->item = $item;
         $this->queryItems = $queryItems;
-        $this->db = Database::getNewInstance();
-        $this->getNumberPages();
-        $this->getCurrentPage();
+        $this->numberPages = $this->getNumberPages();
+        $this->getCurrentPage();;
     }
 
-    /**
-     * get the items to paginate from the bdd
-     */
-    public function getItems()
+
+
+    public function getItems(): array
     {
         $offset = $this->getOffset();
         if ($this->item === "post" || $this->item === "admin/posts") {
@@ -38,80 +39,74 @@ class Pagination
             $query = $this->queryItems . " LIMIT $this->perPage OFFSET $offset";
         }
 
-        $items = $this->db->read($query);
-        return $items;
+        return $this->db->read($query);
     }
 
-    /**
-     * get the offset for the sql query
-     */
-    private function getOffset()
+
+    private function getOffset(): int
     {
-        $this->offset =  $this->perPage * ($this->getCurrentPage() - 1);
-        return $this->offset;
+        return $this->perPage * ($this->getCurrentPage() - 1);
     }
 
-    /**
-     * get the current page from the url
-     */
-    private function getCurrentPage()
+
+    private function getCurrentPage(): int
     {
         if (isset($_GET['page'])) {
             if (!filter_var($_GET['page'], FILTER_VALIDATE_INT)) {
-                header("Location: " . ROOT . "{$this->item}");
-                return;
+                header("Location: /{$this->item}");
+                die;
             }
 
             if ($_GET['page'] <= 1 || $_GET['page'] > $this->numberPages) {
-                header("Location: " . ROOT . "{$this->item}");
-                return;
+                header("Location: /{$this->item}");
+                die;
             }
+
             $this->currentPage = $_GET['page'];
         }
-        return  $this->currentPage;
+
+        return $this->currentPage;
     }
 
-    /**
-     * get the number of page for pagination
-     */
-    private function getNumberPages()
+
+    private function getNumberPages(): int
     {
-        $totalItems =  $this->db->read($this->queryCount, [], PDO::FETCH_BOTH);
-        $totalItems = $totalItems[0][0];
+        $totalItems =  $this->db->readSingleRow($this->queryCount, [], PDO::FETCH_NUM);
+        $totalItems = $totalItems[0];
         if ($totalItems == 0) {
-            header("Location: " . ROOT . "{$this->item}");
-            return;
+            header("Location: /{$this->item}");
+            die;
         }
-        $this->numberPages = (int)ceil($totalItems / $this->perPage);
+
+        return  (int)ceil($totalItems / $this->perPage);
     }
 
-    /**
-     * generate link to go to the next page
-     */
-    public function nextLink()
+
+
+    public function nextLink(): string|null
     {
         $this->currentPage = $this->getCurrentPage();
+
         if ($this->currentPage >= $this->numberPages) {
             return null;
         }
+
         $nextpage = $this->currentPage + 1;
         $link = ROOT . "{$this->item}?page=$nextpage";
-        $linkHTML = "<a class='btn btn-primary ms-auto' href='$link'>Page suivante</a>";
-        return $linkHTML;
+        return "<a class='btn btn-primary ms-auto' href='$link'>Page suivante</a>";
     }
 
-    /**
-     * generate link to go to the previous page
-     */
-    public function previousLink()
+
+
+    public function previousLink(): string|null
     {
         if ($this->currentPage <= 1) {
             return null;
         }
+
         $this->currentPage = $this->getCurrentPage();
         $nextpage = $this->currentPage - 1;
         $link = ROOT . "{$this->item}?page=$nextpage";
-        $linkHTML = "<a class='btn btn-primary' href='$link'>Page précédente</a>";
-        return $linkHTML;
+        return  "<a class='btn btn-primary' href='$link'>Page précédente</a>";
     }
 }

@@ -1,15 +1,18 @@
 <?php
 
-require_once('../app/core/Controller.php');
-require_once('../app/helpers/Pagination.php');
+namespace App\controllers;
 
-class Category extends Controller
+use App\core\Controller;
+use App\models\Category;
+use App\helpers\Pagination;
+
+class CategoryController extends Controller
 {
     private $categoryModel;
 
     public function __construct()
     {
-        $this->categoryModel = $this->loadModel("CategoryModel");
+        $this->categoryModel = new Category();
     }
 
     /**
@@ -18,30 +21,30 @@ class Category extends Controller
      */
     public function index()
     {
-        $queryCount = $this->categoryModel->count();
-        $queryItems = $this->categoryModel->limitItems();
+        $queryCount = $this->categoryModel->getQueryCount();
+        $queryItems = $this->categoryModel->getQueryEverything();
         $paginateCategories = new Pagination($queryCount, $queryItems, 12, "category");
-        $limitCategories = $paginateCategories->getItems();
+        $data["categories"] = $paginateCategories->getItems();
         $data['nextLink'] = $paginateCategories->nextLink();
         $data['previousLink'] = $paginateCategories->previousLink();
-        $data['limitCategories'] = $limitCategories;
+
         $this->view("categories/listCategories", $data);
     }
 
     /**
      * get the paginated categories
      */
-    public function getPaginatedCategories()
-    {
-        $queryCount = $this->categoryModel->count();
-        $queryItems = $this->categoryModel->limitItems();
-        $paginateCategories = new Pagination($queryCount, $queryItems, 12, "category");
-        $limitCategories = $paginateCategories->getItems();
-        $data['nextLink'] = $paginateCategories->nextLink();
-        $data['previousLink'] = $paginateCategories->previousLink();
-        $data['limitCategories'] = $limitCategories;
-        return $data;
-    }
+    // public function getPaginatedCategories()
+    // {
+    //     $queryCount = $this->categoryModel->count();
+    //     $queryItems = $this->categoryModel->limitItems();
+    //     $paginateCategories = new Pagination($queryCount, $queryItems, 12, "category");
+    //     $limitCategories = $paginateCategories->getItems();
+    //     $data['nextLink'] = $paginateCategories->nextLink();
+    //     $data['previousLink'] = $paginateCategories->previousLink();
+    //     $data['limitCategories'] = $limitCategories;
+    //     return $data;
+    // }
 
     /**
      * delete one category
