@@ -27,7 +27,15 @@ class User extends Table
     }
 
 
-    public function checkIfEmailExists(array $data)
+    public function checkIfEmailExists(string $email): bool
+    {
+        $query = "SELECT id FROM user WHERE email = :email";
+        $result = $this->db->readSingleRow($query, ["email" => $email]);
+        return count($result) > 0;
+    }
+
+
+    public function checkIfEmailAlreadyExists(array $data)
     {
         $query = "SELECT * FROM user WHERE email = :email AND id != :id";
         return $this->db->read($query, $data);
@@ -40,38 +48,31 @@ class User extends Table
     }
 
 
-    public function setResetPwd($token, $email)
+    public function setResetPasswordToken(array $data): bool
     {
         $query = "UPDATE user SET password_reset_date = NOW(), password_reset_token = :token WHERE email = :email";
-        $data['token'] = $token;
-        $data['email'] = $email;
-        $this->db->write($query, $data);
+        return $this->db->write($query, $data);
     }
 
 
-    public function getDateReset($token)
+    public function getDateReset(string $token): array
     {
-        $query = "SELECT password_reset_date FROM user WHERE password_reset_token = '$token'";
-        $data['password_reset_token'] = $token;
-        $result =  $this->db->read($query);
-        return $result[0]->password_reset_date;
+        $query = "SELECT password_reset_date FROM user WHERE password_reset_token = :token";
+        $result =  $this->db->readSingleRow($query, ["token" => $token]);
+        return $result;
     }
 
     /**
      * update the password in the bdd
      */
-    // public function updatePassword($password, $token)
-    // {
-    //     $password = hash('sha1', $password);
-    //     $query = "UPDATE user SET password = :password, password_reset_token = '' WHERE password_reset_token = :password_reset_token";
-    //     $data['password'] = $password;
-    //     $data['password_reset_token'] = $token;
-    //     $result =  $this->db->write($query, $data);
-    //     return $result;
-    // }
+    public function updatePasswordFromToken(array $data): bool
+    {
+        $query = "UPDATE user SET password = :password, password_reset_token = '' WHERE password_reset_token = :token";
+        return $this->db->write($query, $data);
+    }
 
 
-    public function updatePassword(array $data): bool 
+    public function updatePassword(array $data): bool
     {
         $query = "UPDATE user SET password = :password WHERE id = :id";
         return $this->db->write($query, $data);

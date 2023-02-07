@@ -17,32 +17,32 @@ abstract class Controller
      *
      * @return void
      */
-    abstract public function index(): void;
+    // abstract public function index(): void;
 
 
-    /**
-     * add
-     *
-     * @return void
-     */
-    abstract public function add(): void;
+    // /**
+    //  * add
+    //  *
+    //  * @return void
+    //  */
+    // abstract public function add(): void;
 
 
-    /**
-     * edit
-     *
-     * @param int $id
-     * @return void
-     */
-    abstract public function edit(int $id): void;
+    // /**
+    //  * edit
+    //  *
+    //  * @param int $id
+    //  * @return void
+    //  */
+    // abstract public function edit(int $id): void;
 
 
-    /**
-     * delete
-     *
-     * @return void
-     */
-    abstract public function delete(): void;
+    // /**
+    //  * delete
+    //  *
+    //  * @return void
+    //  */
+    // abstract public function delete(): void;
 
 
     /**
@@ -95,6 +95,8 @@ abstract class Controller
 
         Session::unsetKey("error");
     }
+
+
 
 
     /**

@@ -11,16 +11,16 @@
         <div class="col-6">
             <form action="" method="POST">
                 <div class="mb-3">
-                    <label for="user-resetPwd1" class="form-label">Mot de passe : </label>
-                    <input type="password" name='user-resetPwd1' class="form-control">
+                    <label for="password" class="form-label">Mot de passe : </label>
+                    <input type="password" name='password' class="form-control">
                 </div>
                 <div class="mb-3">
                     <label for="user-resetPwd2" class="form-label">Confirmez le mot de passe : </label>
-                    <input type="password" name='user-resetPwd2' class="form-control">
+                    <input type="password" name='confirmationPassword' class="form-control">
                 </div>
                 <input type="submit" class="btn btn-primary" name="user-resetPwd" value="Valider">
             </form>
-            <?= checkError() ?>
+            <?= $this->checkError() ?>
         </div>
     </div>
 </div>

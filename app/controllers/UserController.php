@@ -110,7 +110,7 @@ class UserController extends Controller
     {
         if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["editProfil"])) {
             if ($this->checkEditUserData()) {
-                if (!$this->model->checkIfEmailExists(["id" => $id, "email" => $_POST["email"]])) {
+                if (!$this->model->checkIfEmailAlreadyExists(["id" => $id, "email" => $_POST["email"]])) {
                     $data = ["id" => $id, "email" => $_POST["email"], "username" => $_POST["username"]];
                     $this->model->update($data);
                     http_response_code(200);
