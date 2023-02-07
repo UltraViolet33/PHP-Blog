@@ -8,7 +8,7 @@ class Post extends Table
 {
     // protected $table = "post";
 
-    protected string $table = "posts";
+    protected string $table = "post";
     protected string $id = "id";
 
     /**

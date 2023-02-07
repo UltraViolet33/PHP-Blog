@@ -4,34 +4,34 @@ namespace App\controllers;
 
 use App\core\Controller;
 use App\models\Post;
+use App\helpers\Pagination;
+use DateTime;
 
 class PostController extends Controller
 {
-    private $postModel;
+    private Post $postModel;
 
     public function __construct()
     {
-        // $this->postModel = $this->loadModel("PostModel");
-        $this->model = new Post();
+        $this->postModel = new Post();
     }
 
 
     public function index(): void
     {
-        // $queryCount = $this->postModel->count();
-        // $queryItems = $this->postModel->limitItems();
-        // $paginatePosts = new Pagination($queryCount, $queryItems, 12, "post");
-        // $limitPosts = $paginatePosts->getItems();
+        $queryCount = $this->postModel->getQueryCount();
+        $queryItems = $this->postModel->getQueryEverything();
+        $paginatePosts = new Pagination($queryCount, $queryItems, 12, "post");
+        $posts = $paginatePosts->getItems();
 
-        // foreach ($limitPosts as $post) {
-        //     $post->created_at = $this->dateToString($post->created_at);
-        //     $post->content = $this->getExtractContent($post->content);
-        // }
+        foreach ($posts as $post) {
+            $post->created_at = $this->dateToString($post->created_at);
+            $post->content = $this->getExtractContent($post->content);
+        }
 
-        // $data['limitPosts'] = $limitPosts;
-        // $data['nextLink'] = $paginatePosts->nextLink();
-        // $data['previousLink'] = $paginatePosts->previousLink();
-        $data = [];
+        $data['posts'] = $posts;
+        $data['nextLink'] = $paginatePosts->nextLink();
+        $data['previousLink'] = $paginatePosts->previousLink();
         $this->view("posts/index", $data);
     }
 
@@ -94,10 +94,8 @@ class PostController extends Controller
     }
 
 
-    /**
-     * get an extract of a post content
-     */
-    private function getExtractContent($content)
+
+    private function getExtractContent(string $content): string
     {
         if (strlen($content) <= 50) {
             return $content;
@@ -135,7 +133,7 @@ class PostController extends Controller
     //     $this->postModel->delete($id);
     // }
 
-      /**
+    /**
      * delete one post
      */
     public function delete(): void
@@ -171,13 +169,9 @@ class PostController extends Controller
 
     public function add(): void
     {
-
     }
 
     public function edit(int $id): void
     {
-
     }
-
-    
 }
