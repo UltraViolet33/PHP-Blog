@@ -108,7 +108,7 @@ class UserController extends Controller
 
     public function edit(int $id): void
     {
-        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["editProfil"])) {
             if ($this->checkEditUserData()) {
                 if (!$this->model->checkIfEmailExists(["id" => $id, "email" => $_POST["email"]])) {
                     $data = ["id" => $id, "email" => $_POST["email"], "username" => $_POST["username"]];
@@ -117,7 +117,19 @@ class UserController extends Controller
                     header("Location: /user/profil");
                     return;
                 }
+
                 Session::set("error", "email already exists");
+            }
+        }
+
+        if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["changePassword"])) {
+
+            if ($this->checkEditPasswordData()) {
+
+                $data = ["id" => $id, "password" => hash('sha1', $_POST["newPassword"])];
+                $this->model->updatePassword($data);
+                header("Location: /user/profil");
+                return;
             }
         }
 
@@ -125,6 +137,47 @@ class UserController extends Controller
         $user = Session::get("user");
         $data["profil"] =  $this->model->find($user["id"]);
         $this->view("updateProfil", $data);
+    }
+
+    private function checkEditPasswordData(): bool
+    {
+        $data = ["currentPassword", "newPassword", "confirmationPassword"];
+
+        if (!$this->checkDataForm($data)) {
+            Session::set("errorEditPassword", "Please fill all inputs");
+            return false;
+        }
+
+
+        if (!$this->checkIfCurrentPasswordIsValid()) {
+            Session::set("errorEditPassword", "Incorrect current password");
+            return false;
+        }
+
+        if (!$this->checkIfNewPasswordMatch()) {
+            Session::set("errorEditPassword", "Passwords don't match");
+            return false;
+        }
+
+        return true;
+    }
+
+
+    private function checkIfNewPasswordMatch(): bool
+    {
+        return $_POST["newPassword"] === $_POST["confirmationPassword"];
+    }
+    
+
+    private function checkIfCurrentPasswordIsValid(): bool
+    {
+        $userPassword = $this->model->selectPasswordById(Session::get("user")["id"]);
+
+        if ($userPassword["password"] !== hash('sha1', $_POST["currentPassword"])) {
+            return false;
+        }
+
+        return true;
     }
 
 

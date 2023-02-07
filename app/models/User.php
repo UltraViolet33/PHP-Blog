@@ -33,6 +33,12 @@ class User extends Table
         return $this->db->read($query, $data);
     }
 
+    public function selectPasswordById(int $id): array
+    {
+        $query = "SELECT password FROM user WHERE id = :id";
+        return $this->db->readSingleRow($query, ["id" => $id]);
+    }
+
 
     public function setResetPwd($token, $email)
     {
@@ -54,14 +60,21 @@ class User extends Table
     /**
      * update the password in the bdd
      */
-    public function updatePassword($password, $token)
+    // public function updatePassword($password, $token)
+    // {
+    //     $password = hash('sha1', $password);
+    //     $query = "UPDATE user SET password = :password, password_reset_token = '' WHERE password_reset_token = :password_reset_token";
+    //     $data['password'] = $password;
+    //     $data['password_reset_token'] = $token;
+    //     $result =  $this->db->write($query, $data);
+    //     return $result;
+    // }
+
+
+    public function updatePassword(array $data): bool 
     {
-        $password = hash('sha1', $password);
-        $query = "UPDATE user SET password = :password, password_reset_token = '' WHERE password_reset_token = :password_reset_token";
-        $data['password'] = $password;
-        $data['password_reset_token'] = $token;
-        $result =  $this->db->write($query, $data);
-        return $result;
+        $query = "UPDATE user SET password = :password WHERE id = :id";
+        return $this->db->write($query, $data);
     }
 
     public function update(array $data): bool

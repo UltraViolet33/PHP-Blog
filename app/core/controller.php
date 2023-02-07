@@ -70,12 +70,12 @@ abstract class Controller
      *
      * @return void
      */
-    protected function checkError(): void
+    protected function checkError(string $key = "error"): void
     {
         $errors = "";
         $htmlError = "";
 
-        $errors = Session::get("error");
+        $errors = Session::get($key);
 
         if (!$errors) {
             return;
