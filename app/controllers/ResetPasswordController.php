@@ -10,6 +10,7 @@ use App\helpers\Session;
 class ResetPasswordController extends Controller
 {
     protected User $model;
+
     private Validator $v;
 
     public function __construct()
@@ -51,11 +52,13 @@ class ResetPasswordController extends Controller
         mail($to, $subject, $message, implode("\r\n", $headers));
     }
 
+
     private function generateToken(): string
     {
         $string = implode('', array_merge(range('A', 'Z'), range('a', 'z'), range('0', '9')));
         return substr(str_shuffle($string), 0, 20);
     }
+
 
     private function checkUserEmail(): bool
     {
@@ -72,6 +75,7 @@ class ResetPasswordController extends Controller
         return true;
     }
 
+    
     protected function checkDataForm(array $data): bool
     {
         $this->v = new Validator($_POST);

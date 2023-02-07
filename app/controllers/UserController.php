@@ -10,6 +10,7 @@ use App\helpers\Session;
 class UserController extends Controller
 {
     protected User $model;
+
     private Validator $v;
 
 
@@ -139,6 +140,7 @@ class UserController extends Controller
         $this->view("updateProfil", $data);
     }
 
+
     private function checkEditPasswordData(): bool
     {
         $data = ["currentPassword", "newPassword", "confirmationPassword"];
@@ -184,6 +186,7 @@ class UserController extends Controller
     private function checkEditUserData(): bool
     {
         $data = ["username", "email"];
+        
         if (!$this->checkDataForm($data)) {
             Session::set("error", $this->v->errors());
             return false;

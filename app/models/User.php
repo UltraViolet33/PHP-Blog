@@ -41,6 +41,7 @@ class User extends Table
         return $this->db->read($query, $data);
     }
 
+
     public function selectPasswordById(int $id): array
     {
         $query = "SELECT password FROM user WHERE id = :id";
@@ -62,9 +63,7 @@ class User extends Table
         return $result;
     }
 
-    /**
-     * update the password in the bdd
-     */
+
     public function updatePasswordFromToken(array $data): bool
     {
         $query = "UPDATE user SET password = :password, password_reset_token = '' WHERE password_reset_token = :token";
@@ -77,6 +76,7 @@ class User extends Table
         $query = "UPDATE user SET password = :password WHERE id = :id";
         return $this->db->write($query, $data);
     }
+    
 
     public function update(array $data): bool
     {
