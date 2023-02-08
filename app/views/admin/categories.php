@@ -12,14 +12,14 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($data['limitCategories'] as $category) : ?>
+            <?php foreach ($categories as $category) : ?>
                 <tr>
                     <th scope="row"><?= $category->id ?></th>
-                    <td><a href="<?= ROOT ?>post/category/<?= $category->id ?>" class="btn btn-primary"><?= validateData($category->name) ?></a></td>
+                    <td><a href="<?= ROOT ?>post/category/<?= $category->id ?>" class="btn btn-primary"><?= $this->validateData($category->name) ?></a></td>
                     <td><a href="<?= ROOT ?>admin/categories/update/<?= $category->id ?>" class="btn btn-primary">Modifier</a></td>
                     <td>
                         <form onsubmit="return confirm('Voulez vous supprimer cette catégorie ?')" action="<?= ROOT ?>admin/categories/delete/<?= $category->id ?>" method="POST">
-                            <input hidden="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+                            <!-- <input hidden="hidden" name="token" value="<?= $_SESSION['token'] ?>"> -->
                             <button type="submit" name="deleteCategories" class="btn btn-warning">Supprimer</button>
                         </form>
                     </td>

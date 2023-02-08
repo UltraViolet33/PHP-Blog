@@ -15,36 +15,25 @@ class CategoryController extends Controller
         $this->categoryModel = new Category();
     }
 
-    /**
-     * index 
-     * display categories page
-     */
-    public function index()
-    {
-        $queryCount = $this->categoryModel->getQueryCount();
-        $queryItems = $this->categoryModel->getQueryEverything();
-        $paginateCategories = new Pagination($queryCount, $queryItems, 12, "category");
-        $data["categories"] = $paginateCategories->getItems();
-        $data['nextLink'] = $paginateCategories->nextLink();
-        $data['previousLink'] = $paginateCategories->previousLink();
 
+    public function index(): void
+    {
+        $data = $this->getPaginatedCategories("category");
         $this->view("categories/listCategories", $data);
     }
 
-    /**
-     * get the paginated categories
-     */
-    // public function getPaginatedCategories()
-    // {
-    //     $queryCount = $this->categoryModel->count();
-    //     $queryItems = $this->categoryModel->limitItems();
-    //     $paginateCategories = new Pagination($queryCount, $queryItems, 12, "category");
-    //     $limitCategories = $paginateCategories->getItems();
-    //     $data['nextLink'] = $paginateCategories->nextLink();
-    //     $data['previousLink'] = $paginateCategories->previousLink();
-    //     $data['limitCategories'] = $limitCategories;
-    //     return $data;
-    // }
+
+    public function getPaginatedCategories(string $route): array
+    {
+        $queryCount = $this->categoryModel->getQueryCount();
+        $queryItems = $this->categoryModel->getQueryEverything();
+        $paginateCategories = new Pagination($queryCount, $queryItems, 12, $route);
+        $data["categories"] = $paginateCategories->getItems();
+        $data['nextLink'] = $paginateCategories->nextLink();
+        $data['previousLink'] = $paginateCategories->previousLink();
+        return $data;
+    }
+    
 
     /**
      * delete one category

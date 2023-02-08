@@ -1,17 +1,23 @@
 <?php
 
-require_once('../app/core/Controller.php');
+namespace App\controllers;
 
-class Admin extends Controller
+use App\core\Controller;
+// use App\models\Admin;
+use Valitron\Validator;
+use App\helpers\Session;
+
+class AdminController extends Controller
 {
 
     private $postController;
+    private CategoryController $categoryController;
 
     public function __construct()
     {
-        $this->checkAdminLogin();
-        $this->postController  = $this->loadController("post");
-        $this->categoryController = $this->loadController("category");
+        // $this->checkAdminLogin();
+        // $this->postController  = $this->loadController("post");
+        $this->categoryController = new CategoryController();
     }
 
     public function index()
@@ -115,22 +121,22 @@ class Admin extends Controller
      */
     public function categories($method = null, $id = null)
     {
-        if ($method == "delete") {
-            if ($_POST['token'] == $_SESSION['token']) {
-                $this->deleteCategory($id);
-                header("Location: " . ROOT . "admin/categories");
-                return;
-            } else {
-                header("Location: " . ROOT . "login");
-                return;
-            }
-        } elseif ($method == "update") {
-            $this->updateCategory($id);
-            return;
-        } elseif ($method == "create") {
-            $this->createCategory();
-            return;
-        }
+        //     if ($method == "delete") {
+        //         if ($_POST['token'] == $_SESSION['token']) {
+        //             $this->deleteCategory($id);
+        //             header("Location: " . ROOT . "admin/categories");
+        //             return;
+        //         } else {
+        //             header("Location: " . ROOT . "login");
+        //             return;
+        //         }
+        //     } elseif ($method == "update") {
+        //         $this->updateCategory($id);
+        //         return;
+        //     } elseif ($method == "create") {
+        //         $this->createCategory();
+        //         return;
+        //     }
         $categories = $this->categoryController->getPaginatedCategories("admin/categories");
         $this->view('admin/categories', $categories);
     }
