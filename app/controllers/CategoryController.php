@@ -42,10 +42,10 @@ class CategoryController extends Controller
     }
 
 
-    
-    public function getAllCategories()
+
+    public function getAllCategories(): array
     {
-        return $this->categoryModel->getAllCategories();
+        return $this->categoryModel->selectAll();
     }
 
     /**

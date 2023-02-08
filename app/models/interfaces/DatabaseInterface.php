@@ -15,4 +15,7 @@ interface DatabaseInterface
 
 
     public function readSingleRow(string $query, array $data = []): array;
+
+    
+    public function getLastInsertId(): int;
 }

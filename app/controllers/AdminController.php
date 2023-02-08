@@ -16,7 +16,7 @@ class AdminController extends Controller
     public function __construct()
     {
         // $this->checkAdminLogin();
-        // $this->postController  = $this->loadController("post");
+        $this->postController  = new PostController();
         $this->categoryController = new CategoryController();
     }
 
@@ -30,48 +30,55 @@ class AdminController extends Controller
      */
     public function posts($method = null, $id = null)
     {
-        if ($method == "delete") {
-            if ($_POST['token'] == $_SESSION['token']) {
-                $this->deletePost($id);
-                header("Location: " . ROOT . "admin/posts");
-                return;
-            } else {
-                header("Location: " . ROOT . "login");
-                return;
-            }
-        } elseif ($method == "update") {
-            $this->updatePost($id);
-            return;
-        } elseif ($method == "create") {
-            $this->createPost();
-            return;
+        switch ($method) {
+            case "create":
+                $this->createPost();
+                die;
+                break;
         }
+        // if ($method == "delete") {
+        //     if ($_POST['token'] == $_SESSION['token']) {
+        //         $this->deletePost($id);
+        //         header("Location: " . ROOT . "admin/posts");
+        //         return;
+        //     } else {
+        //         header("Location: " . ROOT . "login");
+        //         return;
+        //     }
+        // } elseif ($method == "update") {
+        //     $this->updatePost($id);
+        //     return;
+        // } elseif ($method == "create") {
+        //     $this->createPost();
+        //     return;
+        // }
 
         $posts = $this->postController->getPaginatedPosts("admin/posts");
         $this->view("admin/posts", $posts);
     }
 
-    /**
-     * create a post
-     */
-    private function createPost()
-    {
-        if (!empty($_POST)) {
 
-            if (empty($_POST['name']) || empty($_POST['content']) || !isset($_POST['categories'])) {
-                $_SESSION['error'] = "Veuillez renseigner les informations <br>";
-            } else {
-                $this->postController->insert($_POST['name'], $_POST['content'], $_POST['categories']);
-                header("Location: " . ROOT . "admin/posts");
+
+    private function createPost(): void
+    {
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $data = ["name", "content", "categories"];
+            if ($this->checkDataForm($data)) {
+                $dataPost = ["name" => $_POST["name"], "content" => $_POST["content"]];
+                $this->postController->insert($dataPost, $_POST["categories"]);
+                header("Location: /admin/posts");
                 return;
             }
+
+            Session::set("error", $this->v->errors());
         }
 
         $allCategories = $this->categoryController->getAllCategories();
         $data['allCategories'] = $allCategories;
-
         $this->view("admin/addPost", $data);
     }
+
+    
     /**
      * delete one post
      */
@@ -195,10 +202,8 @@ class AdminController extends Controller
 
     public function deleteCategory(int $id): void
     {
-        if($_SERVER["REQUEST_METHOD"] === "POST")
-        {
-            if($this->checkTokenAdmin())
-            {
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            if ($this->checkTokenAdmin()) {
                 $this->categoryController->delete($id);
                 header("Location: /admin/categories");
                 return;
@@ -208,16 +213,14 @@ class AdminController extends Controller
         }
     }
 
-    
-    private function checkTokenAdmin(): bool 
+
+    private function checkTokenAdmin(): bool
     {
-        if(!isset($_POST["token"]))
-        {
+        if (!isset($_POST["token"])) {
             return false;
         }
 
-        if($_POST["token"] !== Session::get("token"))
-        {
+        if ($_POST["token"] !== Session::get("token")) {
             return false;
         }
 

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\models;
+
 use App\models\Table;
 
 
@@ -49,27 +50,18 @@ class Post extends Table
         $data['content'] = $content;
         $this->db->write($query, $data);
     }
+    
 
-    /**
-     * insert a post
-     */
-    public function insertPost($name, $content, $categories)
+    public function insert(array $data): int
     {
-        $idPost = [];
         $query = "INSERT INTO post (name, content, created_at) VALUES(:name, :content, NOW())";
-        $data['name'] = $name;
-        $data['content'] = $content;
         $this->db->write($query, $data);
-        $idPost = $this->db->getLastInsertId();
+        return $this->db->getLastInsertId();
+    }
 
-        $data = [];
-
-        $queryPostCategories = "INSERT INTO post_category (post_id, category_id) VALUES (:post_id, :category_id)";
-        $data['post_id']  = $idPost;
-        for ($i = 0; $i < count($categories); $i++) {
-            $data['category_id'] = $categories[$i];
-            $this->db->write($queryPostCategories, $data);
-            $data['category_id'] = null;
-        }
+    public function insertPostCategories(array $data): bool
+    {
+        $query = "INSERT INTO post_category (post_id, category_id) VALUES (:post_id, :category_id)";
+        return $this->db->write($query, $data);
     }
 }

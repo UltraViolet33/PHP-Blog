@@ -5,11 +5,13 @@ namespace App\controllers;
 use App\core\Controller;
 use App\models\Post;
 use App\helpers\Pagination;
+use App\models\Category;
 use DateTime;
 
 class PostController extends Controller
 {
     private Post $postModel;
+    private Category $categoryModel;
 
     public function __construct()
     {
@@ -104,22 +106,20 @@ class PostController extends Controller
     }
 
 
-    /**
-     * get the paginated posts
-     */
-    public function getPaginatedPosts($path)
-    {
-        $queryCount = $this->postModel->count();
-        $queryItems = $this->postModel->limitItems();
-        $paginatePosts = new Pagination($queryCount, $queryItems, 12, $path);
-        $limitPosts = $paginatePosts->getItems();
 
-        foreach ($limitPosts as $post) {
+    public function getPaginatedPosts(string $path): array
+    {
+        $queryCount = $this->postModel->getQueryCount();
+        $queryItems = $this->postModel->getQueryEverything();
+        $paginatePosts = new Pagination($queryCount, $queryItems, 12, $path);
+        $posts = $paginatePosts->getItems();
+
+        foreach ($posts as $post) {
             $post->created_at = $this->dateToString($post->created_at);
             $post->content = $this->getExtractContent($post->content);
         }
 
-        $data['limitPosts'] = $limitPosts;
+        $data['posts'] = $posts;
         $data['nextLink'] = $paginatePosts->nextLink();
         $data['previousLink'] = $paginatePosts->previousLink();
         return $data;
@@ -150,14 +150,25 @@ class PostController extends Controller
         $this->postModel->updatePost($id, $name, $content);
     }
 
-    /**
-     * insert a post
-     */
-    public function insert($name, $content, $categories)
+
+
+    public function insert(array $dataPost, array $categories): bool
     {
-        $this->postModel->insertPost($name, $content, $categories);
+        $idPost = $this->postModel->insert($dataPost);
+        return $this->insertPostCategories($idPost, $categories);
     }
 
+    
+    public function insertPostCategories(int $idPost, array $categories): bool
+    {
+        foreach($categories as $category)
+        {
+            $data = ["post_id" => $idPost, "category_id" => $category];
+            $this->postModel->insertPostCategories($data);
+        }
+
+        return true;
+    }
     /**
      * 404 not found
      */

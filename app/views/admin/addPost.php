@@ -12,14 +12,14 @@
             <form action="" method="POST">
                 <div class="mb-3">
                     <label for="name" class="form-label">Titre : </label>
-                    <input type="text" value="<?= isset($_POST['name']) ? $_POST['name'] : ""; ?>" name='name' class="form-control">
+                    <input type="text" value="<?= isset($_POST['name']) ? $this->validateData($_POST['name']) : ""; ?>" name='name' class="form-control">
                 </div>
                 <div class="mb-3">
                     <label for="categories[]">Catégorie(s)</label>
                     <select class="form-select" name="categories[]" multiple="multiple">
-                        <?php foreach($allCategories as $category): ?>
-                            <option value="<?= $category->id ?>"><?= $category->name ?></option>
-                            <?php endforeach; ?>
+                        <?php foreach ($allCategories as $category) : ?>
+                            <option value="<?= $this->validateData($category->id) ?>"><?= $this->validateData($category->name) ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="form-group mb-3">
@@ -28,7 +28,7 @@
                 </div>
                 <input type="submit" class="btn btn-primary" name="addPost" value="Valider">
             </form>
-            <?= checkError() ?>
+            <?= $this->checkError() ?>
         </div>
     </div>
 </div>

@@ -22,14 +22,11 @@ class Category extends Table
         return $categories;
     }
 
-    /**
-     * get all the categories
-     */
-    public function getAllCategories()
+
+    public function selectAll(): array
     {
         $query = "SELECT name, id FROM $this->table";
-        $categories = $this->db->read($query);
-        return $categories;
+        return $this->db->read($query);
     }
 
 
