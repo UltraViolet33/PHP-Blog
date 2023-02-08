@@ -40,23 +40,11 @@ class AdminController extends Controller
                 $this->updatePost($id);
                 die;
                 break;
+            case "delete":
+                $this->deletePost($id);
+                die;
+                break;
         }
-        // if ($method == "delete") {
-        //     if ($_POST['token'] == $_SESSION['token']) {
-        //         $this->deletePost($id);
-        //         header("Location: " . ROOT . "admin/posts");
-        //         return;
-        //     } else {
-        //         header("Location: " . ROOT . "login");
-        //         return;
-        //     }
-        // } elseif ($method == "update") {
-        //     $this->updatePost($id);
-        //     return;
-        // } elseif ($method == "create") {
-        //     $this->createPost();
-        //     return;
-        // }
 
         $posts = $this->postController->getPaginatedPosts("admin/posts");
         $this->view("admin/posts", $posts);
@@ -84,12 +72,18 @@ class AdminController extends Controller
     }
 
 
-    /**
-     * delete one post
-     */
-    public function deletePost($id)
+
+    public function deletePost(int $id): void
     {
-        $this->postController->delete($id);
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            if ($this->checkTokenAdmin()) {
+                $this->postController->delete($id);
+                header("Location: /admin/posts");
+                return;
+            }
+
+            // header("Location: /user/login");
+        }
     }
 
 

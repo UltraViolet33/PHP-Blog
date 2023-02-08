@@ -133,12 +133,11 @@ class PostController extends Controller
     //     $this->postModel->delete($id);
     // }
 
-    /**
-     * delete one post
-     */
-    public function delete(): void
+
+
+    public function delete(int $id): bool
     {
-        // $this->postModel->delete($id);
+        return $this->postModel->delete($id);
     }
 
 
@@ -158,7 +157,7 @@ class PostController extends Controller
         return $this->insertPostCategories($idPost, $categories);
     }
 
-    private function deletePostCategories(int $idPost): bool 
+    private function deletePostCategories(int $idPost): bool
     {
         return $this->postModel->deletePostCategories($idPost);
     }
@@ -174,8 +173,7 @@ class PostController extends Controller
 
     public function insertPostCategories(int $idPost, array $categories): bool
     {
-        foreach($categories as $category)
-        {
+        foreach ($categories as $category) {
             $data = ["post_id" => $idPost, "category_id" => $category];
             $this->postModel->insertPostCategories($data);
         }
