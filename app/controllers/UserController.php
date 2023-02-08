@@ -71,6 +71,9 @@ class UserController extends Controller
         $user = $this->model->selectUser($loginData);
         if (count($user) > 0) {
             Session::set("user", $user);
+            if ($user["isAdmin"] == 1) {
+                Session::set("token", bin2hex(openssl_random_pseudo_bytes(6)));
+            }
             return true;
         }
 
@@ -169,7 +172,7 @@ class UserController extends Controller
     {
         return $_POST["newPassword"] === $_POST["confirmationPassword"];
     }
-    
+
 
     private function checkIfCurrentPasswordIsValid(): bool
     {
@@ -186,7 +189,7 @@ class UserController extends Controller
     private function checkEditUserData(): bool
     {
         $data = ["username", "email"];
-        
+
         if (!$this->checkDataForm($data)) {
             Session::set("error", $this->v->errors());
             return false;

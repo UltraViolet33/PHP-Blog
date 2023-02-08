@@ -46,4 +46,10 @@ class Category extends Table
         $query = "UPDATE category SET name = :name WHERE id = :id";
         return $this->db->write($query, $data);
     }
+
+    // public function delete(int $id): bool
+    // {
+    //     $query = "DELETE FROM category WHERE id = :id";
+    //     return $this->db->write($query, ["id" => "id"]);
+    // }
 }

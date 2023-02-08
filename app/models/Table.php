@@ -18,15 +18,10 @@ class Table
     }
 
 
-    /**
-     * delete
-     * delete a item in the BDD
-     * @param int $id
-     * @return void
-     */
-    protected function delete(int $id): void
+
+    public function delete(int $id): bool
     {
-        $this->db->write("DELETE FROM $this->table WHERE $this->id  = $id");
+        return $this->db->write("DELETE FROM $this->table WHERE $this->id  = $id");
     }
 
 

@@ -35,17 +35,14 @@ class CategoryController extends Controller
     }
 
 
-    /**
-     * delete one category
-     */
-    public function delete($id)
+
+    public function delete(int $id): bool
     {
-        $this->categoryModel->delete($id);
+        return $this->categoryModel->delete($id);
     }
 
-    /**
-     * get all the categories
-     */
+
+    
     public function getAllCategories()
     {
         return $this->categoryModel->getAllCategories();
@@ -58,7 +55,6 @@ class CategoryController extends Controller
     {
         return $this->categoryModel->find($id);
     }
-
 
 
     public function update(array $data): bool

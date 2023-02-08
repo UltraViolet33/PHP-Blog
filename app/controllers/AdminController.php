@@ -121,7 +121,6 @@ class AdminController extends Controller
      */
     public function categories($method = null, $id = null)
     {
-        // var_dump($id);
         switch ($method) {
             case "create":
                 $this->createCategory();
@@ -129,6 +128,10 @@ class AdminController extends Controller
                 break;
             case "update":
                 $this->updateCategory($id);
+                die;
+                break;
+            case "delete":
+                $this->deleteCategory($id);
                 die;
                 break;
         }
@@ -189,11 +192,35 @@ class AdminController extends Controller
         $this->view("admin/editCategory", $data);
     }
 
-    /**
-     * delete one category
-     */
-    public function deleteCategory($id)
+
+    public function deleteCategory(int $id): void
     {
-        $this->categoryController->delete($id);
+        if($_SERVER["REQUEST_METHOD"] === "POST")
+        {
+            if($this->checkTokenAdmin())
+            {
+                $this->categoryController->delete($id);
+                header("Location: /admin/categories");
+                return;
+            }
+
+            // header("Location: /user/login");
+        }
+    }
+
+    
+    private function checkTokenAdmin(): bool 
+    {
+        if(!isset($_POST["token"]))
+        {
+            return false;
+        }
+
+        if($_POST["token"] !== Session::get("token"))
+        {
+            return false;
+        }
+
+        return true;
     }
 }

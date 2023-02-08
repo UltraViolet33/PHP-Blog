@@ -1,4 +1,8 @@
-<?php $this->view("inc/header", $data); ?>
+<?php
+
+use App\helpers\Session;
+
+ $this->view("inc/header", $data); ?>
 <h1 class="text-center">Les Catégories</h1>
 <a class="btn btn-primary" href="<?= ROOT ?>admin/categories/create">Ajouter une catégorie</a>
 <div class="row justify-content-center">
@@ -19,7 +23,7 @@
                     <td><a href="<?= ROOT ?>admin/categories/update/<?= $category->id ?>" class="btn btn-primary">Modifier</a></td>
                     <td>
                         <form onsubmit="return confirm('Voulez vous supprimer cette catégorie ?')" action="<?= ROOT ?>admin/categories/delete/<?= $category->id ?>" method="POST">
-                            <!-- <input hidden="hidden" name="token" value="<?= $_SESSION['token'] ?>"> -->
+                            <input hidden="hidden" name="token" value="<?= Session::get("token") ?>">
                             <button type="submit" name="deleteCategories" class="btn btn-warning">Supprimer</button>
                         </form>
                     </td>
