@@ -21,22 +21,18 @@ class Post extends Table
         return $this->db->read($query);
     }
 
-    /**
-     * get the posts from a category
-     */
-    public function getPostFromCategory($idCategory)
+
+
+    public function getPostFromCategory(int $idCategory): string
     {
-        $query = "SELECT p.* FROM post p JOIN post_category pc ON p.id = pc.post_id WHERE pc.category_id = $idCategory";
-        return $query;
+        return "SELECT p.* FROM post p JOIN post_category pc ON p.id = pc.post_id WHERE pc.category_id = $idCategory";
     }
 
-    /**
-     * return the query to count posts
-     */
-    public function countPostFronCat($idCategory)
+
+
+    public function getQueryCountPostsFromCategory(int $idCategory): string
     {
-        $query = "SELECT COUNT(p.id) FROM post p JOIN post_category pc ON p.id = pc.post_id WHERE pc.category_id = $idCategory";
-        return $query;
+        return  "SELECT COUNT(p.id) FROM post p JOIN post_category pc ON p.id = pc.post_id WHERE pc.category_id = $idCategory";
     }
 
 

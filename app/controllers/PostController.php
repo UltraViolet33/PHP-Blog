@@ -16,6 +16,7 @@ class PostController extends Controller
     public function __construct()
     {
         $this->postModel = new Post();
+        $this->categoryModel = new Category();
     }
 
 
@@ -38,63 +39,55 @@ class PostController extends Controller
     }
 
 
-    /**
-     * display details page for post
-     */
-    public function details($id)
+
+    public function details(int $id): void
     {
         $post = $this->postModel->find($id);
         if (!$post) {
-            header("Location: " . ROOT . "post");
+            $this->notFound();
             return;
         }
-        $post[0]->created_at = $this->dateToString($post[0]->created_at);
-        $data['post'] = $post[0];
+
+        $post["created_at"] = $this->dateToString($post["created_at"]);
+        $data['post'] = $post;
         $this->view("posts/detailsPost", $data);
     }
 
-    /**
-     * display posts from categories
-     */
-    public function category($id)
+
+
+    public function category(int $id): void
     {
-        $categoryModel = $this->loadModel("CategoryModel");
-        $category = $categoryModel->find($id);
+        $category = $this->categoryModel->find($id);
+
+
         if (!$category) {
-            header("Location: " . ROOT . "category/index");
-            return;
-        }
-        $posts = $this->postModel->getPostFromCategory($id);
-        if (!$posts) {
-            header("Location: " . ROOT . "category/index");
+            $this->notFound();
             return;
         }
 
-        $queryCount = $this->postModel->countPostFronCat($id);
+        $queryCount = $this->postModel->getQueryCountPostsFromCategory($id);
         $queryItems = $this->postModel->getPostFromCategory($id);
-        $paginatePosts = new Pagination($queryCount, $queryItems, 12, "post/category");
-        $limitPosts = $paginatePosts->getItems();
+        $paginatePosts = new Pagination($queryCount, $queryItems, 12, "post/category/$id");
+        $posts = $paginatePosts->getItems();
 
-        foreach ($limitPosts as $post) {
+        foreach ($posts as $post) {
             $post->created_at = $this->dateToString($post->created_at);
             $post->content = $this->getExtractContent($post->content);
         }
 
-        $data['limitPosts'] = $limitPosts;
-        $data['nextLink'] = null;
-        $data['previousLink'] = null;
+        $data['posts'] = $posts;
+        $data['nextLink'] = $paginatePosts->nextLink();
+        $data['previousLink'] = $paginatePosts->previousLink();
         $this->view("posts/index", $data);
     }
 
-    /**
-     * convert date MySQL to dd/mm/yyyy
-     */
-    private function dateToString($date)
+
+
+    private function dateToString(string $date): string
     {
         $dateFormat = new DateTime($date);
         return $dateFormat->format("m/d/Y");
     }
-
 
 
     private function getExtractContent(string $content): string
@@ -180,9 +173,8 @@ class PostController extends Controller
 
         return true;
     }
-    /**
-     * 404 not found
-     */
+
+
     public function notFound()
     {
         http_response_code(404);
