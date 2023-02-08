@@ -35,6 +35,11 @@ class AdminController extends Controller
                 $this->createPost();
                 die;
                 break;
+
+            case "update":
+                $this->updatePost($id);
+                die;
+                break;
         }
         // if ($method == "delete") {
         //     if ($_POST['token'] == $_SESSION['token']) {
@@ -78,7 +83,7 @@ class AdminController extends Controller
         $this->view("admin/addPost", $data);
     }
 
-    
+
     /**
      * delete one post
      */
@@ -87,27 +92,25 @@ class AdminController extends Controller
         $this->postController->delete($id);
     }
 
-    /**
-     * Update one post
-     */
-    public function updatePost($idPost)
+
+
+    public function updatePost(int $idPost): void
     {
-        if (!empty($_POST)) {
-            if (empty($_POST['name']) || empty($_POST['content'])) {
-                $_SESSION['error'] = "Veuillez renseigner les informations <br>";
-            } else {
-                $this->postController->update($idPost, $_POST['name'], $_POST['content']);
-                header("Location: " . ROOT . "admin/posts");
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $data = ["name", "content", "categories"];
+            if ($this->checkDataForm($data)) {
+                $dataPost = ["name" => $_POST["name"], "content" => $_POST["content"]];
+                $this->postController->update($idPost, $dataPost, $_POST["categories"]);
+                header("Location: /admin/posts");
                 return;
             }
+
+            Session::set("error", $this->v->errors());
         }
+
         $categories = $this->categoryController->getCategoriesPost($idPost);
-
-        $data['categories'] = $categories;
         $post = $this->postController->postModel->find($idPost);
-
         $allCategories = $this->categoryController->getAllCategories();
-
         foreach ($allCategories as $category) {
             foreach ($categories as $categoryPost) {
                 if ($category->id == $categoryPost->id) {
@@ -119,7 +122,7 @@ class AdminController extends Controller
             }
         }
         $data['allCategories'] = $allCategories;
-        $data['post'] = $post[0];
+        $data['post'] = $post;
         $this->view("admin/editPost", $data);
     }
 
@@ -142,22 +145,7 @@ class AdminController extends Controller
                 die;
                 break;
         }
-        //     if ($method == "delete") {
-        //         if ($_POST['token'] == $_SESSION['token']) {
-        //             $this->deleteCategory($id);
-        //             header("Location: " . ROOT . "admin/categories");
-        //             return;
-        //         } else {
-        //             header("Location: " . ROOT . "login");
-        //             return;
-        //         }
-        //     } elseif ($method == "update") {
-        //         $this->updateCategory($id);
-        //         return;
-        //     } elseif ($method == "create") {
-        //         $this->createCategory();
-        //         return;
-        //     }
+
         $categories = $this->categoryController->getPaginatedCategories("admin/categories");
         $this->view('admin/categories', $categories);
     }

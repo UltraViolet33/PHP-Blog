@@ -10,8 +10,8 @@ use DateTime;
 
 class PostController extends Controller
 {
-    private Post $postModel;
-    private Category $categoryModel;
+    public Post $postModel;
+    public Category $categoryModel;
 
     public function __construct()
     {
@@ -145,9 +145,22 @@ class PostController extends Controller
     /**
      * update post
      */
-    public function update($id, $name, $content)
+    public function update(int $idPost, array $dataPost, array $categories)
     {
-        $this->postModel->updatePost($id, $name, $content);
+        $dataPost["id"] = $idPost;
+        $this->postModel->update($dataPost);
+        $this->updatePostCategories($idPost, $categories);
+    }
+
+    private function updatePostCategories(int $idPost, array $categories)
+    {
+        $this->deletePostCategories($idPost);
+        return $this->insertPostCategories($idPost, $categories);
+    }
+
+    private function deletePostCategories(int $idPost): bool 
+    {
+        return $this->postModel->deletePostCategories($idPost);
     }
 
 
@@ -158,7 +171,7 @@ class PostController extends Controller
         return $this->insertPostCategories($idPost, $categories);
     }
 
-    
+
     public function insertPostCategories(int $idPost, array $categories): bool
     {
         foreach($categories as $category)

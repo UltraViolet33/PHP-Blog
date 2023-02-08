@@ -12,14 +12,11 @@ class Category extends Table
     protected string $id = "id";
 
 
-    /**
-     * get the categories for a post
-     */
-    public function getCategoriesFromPost($idPost)
+
+    public function getCategoriesFromPost(int $idPost): array
     {
         $query = "SELECT c.* FROM category c JOIN post_category pc ON c.id = pc.category_id WHERE pc.post_id = $idPost";
-        $categories = $this->db->read($query);
-        return $categories;
+        return $this->db->read($query);
     }
 
 

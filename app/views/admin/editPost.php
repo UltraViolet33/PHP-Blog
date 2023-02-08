@@ -12,7 +12,7 @@
             <form action="" method="POST">
                 <div class="mb-3">
                     <label for="name" class="form-label">Titre : </label>
-                    <input type="text" value="<?= validateData($post->name) ?>" name='name' class="form-control">
+                    <input type="text" value="<?= $post["name"] ?>" name='name' class="form-control">
                 </div>
                 <div class="mb-3">
                     <label for="categories[]">Catégorie(s)</label>
@@ -28,11 +28,11 @@
                 </div>
                 <div class="form-group mb-3">
                     <label for="content">Contenu : </label>
-                    <textarea class="form-control" rows="10" name="content"><?= validateData($post->content) ?></textarea>
+                    <textarea class="form-control" rows="10" name="content"><?= $post["content"] ?></textarea>
                 </div>
                 <input type="submit" class="btn btn-primary" name="editPost" value="Valider">
             </form>
-            <?= checkError() ?>
+            <?= $this->checkError() ?>
         </div>
     </div>
 </div>

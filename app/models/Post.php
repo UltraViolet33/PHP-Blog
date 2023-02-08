@@ -39,18 +39,20 @@ class Post extends Table
         return $query;
     }
 
-    /**
-     * update post
-     */
-    public function updatePost($id, $name, $content)
+
+
+    public function update(array $data): bool
     {
         $query = "UPDATE post SET name = :name, content = :content WHERE id = :id";
-        $data['id'] = $id;
-        $data['name'] = $name;
-        $data['content'] = $content;
-        $this->db->write($query, $data);
+        return $this->db->write($query, $data);
     }
-    
+
+    public function deletePostCategories(int $id): bool
+    {
+        $query = "DELETE FROM post_category WHERE post_id = :id";
+        return $this->db->write($query, ["id" => $id]);
+    }
+
 
     public function insert(array $data): int
     {
