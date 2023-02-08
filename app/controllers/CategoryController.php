@@ -54,19 +54,17 @@ class CategoryController extends Controller
     /**
      * get one category
      */
-    public function getOneCategory($id)
+    public function getSingleCategory(int $id)
     {
         return $this->categoryModel->find($id);
     }
 
-    /**
-     * update category
-     */
-    public function update($id, $name)
-    {
-        return $this->categoryModel->updateCategory($id, $name);
-    }
 
+
+    public function update(array $data): bool
+    {
+        return $this->categoryModel->update($data);
+    }
 
 
     public function insert(string $name): bool

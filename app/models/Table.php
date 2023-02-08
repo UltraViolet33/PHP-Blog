@@ -41,7 +41,7 @@ class Table
     //     return $this->db->readOneRow($query, ['id' => $id]);
     // }
 
-    protected function find(int $id): array
+    public function find(int $id): array
     {
         $query = "SELECT * FROM $this->table WHERE $this->id = :id";
         return $this->db->readSingleRow($query, ["id" => $id]);

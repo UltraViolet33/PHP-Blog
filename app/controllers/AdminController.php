@@ -121,10 +121,16 @@ class AdminController extends Controller
      */
     public function categories($method = null, $id = null)
     {
+        // var_dump($id);
         switch ($method) {
             case "create":
                 $this->createCategory();
                 die;
+                break;
+            case "update":
+                $this->updateCategory($id);
+                die;
+                break;
         }
         //     if ($method == "delete") {
         //         if ($_POST['token'] == $_SESSION['token']) {
@@ -163,22 +169,23 @@ class AdminController extends Controller
         $this->view("admin/addCategory");
     }
 
-    /**
-     * update one category
-     */
-    private function updateCategory($id)
+
+
+    private function updateCategory(int $id): void
     {
-        if (!empty($_POST)) {
-            if (empty($_POST['name'])) {
-                $_SESSION['error'] = "Veuillez renseigner un nom pour la categorie <br>";
-            } else {
-                $this->categoryController->update($id, $_POST['name']);
-                header("Location: " . ROOT . "admin/categories");
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            if ($this->checkDataForm(["name"])) {
+                $data = ["id" => $id, "name" => $_POST["name"]];
+                $this->categoryController->update($data);
+                header("Location: /admin/categories");
                 return;
             }
+
+            Session::set("error", $this->v->errors());
         }
-        $category = $this->categoryController->getOneCategory($id);
-        $data['category'] = $category[0];
+
+        $category = $this->categoryController->getSingleCategory($id);
+        $data["category"] = $category;
         $this->view("admin/editCategory", $data);
     }
 

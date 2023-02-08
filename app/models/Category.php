@@ -9,6 +9,7 @@ class Category extends Table
 
 
     protected string $table = "category";
+    protected string $id = "id";
 
 
     /**
@@ -32,21 +33,17 @@ class Category extends Table
     }
 
 
-    
+
     public function insert(string $name): bool
     {
         $query = "INSERT INTO category(name) VALUES (:name)";
         return $this->db->write($query, ["name" => $name]);
     }
 
-    /**
-     * update category
-     */
-    public function updateCategory($id, $name)
+
+    public function update(array $data): bool
     {
         $query = "UPDATE category SET name = :name WHERE id = :id";
-        $data['id'] = $id;
-        $data['name'] = $name;
-        $this->db->write($query, $data);
+        return $this->db->write($query, $data);
     }
 }
