@@ -4,10 +4,21 @@ namespace App\core;
 
 use App\helpers\Session;
 use App\models\Table;
+use Valitron\Validator;
 
 abstract class Controller
 {
     const VIEW_PATH  = ROOT_PATH . "app" . DIRECTORY_SEPARATOR . "views";
+
+    protected Validator $v; 
+
+
+    protected function checkDataForm(array $data): bool
+    {
+        $this->v = new Validator($_POST);
+        $this->v->rule("required", $data);
+        return $this->v->validate();
+    }
 
     // protected $model;
 

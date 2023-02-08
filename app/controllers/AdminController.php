@@ -121,6 +121,11 @@ class AdminController extends Controller
      */
     public function categories($method = null, $id = null)
     {
+        switch ($method) {
+            case "create":
+                $this->createCategory();
+                die;
+        }
         //     if ($method == "delete") {
         //         if ($_POST['token'] == $_SESSION['token']) {
         //             $this->deleteCategory($id);
@@ -141,20 +146,20 @@ class AdminController extends Controller
         $this->view('admin/categories', $categories);
     }
 
-    /**
-     * create a category
-     */
-    private function createCategory()
+
+
+    private function createCategory(): void
     {
-        if (!empty($_POST)) {
-            if (empty($_POST['name'])) {
-                $_SESSION['error'] = "Veuillez renseigner un nom pour la categorie <br>";
-            } else {
-                $this->categoryController->insert($_POST['name']);
-                header("Location: " . ROOT . "admin/categories");
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            if ($this->checkDataForm(["name"])) {
+                $this->categoryController->insert($_POST["name"]);
+                header("Location: /admin/categories");
                 return;
             }
+
+            Session::set("error", $this->v->errors());
         }
+
         $this->view("admin/addCategory");
     }
 

@@ -11,7 +11,7 @@ class UserController extends Controller
 {
     protected User $model;
 
-    private Validator $v;
+    // private Validator $v;
 
 
     public function __construct()
@@ -78,12 +78,12 @@ class UserController extends Controller
     }
 
 
-    private function checkDataForm(array $data): bool
-    {
-        $this->v = new Validator($_POST);
-        $this->v->rule("required", $data);
-        return $this->v->validate();
-    }
+    // private function checkDataForm(array $data): bool
+    // {
+    //     $this->v = new Validator($_POST);
+    //     $this->v->rule("required", $data);
+    //     return $this->v->validate();
+    // }
 
 
     public function index(): void

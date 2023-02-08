@@ -12,11 +12,11 @@
             <form action="" method="POST">
                 <div class="mb-3">
                     <label for="name" class="form-label">Nom de la catégorie : </label>
-                    <input type="text" value="<?= isset($_POST['name']) ? $_POST['name'] : ""; ?>" name='name' class="form-control">
+                    <input type="text" value="<?= isset($_POST['name']) ? $this->validateData($_POST['name']) : ""; ?>" name='name' class="form-control">
                 </div>
                 <input type="submit" class="btn btn-primary" name="addCategory" value="Valider">
             </form>
-            <?= checkError() ?>
+            <?= $this->checkError() ?>
         </div>
     </div>
 </div>

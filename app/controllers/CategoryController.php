@@ -33,7 +33,7 @@ class CategoryController extends Controller
         $data['previousLink'] = $paginateCategories->previousLink();
         return $data;
     }
-    
+
 
     /**
      * delete one category
@@ -67,12 +67,11 @@ class CategoryController extends Controller
         return $this->categoryModel->updateCategory($id, $name);
     }
 
-    /**
-     * insert a category
-     */
-    public function insert($name)
+
+
+    public function insert(string $name): bool
     {
-        return $this->categoryModel->insertCategory($name);
+        return $this->categoryModel->insert($name);
     }
 
     public function getCategoriesPost($idPost)

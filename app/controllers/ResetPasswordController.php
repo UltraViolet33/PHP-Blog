@@ -11,7 +11,7 @@ class ResetPasswordController extends Controller
 {
     protected User $model;
 
-    private Validator $v;
+    // private Validator $v;
 
     public function __construct()
     {
@@ -76,12 +76,12 @@ class ResetPasswordController extends Controller
     }
 
     
-    protected function checkDataForm(array $data): bool
-    {
-        $this->v = new Validator($_POST);
-        $this->v->rule("required", $data);
-        return $this->v->validate();
-    }
+    // protected function checkDataForm(array $data): bool
+    // {
+    //     $this->v = new Validator($_POST);
+    //     $this->v->rule("required", $data);
+    //     return $this->v->validate();
+    // }
 
 
     public function update()

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\models;
+
 use App\models\Table;
 
 class Category extends Table
@@ -9,7 +10,7 @@ class Category extends Table
 
     protected string $table = "category";
 
-    
+
     /**
      * get the categories for a post
      */
@@ -30,14 +31,12 @@ class Category extends Table
         return $categories;
     }
 
-    /**
-     * insert a category in the BDD
-     */
-    public function insertCategory($name)
+
+    
+    public function insert(string $name): bool
     {
         $query = "INSERT INTO category(name) VALUES (:name)";
-        $data['name'] = $name;
-        $this->db->write($query, $data);
+        return $this->db->write($query, ["name" => $name]);
     }
 
     /**
