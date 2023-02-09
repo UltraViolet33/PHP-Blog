@@ -75,6 +75,10 @@ class PostController extends Controller
             $post->content = $this->getExtractContent($post->content);
         }
 
+        // var_dump($posts);
+        // echo "ij";
+        // die;
+
         $data['posts'] = $posts;
         $data['nextLink'] = $paginatePosts->nextLink();
         $data['previousLink'] = $paginatePosts->previousLink();

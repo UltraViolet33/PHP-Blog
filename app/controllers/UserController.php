@@ -4,14 +4,11 @@ namespace App\controllers;
 
 use App\core\Controller;
 use App\models\User;
-use Valitron\Validator;
 use App\helpers\Session;
 
 class UserController extends Controller
 {
     protected User $model;
-
-    // private Validator $v;
 
 
     public function __construct()
@@ -81,14 +78,6 @@ class UserController extends Controller
     }
 
 
-    // private function checkDataForm(array $data): bool
-    // {
-    //     $this->v = new Validator($_POST);
-    //     $this->v->rule("required", $data);
-    //     return $this->v->validate();
-    // }
-
-
     public function index(): void
     {
         $this->isUserLoggedIn();
@@ -97,18 +86,17 @@ class UserController extends Controller
         $this->view("profil", $data);
     }
 
+
     public function isUserLoggedIn(): void
     {
+        
         if (!Session::get("user")) {
             header("Location: /user/login");
-            http_response_code(401);
+            // http_response_code(401);
             return;
         }
     }
 
-    public function add(): void
-    {
-    }
 
     public function edit(int $id): void
     {
@@ -203,9 +191,5 @@ class UserController extends Controller
         }
 
         return true;
-    }
-
-    public function delete(): void
-    {
     }
 }

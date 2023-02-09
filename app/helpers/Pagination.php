@@ -73,11 +73,6 @@ class Pagination
     {
         $totalItems =  $this->db->readSingleRow($this->queryCount, [], PDO::FETCH_NUM);
         $totalItems = $totalItems[0];
-        if ($totalItems == 0) {
-            header("Location: /{$this->item}");
-            die;
-        }
-
         return  (int)ceil($totalItems / $this->perPage);
     }
 
