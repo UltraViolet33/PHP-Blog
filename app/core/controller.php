@@ -3,7 +3,6 @@
 namespace App\core;
 
 use App\helpers\Session;
-use App\models\Table;
 use Valitron\Validator;
 
 abstract class Controller
@@ -20,49 +19,7 @@ abstract class Controller
         return $this->v->validate();
     }
 
-    // protected $model;
 
-
-    /**
-     * index
-     *
-     * @return void
-     */
-    // abstract public function index(): void;
-
-
-    // /**
-    //  * add
-    //  *
-    //  * @return void
-    //  */
-    // abstract public function add(): void;
-
-
-    // /**
-    //  * edit
-    //  *
-    //  * @param int $id
-    //  * @return void
-    //  */
-    // abstract public function edit(int $id): void;
-
-
-    // /**
-    //  * delete
-    //  *
-    //  * @return void
-    //  */
-    // abstract public function delete(): void;
-
-
-    /**
-     * view
-     * load a view file
-     * @param string $path
-     * @param array $data
-     * @return void
-     */
     public function view(string $path, array $data = []): void
     {
         extract($data);
@@ -76,11 +33,6 @@ abstract class Controller
     }
 
 
-    /**
-     * checkError
-     *
-     * @return void
-     */
     protected function checkError(string $key = "error"): void
     {
         $errors = "";
@@ -108,14 +60,6 @@ abstract class Controller
     }
 
 
-
-
-    /**
-     * validateData
-     *
-     * @param  mixed $data
-     * @return mixed
-     */
     protected function validateData(mixed $data): mixed
     {
         $data = trim($data);
@@ -124,52 +68,3 @@ abstract class Controller
         return $data;
     }
 }
-// class Controller
-// {
-
-//     public function view(string $path, array $data = []): void
-//     {
-//         extract($data);
-
-//         if (file_exists("../app/view/" . $path . ".php")) {
-//             include "../app/view/" . $path . ".php";
-//         } else {
-//             include "../app/view/404.php";
-//         }
-//     }
-
-
-//     public function loadModel(string $model): object|bool
-//     {
-//         if (file_exists("../app/model/" .  strtolower($model) . ".php")) {
-//             include "../app/model/" . strtolower($model) . ".php";
-//             return $a = new $model();
-//         }
-//         return false;
-//     }
-
-
-//     public function loadController(string $controller): object|bool
-//     {
-//         if (file_exists("../app/controller/" .  strtolower($controller) . ".php")) {
-//             include "../app/controller/" . strtolower($controller) . ".php";
-//             return $a = new $controller();
-//         }
-//         return false;
-//     }
-
-
-//     public function checkLogin(): bool
-//     {
-//         return !empty($_SESSION['user']);
-//     }
-
-
-//     public function checkAdminLogin(): void
-//     {
-//         if (empty($_SESSION['user']) || $_SESSION['user']['isAdmin'] != 1) {
-//             header("Location: " . ROOT . "login");
-//             return;
-//         }
-//     }
-// }

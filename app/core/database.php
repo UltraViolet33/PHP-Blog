@@ -29,13 +29,13 @@ class Database implements DatabaseInterface
   }
 
 
-  public static function getInstance(): self
-  {
-    if (is_null(self::$instance)) {
-      self::$instance = new Database();
-    }
-    return self::$instance;
-  }
+  // public static function getInstance(): self
+  // {
+  //   if (is_null(self::$instance)) {
+  //     self::$instance = new Database();
+  //   }
+  //   return self::$instance;
+  // }
 
 
   public function read(string $query, array $data = array()): array|bool

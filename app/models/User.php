@@ -6,7 +6,7 @@ use App\models\Table;
 
 class User extends Table
 {
-
+    
     protected string $table = "user";
     protected string $id = "id";
 
@@ -76,7 +76,7 @@ class User extends Table
         $query = "UPDATE user SET password = :password WHERE id = :id";
         return $this->db->write($query, $data);
     }
-    
+
 
     public function update(array $data): bool
     {

@@ -6,11 +6,8 @@ use App\models\Table;
 
 class Category extends Table
 {
-
-
     protected string $table = "category";
     protected string $id = "id";
-
 
 
     public function getCategoriesFromPost(int $idPost): array
@@ -27,7 +24,6 @@ class Category extends Table
     }
 
 
-
     public function insert(string $name): bool
     {
         $query = "INSERT INTO category(name) VALUES (:name)";
@@ -40,10 +36,4 @@ class Category extends Table
         $query = "UPDATE category SET name = :name WHERE id = :id";
         return $this->db->write($query, $data);
     }
-
-    // public function delete(int $id): bool
-    // {
-    //     $query = "DELETE FROM category WHERE id = :id";
-    //     return $this->db->write($query, ["id" => "id"]);
-    // }
 }

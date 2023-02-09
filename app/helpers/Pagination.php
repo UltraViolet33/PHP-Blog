@@ -29,7 +29,6 @@ class Pagination
     }
 
 
-
     public function getItems(): array
     {
         $offset = $this->getOffset();
@@ -77,7 +76,6 @@ class Pagination
     }
 
 
-
     public function nextLink(): string|null
     {
         $this->currentPage = $this->getCurrentPage();
@@ -90,7 +88,6 @@ class Pagination
         $link = ROOT . "{$this->item}?page=$nextpage";
         return "<a class='btn btn-primary ms-auto' href='$link'>Page suivante</a>";
     }
-
 
 
     public function previousLink(): string|null

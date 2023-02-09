@@ -89,10 +89,9 @@ class UserController extends Controller
 
     public function isUserLoggedIn(): void
     {
-        
+
         if (!Session::get("user")) {
             header("Location: /user/login");
-            // http_response_code(401);
             return;
         }
     }
@@ -117,7 +116,6 @@ class UserController extends Controller
         if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["changePassword"])) {
 
             if ($this->checkEditPasswordData()) {
-
                 $data = ["id" => $id, "password" => hash('sha1', $_POST["newPassword"])];
                 $this->model->updatePassword($data);
                 header("Location: /user/profil");
