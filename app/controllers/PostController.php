@@ -13,6 +13,7 @@ class PostController extends Controller
     public Post $postModel;
     public Category $categoryModel;
 
+
     public function __construct()
     {
         $this->postModel = new Post();
@@ -22,22 +23,9 @@ class PostController extends Controller
 
     public function index(): void
     {
-        $queryCount = $this->postModel->getQueryCount();
-        $queryItems = $this->postModel->getQueryEverything();
-        $paginatePosts = new Pagination($queryCount, $queryItems, 12, "post");
-        $posts = $paginatePosts->getItems();
-
-        foreach ($posts as $post) {
-            $post->created_at = $this->dateToString($post->created_at);
-            $post->content = $this->getExtractContent($post->content);
-        }
-
-        $data['posts'] = $posts;
-        $data['nextLink'] = $paginatePosts->nextLink();
-        $data['previousLink'] = $paginatePosts->previousLink();
+        $data = $this->getPaginatedPosts("post");
         $this->view("posts/index", $data);
     }
-
 
 
     public function details(int $id): void
@@ -54,11 +42,9 @@ class PostController extends Controller
     }
 
 
-
     public function category(int $id): void
     {
         $category = $this->categoryModel->find($id);
-
 
         if (!$category) {
             $this->notFound();
@@ -75,16 +61,11 @@ class PostController extends Controller
             $post->content = $this->getExtractContent($post->content);
         }
 
-        // var_dump($posts);
-        // echo "ij";
-        // die;
-
         $data['posts'] = $posts;
         $data['nextLink'] = $paginatePosts->nextLink();
         $data['previousLink'] = $paginatePosts->previousLink();
         $this->view("posts/index", $data);
     }
-
 
 
     private function dateToString(string $date): string
@@ -101,7 +82,6 @@ class PostController extends Controller
         }
         return substr($content, 0, 50) . "...";
     }
-
 
 
     public function getPaginatedPosts(string $path): array
@@ -122,15 +102,6 @@ class PostController extends Controller
         return $data;
     }
 
-    /**
-     * delete one post
-     */
-    // public function delete2($id)
-    // {
-    //     $this->postModel->delete($id);
-    // }
-
-
 
     public function delete(int $id): bool
     {
@@ -138,9 +109,6 @@ class PostController extends Controller
     }
 
 
-    /**
-     * update post
-     */
     public function update(int $idPost, array $dataPost, array $categories)
     {
         $dataPost["id"] = $idPost;
@@ -148,17 +116,18 @@ class PostController extends Controller
         $this->updatePostCategories($idPost, $categories);
     }
 
+
     private function updatePostCategories(int $idPost, array $categories)
     {
         $this->deletePostCategories($idPost);
         return $this->insertPostCategories($idPost, $categories);
     }
 
+
     private function deletePostCategories(int $idPost): bool
     {
         return $this->postModel->deletePostCategories($idPost);
     }
-
 
 
     public function insert(array $dataPost, array $categories): bool
@@ -183,13 +152,5 @@ class PostController extends Controller
     {
         http_response_code(404);
         $this->view("404");
-    }
-
-    public function add(): void
-    {
-    }
-
-    public function edit(int $id): void
-    {
     }
 }
