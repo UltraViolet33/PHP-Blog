@@ -10,6 +10,7 @@ class CategoryController extends Controller
 {
     private $categoryModel;
 
+
     public function __construct()
     {
         $this->categoryModel = new Category();
@@ -35,12 +36,10 @@ class CategoryController extends Controller
     }
 
 
-
     public function delete(int $id): bool
     {
         return $this->categoryModel->delete($id);
     }
-
 
 
     public function getAllCategories(): array
@@ -48,9 +47,7 @@ class CategoryController extends Controller
         return $this->categoryModel->selectAll();
     }
 
-    /**
-     * get one category
-     */
+
     public function getSingleCategory(int $id)
     {
         return $this->categoryModel->find($id);
@@ -68,6 +65,7 @@ class CategoryController extends Controller
         return $this->categoryModel->insert($name);
     }
 
+    
     public function getCategoriesPost(int $idPost): array
     {
         return $this->categoryModel->getCategoriesFromPost($idPost);
