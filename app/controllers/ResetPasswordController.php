@@ -4,14 +4,12 @@ namespace App\controllers;
 
 use App\core\Controller;
 use App\models\User;
-use Valitron\Validator;
 use App\helpers\Session;
 
 class ResetPasswordController extends Controller
 {
     protected User $model;
 
-    // private Validator $v;
 
     public function __construct()
     {
@@ -75,16 +73,8 @@ class ResetPasswordController extends Controller
         return true;
     }
 
-    
-    // protected function checkDataForm(array $data): bool
-    // {
-    //     $this->v = new Validator($_POST);
-    //     $this->v->rule("required", $data);
-    //     return $this->v->validate();
-    // }
 
-
-    public function update()
+    public function update(): void
     {
         $this->checkTokenInUrl();
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -118,7 +108,7 @@ class ResetPasswordController extends Controller
     }
 
 
-    private function checkTokenInUrl()
+    private function checkTokenInUrl(): void
     {
         if (empty($_GET['token'])) {
             header("Location: user/login");
