@@ -1,4 +1,4 @@
-<?php $this->view("inc/header", $data)?>
+<?php $this->view("inc/header", $data) ?>
 <div class="container">
     <h1 class="text-center">Profil : <?= $data['profil']["username"]  ?></h1>
     <div class="row justify-content-center">

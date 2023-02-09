@@ -2,7 +2,7 @@
 
 use App\helpers\Session;
 
- $this->view("inc/header", $data); ?>
+$this->view("inc/header", $data); ?>
 <h1 class="text-center">Les Catégories</h1>
 <a class="btn btn-primary" href="<?= ROOT ?>admin/categories/create">Ajouter une catégorie</a>
 <div class="row justify-content-center">
