@@ -25,10 +25,7 @@ abstract class Controller
         extract($data);
 
         if (file_exists(Controller::VIEW_PATH . DIRECTORY_SEPARATOR . $path . ".php")) {
-
             include Controller::VIEW_PATH . DIRECTORY_SEPARATOR . $path . ".php";
-        } else {
-            include Controller::VIEW_PATH . DIRECTORY_SEPARATOR . "404.php";
         }
     }
 

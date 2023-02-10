@@ -32,7 +32,7 @@ class PostController extends Controller
     {
         $post = $this->postModel->find($id);
         if (!$post) {
-            $this->notFound();
+            (new NotFoundController())->index();
             return;
         }
 
@@ -47,7 +47,7 @@ class PostController extends Controller
         $category = $this->categoryModel->find($id);
 
         if (!$category) {
-            $this->notFound();
+            (new NotFoundController())->index();
             return;
         }
 
@@ -145,12 +145,5 @@ class PostController extends Controller
         }
 
         return true;
-    }
-
-
-    public function notFound()
-    {
-        http_response_code(404);
-        $this->view("404");
     }
 }

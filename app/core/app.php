@@ -1,6 +1,7 @@
 <?php
 
 namespace App\core;
+
 use App\core\Controller;
 
 
@@ -37,7 +38,6 @@ class App
 
     private function getController(array $url): Controller
     {
-
         if (file_exists(App::PATH_TO_CONTROLLERS . strtolower($url[0]) . "Controller.php")) {
 
             $controller = ucfirst($url[0]) . "Controller";
@@ -50,7 +50,8 @@ class App
             }
         }
 
-        // redirect on 404
+        $controller = App::NAMESPACE_CONTROLLERS . "NotFoundController";
+        return new $controller();
     }
 
 
