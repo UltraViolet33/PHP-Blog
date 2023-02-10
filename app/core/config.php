@@ -1,18 +1,12 @@
 <?php
 
-// define("WEBSITE_TITLE", "");
+namespace App\core;
 
-//database
-define("DB_NAME", "blog");
-define("DB_USER", "root");
-define("DB_PASS", "");
-define("DB_TYPE", 'mysql');
-define("DB_HOST", "localhost");
-
-define("DEBUG", true);
-
-if (DEBUG) {
-    ini_set('display_errors', 1);
-} else {
-    ini_set('display_errors', 0);
+class Config
+{
+    public static string $dbType = "mysql";
+    public static string $dbHost = "127.0.0.1";
+    public static string $dbName = "blog";
+    public static string $dbUser = "root";
+    public static string $dbPassword = "";
 }

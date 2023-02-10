@@ -1,5 +1,11 @@
 {
     "require": {
-        "fakerphp/faker": "^1.19"
+        "fakerphp/faker": "^1.19",
+        "vlucas/valitron": "^1.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
     }
 }

@@ -1,24 +1,26 @@
 <?php
 
-class Database
+namespace App\core;
+
+use App\core\Config;
+use App\models\interfaces\DatabaseInterface;
+use PDO;
+
+class Database implements DatabaseInterface
 {
 
-  private $PDOInstance = null;
-  private static $instance = null;
+  private ?PDO $PDOInstance = null;
+  private static ?self $instance = null;
 
-  private function __construct()
+
+  public function __construct()
   {
-    $string = DB_TYPE . ":host=" . DB_HOST . ";dbname=" . DB_NAME;
-    $this->PDOInstance  = new PDO($string, DB_USER, DB_PASS, [
-      PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-    ]);
+    $string = Config::$dbType . ":host=" . Config::$dbHost . ";dbname=" . Config::$dbName;
+    $this->PDOInstance  = new PDO($string, Config::$dbUser, Config::$dbPassword);
   }
 
 
-  /**
-   * get the pdo instance
-   */
-  public static function getInstance()
+  public static function connect(): self
   {
     if (is_null(self::$instance)) {
       self::$instance = new Database();
@@ -26,45 +28,34 @@ class Database
     return self::$instance;
   }
 
-  public static function getNewInstance()
-  {
-    return new Database();
-  }
 
-  /**
-   * read on the BDD
-   */
-  public function read($query, $data = array(), $method = PDO::FETCH_OBJ)
+  public function read(string $query, array $data = array()): array
   {
     $statement = $this->PDOInstance->prepare($query);
-    $result = $statement->execute($data);
+    $statement->execute($data);
+    $data = $statement->fetchAll(PDO::FETCH_OBJ);
 
-    if ($result) {
-      $data = $statement->fetchAll($method);
-      if (is_array($data) && count($data) > 0) {
-        return $data;
-      }
-    }
-    return false;
+    return $data ? $data : [];
   }
 
-  /**
-   * write on the BDD
-   */
-  public function write($query, $data = array())
+
+  public function readSingleRow(string $query, array $data = [], int $method = PDO::FETCH_ASSOC): array
   {
     $statement = $this->PDOInstance->prepare($query);
-    $result = $statement->execute($data);
-    if ($result) {
-      return true;
-    }
-    return false;
+    $statement->execute($data);
+    $data = $statement->fetch($method);
+    return $data ? $data : [];
   }
 
-  /**
-   * return the last id inserted
-   */
-  public function getLastInsertId()
+
+  public function write(string $query, array $data = array()): bool
+  {
+    $statement = $this->PDOInstance->prepare($query);
+    return $statement->execute($data);
+  }
+
+
+  public function getLastInsertId(): int
   {
     return $this->PDOInstance->lastInsertId();
   }

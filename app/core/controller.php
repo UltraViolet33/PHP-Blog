@@ -1,51 +1,70 @@
 <?php
 
-class Controller
+namespace App\core;
+
+use App\helpers\Session;
+use Valitron\Validator;
+
+abstract class Controller
 {
+    const VIEW_PATH  = ROOT_PATH . "app" . DIRECTORY_SEPARATOR . "views";
+
+    protected Validator $v;
+
+
+    protected function checkDataForm(array $data): bool
+    {
+        $this->v = new Validator($_POST);
+        $this->v->rule("required", $data);
+        return $this->v->validate();
+    }
+
 
     public function view(string $path, array $data = []): void
     {
         extract($data);
 
-        if (file_exists("../app/view/" . $path . ".php")) {
-            include "../app/view/" . $path . ".php";
-        } else {
-            include "../app/view/404.php";
+        if (file_exists(Controller::VIEW_PATH . DIRECTORY_SEPARATOR . $path . ".php")) {
+            include Controller::VIEW_PATH . DIRECTORY_SEPARATOR . $path . ".php";
         }
     }
 
 
-    public function loadModel(string $model): object|bool
+    protected function checkError(string $key = "error"): void
     {
-        if (file_exists("../app/model/" .  strtolower($model) . ".php")) {
-            include "../app/model/" . strtolower($model) . ".php";
-            return $a = new $model();
-        }
-        return false;
-    }
+        $errors = "";
+        $htmlError = "";
 
+        $errors = Session::get($key);
 
-    public function loadController(string $controller): object|bool
-    {
-        if (file_exists("../app/controller/" .  strtolower($controller) . ".php")) {
-            include "../app/controller/" . strtolower($controller) . ".php";
-            return $a = new $controller();
-        }
-        return false;
-    }
-
-
-    public function checkLogin(): bool
-    {
-        return !empty($_SESSION['user']);
-    }
-
-
-    public function checkAdminLogin(): void
-    {
-        if (empty($_SESSION['user']) || $_SESSION['user']['isAdmin'] != 1) {
-            header("Location: " . ROOT . "login");
+        if (!$errors) {
             return;
         }
+
+        if (is_array($errors)) {
+            foreach ($errors as $error) {
+                $htmlError .= "$error[0]<br>";
+            }
+        } else {
+            $htmlError = $errors;
+        }
+
+        echo  '<div class="bg-danger p-3">
+                    <span style="font-size:24px" >' . $htmlError . '</span>
+                </div>';
+
+        Session::unsetKey("error");
+    }
+
+
+
+
+
+    protected function validateData(mixed $data): mixed
+    {
+        $data = trim($data);
+        $data = htmlspecialchars($data);
+        $data = stripslashes($data);
+        return $data;
     }
 }
