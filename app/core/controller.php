@@ -9,7 +9,7 @@ abstract class Controller
 {
     const VIEW_PATH  = ROOT_PATH . "app" . DIRECTORY_SEPARATOR . "views";
 
-    protected Validator $v; 
+    protected Validator $v;
 
 
     protected function checkDataForm(array $data): bool
@@ -55,6 +55,9 @@ abstract class Controller
 
         Session::unsetKey("error");
     }
+
+
+
 
 
     protected function validateData(mixed $data): mixed

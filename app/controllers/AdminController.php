@@ -51,8 +51,9 @@ class AdminController extends Controller
             return;
         }
 
-        $posts = $this->postController->getPaginatedPosts("admin/posts");
-        $this->view("admin/posts", $posts);
+        $data["posts"] = $this->postController->getPaginatedPosts("admin/posts"); 
+        $data["token"] = Session::get("token");
+        $this->view("admin/posts", $data);
     }
 
 
@@ -147,9 +148,10 @@ class AdminController extends Controller
             $this->callCategoryMethod($method, $id);
             return;
         }
-
-        $categories = $this->categoryController->getPaginatedCategories("admin/categories");
-        $this->view('admin/categories', $categories);
+        
+        $data["categories"] = $this->categoryController->getPaginatedCategories("admin/categories");
+        $data["token"] = Session::get("token");
+        $this->view('admin/categories', $data);
     }
 
 

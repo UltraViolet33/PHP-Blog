@@ -24,7 +24,7 @@
                 </div>
                 <div class="form-group mb-3">
                     <label for="content">Contenu : </label>
-                    <textarea class="form-control" rows="10" name="content"><?= isset($_POST['content']) ? $_POST['content'] : ""; ?></textarea>
+                    <textarea class="form-control" rows="10" name="content"><?= isset($_POST['content']) ? $this->validateData($_POST['content']) : ""; ?></textarea>
                 </div>
                 <input type="submit" class="btn btn-primary" name="addPost" value="Valider">
             </form>

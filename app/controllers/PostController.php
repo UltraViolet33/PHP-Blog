@@ -98,6 +98,7 @@ class PostController extends Controller
 
         $data['posts'] = $posts;
         $data['nextLink'] = $paginatePosts->nextLink();
+        
         $data['previousLink'] = $paginatePosts->previousLink();
         return $data;
     }

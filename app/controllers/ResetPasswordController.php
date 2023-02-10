@@ -30,7 +30,7 @@ class ResetPasswordController extends Controller
             }
         }
 
-        $this->view("resetPassword");
+        $this->view("user/resetPassword");
     }
 
 
@@ -86,7 +86,7 @@ class ResetPasswordController extends Controller
             }
         }
 
-        $this->view('formResetPwd');
+        $this->view('user/formResetPwd');
     }
 
 

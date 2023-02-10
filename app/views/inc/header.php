@@ -28,7 +28,7 @@ use App\helpers\Session; ?>
                     <li class="nav-item">
                         <a href="<?= ROOT ?>category" class="nav-link text-white">Categories</a>
                     </li>
-                    <?php if (isset($_SESSION['user'])) : ?>
+                    <?php if (Session::get("user")) : ?>
 
                         <li class="nav-item">
                             <a href="<?= ROOT ?>user" class="nav-link text-white"><?= Session::get("user")["username"] ?></a>
@@ -36,14 +36,12 @@ use App\helpers\Session; ?>
                         <li class="nav-item">
                             <a href="<?= ROOT ?>user/logout" onclick="return confirm()" class="nav-link text-white">Se déconnecter</a>
                         </li>
-                        <?php if ($_SESSION['user']['isAdmin'] == 1) : ?>
-                            <li class="nav-item">
-                                <a href="<?= ROOT ?>admin/posts" class="nav-link text-white">ArticlesAdmin</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="<?= ROOT ?>admin/categories" class="nav-link text-white">CategoriesAdmin</a>
-                            </li>
-                        <?php endif ?>
+                        <li class="nav-item">
+                            <a href="<?= ROOT ?>admin/posts" class="nav-link text-white">ArticlesAdmin</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?= ROOT ?>admin/categories" class="nav-link text-white">CategoriesAdmin</a>
+                        </li>
                     <?php else : ?>
                         <li class="nav-item">
                             <a href="<?= ROOT ?>user/login" class="nav-link text-white">Se connecter</a>

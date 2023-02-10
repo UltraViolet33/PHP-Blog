@@ -27,7 +27,7 @@ class UserController extends Controller
             }
         }
 
-        $this->view("login");
+        $this->view("user/login");
     }
 
 
@@ -83,13 +83,12 @@ class UserController extends Controller
         $this->isUserLoggedIn();
         $user = Session::get("user");
         $data["profil"] =  $this->model->find($user["id"]);
-        $this->view("profil", $data);
+        $this->view("user/profil", $data);
     }
 
 
     public function isUserLoggedIn(): void
     {
-
         if (!Session::get("user")) {
             header("Location: /user/login");
             return;
@@ -97,8 +96,13 @@ class UserController extends Controller
     }
 
 
-    public function edit(int $id): void
+    public function edit(?int $id = null): void
     {
+        $this->isUserLoggedIn();
+        if ($id == null) {
+            header("Location: /user");
+            return;
+        }
         if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["editProfil"])) {
             if ($this->checkEditUserData()) {
                 if (!$this->model->checkIfEmailAlreadyExists(["id" => $id, "email" => $_POST["email"]])) {
@@ -123,10 +127,9 @@ class UserController extends Controller
             }
         }
 
-        $this->isUserLoggedIn();
         $user = Session::get("user");
         $data["profil"] =  $this->model->find($user["id"]);
-        $this->view("updateProfil", $data);
+        $this->view("user/updateProfil", $data);
     }
 
 

@@ -19,8 +19,8 @@
     <?php endif; ?>
 </div>
 <div class="d-flex justify-content-between my-3">
-    <?= $data['previousLink'] ?>
-    <?= $data['nextLink'] ?>
+    <?= $previousLink ?>
+    <?= $nextLink ?>
 </div>
 </div>
 <?php $this->view("inc/footer", $data); ?>

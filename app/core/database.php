@@ -29,28 +29,15 @@ class Database implements DatabaseInterface
   }
 
 
-  // public static function getInstance(): self
-  // {
-  //   if (is_null(self::$instance)) {
-  //     self::$instance = new Database();
-  //   }
-  //   return self::$instance;
-  // }
-
-
-  public function read(string $query, array $data = array()): array|bool
+  public function read(string $query, array $data = array()): array
   {
     $statement = $this->PDOInstance->prepare($query);
-    $result = $statement->execute($data);
+    $statement->execute($data);
+    $data = $statement->fetchAll(PDO::FETCH_OBJ);
 
-    if ($result) {
-      $data = $statement->fetchAll(PDO::FETCH_OBJ);
-      if (is_array($data) && count($data) > 0) {
-        return $data;
-      }
-    }
-    return [];
+    return $data ? $data : [];
   }
+
 
   public function readSingleRow(string $query, array $data = [], int $method = PDO::FETCH_ASSOC): array
   {

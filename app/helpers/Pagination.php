@@ -93,7 +93,7 @@ class Pagination
     public function previousLink(): string|null
     {
         if ($this->currentPage <= 1) {
-            return null;
+            return "";
         }
 
         $this->currentPage = $this->getCurrentPage();
