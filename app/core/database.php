@@ -2,7 +2,6 @@
 
 namespace App\core;
 
-use App\core\Config;
 use App\models\interfaces\DatabaseInterface;
 use PDO;
 
