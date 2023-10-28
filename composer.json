@@ -1,7 +1,8 @@
 {
     "require": {
         "fakerphp/faker": "^1.19",
-        "vlucas/valitron": "^1.4"
+        "vlucas/valitron": "^1.4",
+        "vlucas/phpdotenv": "^5.5"
     },
     "autoload": {
         "psr-4": {

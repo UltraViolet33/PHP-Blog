@@ -15,8 +15,8 @@ class Database implements DatabaseInterface
 
   public function __construct()
   {
-    $string = Config::$dbType . ":host=" . Config::$dbHost . ";dbname=" . Config::$dbName;
-    $this->PDOInstance  = new PDO($string, Config::$dbUser, Config::$dbPassword);
+    $string = $_ENV["DB_TYPE"] . ":host=" . $_ENV["DB_HOST"] . ";dbname=" . $_ENV["DB_NAME"];
+    $this->PDOInstance  = new PDO($string, $_ENV["DB_USER"], $_ENV["DB_PASSWORD"]);
   }
 
 
