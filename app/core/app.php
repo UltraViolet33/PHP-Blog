@@ -15,7 +15,6 @@ class App
     const NAMESPACE_CONTROLLERS = "App" . DIRECTORY_SEPARATOR . "controllers" . DIRECTORY_SEPARATOR;
 
 
-
     public function __construct()
     {
         $url = $this->parseURL();
@@ -39,14 +38,11 @@ class App
     private function getController(array $url): Controller
     {
         if (file_exists(App::PATH_TO_CONTROLLERS . strtolower($url[0]) . "Controller.php")) {
-
             $controller = ucfirst($url[0]) . "Controller";
             $fullController = App::NAMESPACE_CONTROLLERS . $controller;
 
             if (class_exists($fullController)) {
-                $controller = new $fullController();
-
-                return $controller;
+                return  new $fullController();
             }
         }
 
@@ -55,15 +51,12 @@ class App
     }
 
 
-
     private function getMethod(array $url): string
     {
         if (isset($url[1])) {
-
             $url[1] = strtolower($url[1]);
             if (method_exists($this->controller, $url[1])) {
-                $method = $url[1];
-                return $method;
+                return $url[1];
             }
         }
         return "index";
