@@ -68,7 +68,7 @@ class PostController extends Controller
     }
 
 
-    private function dateToString(string $date): string
+    public function dateToString(string $date): string
     {
         $dateFormat = new DateTime($date);
         return $dateFormat->format("m/d/Y");

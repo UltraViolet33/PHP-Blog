@@ -7,7 +7,7 @@ use App\core\Controller;
 
 class App
 {
-    private Controller $controller;
+    private  $controller;
     protected string $method = "index";
     protected array $params;
 
@@ -15,7 +15,7 @@ class App
     const NAMESPACE_CONTROLLERS = "App" . DIRECTORY_SEPARATOR . "controllers" . DIRECTORY_SEPARATOR;
 
 
-    public function __construct()
+    public function __construct($container)
     {
         $url = $this->parseURL();
 
@@ -24,7 +24,13 @@ class App
         $this->params = (count($url) > 2) ? [$url[2]] : [];
         $this->params = array_slice($url, 2);
 
+        $this->controller = $container->get("$this->controller");
+        // var_dump($this->controller);
+        // die;
+
         call_user_func_array([$this->controller, $this->method], $this->params);
+
+
     }
 
 
@@ -35,19 +41,19 @@ class App
     }
 
 
-    private function getController(array $url): Controller
+    private function getController(array $url)
     {
         if (file_exists(App::PATH_TO_CONTROLLERS . strtolower($url[0]) . "Controller.php")) {
             $controller = ucfirst($url[0]) . "Controller";
             $fullController = App::NAMESPACE_CONTROLLERS . $controller;
 
             if (class_exists($fullController)) {
-                return  new $fullController();
+                return   $fullController;
             }
         }
 
         $controller = App::NAMESPACE_CONTROLLERS . "NotFoundController";
-        return new $controller();
+        return  $controller;
     }
 
 

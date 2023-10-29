@@ -7,7 +7,9 @@ use Valitron\Validator;
 
 abstract class Controller
 {
-    const VIEW_PATH  = ROOT_PATH . "app" . DIRECTORY_SEPARATOR . "views";
+    // const VIEW_PATH  = ROOT_PATH . "app" . DIRECTORY_SEPARATOR . "views";
+    const VIEW_PATH  =   "..\app" . DIRECTORY_SEPARATOR . "views";
+
 
     protected Validator $v;
 
@@ -55,9 +57,6 @@ abstract class Controller
 
         Session::unsetKey("error");
     }
-
-
-
 
 
     protected function validateData(mixed $data): mixed

@@ -5,12 +5,12 @@ $path = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['P
 
 $path = str_replace("index.php", "", $path);
 
-require_once "../vendor/autoload.php";
+// require_once "../vendor/autoload.php";
+
+$container = require_once "../app/bootstrap.php";
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . "/..");
 $dotenv->load();
-
-var_dump($_ENV["DB_HOST"]);
 
 use App\core\App;
 
@@ -21,4 +21,4 @@ define('ROOT_PATH', $rootPath);
 define("ROOT", $path);
 define("ASSETS", $path . "assets/");
 
-$app = new App();
+$app = new App($container);
