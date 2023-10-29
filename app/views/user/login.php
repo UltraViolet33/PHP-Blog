@@ -22,6 +22,10 @@
                     <input class="form-check-input" type="checkbox" id="toggle-password">
                     <label class="form-label">Show password</label>
                 </div>
+                <div class="mb-3">
+                    <input class="form-check-input" name="remember-login" type="checkbox" id="toggle-remember-login">
+                    <label class="form-label" for="remember-login">Remember me</label>
+                </div>
                 <input type="submit" class="btn btn-primary" name="login" value="Valider">
             </form>
             <?= $this->checkError() ?>
