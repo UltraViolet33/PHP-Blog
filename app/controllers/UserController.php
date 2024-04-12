@@ -16,6 +16,14 @@ class UserController extends Controller
         $this->model = new User();
     }
 
+    public function index(): void
+    {
+        $this->isUserLoggedIn();
+        $user = Session::get("user");
+        $data["profile"] =  $this->model->find($user["id_user"]);
+        $this->view("user/profile", $data);
+    }
+
 
     public function login(): void
     {
@@ -66,24 +74,16 @@ class UserController extends Controller
         ];
 
         $user = $this->model->selectUser($loginData);
+
         if (count($user) > 0) {
             Session::set("user", $user);
-            if ($user["isAdmin"] == 1) {
+            if ($user["is_admin"] == 1) {
                 Session::set("token", bin2hex(openssl_random_pseudo_bytes(6)));
             }
             return true;
         }
 
         return false;
-    }
-
-
-    public function index(): void
-    {
-        $this->isUserLoggedIn();
-        $user = Session::get("user");
-        $data["profil"] =  $this->model->find($user["id"]);
-        $this->view("user/profil", $data);
     }
 
 
@@ -99,10 +99,12 @@ class UserController extends Controller
     public function edit(?int $id = null): void
     {
         $this->isUserLoggedIn();
+
         if ($id == null) {
             header("Location: /user");
             return;
         }
+
         if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["editProfil"])) {
             if ($this->checkEditUserData()) {
                 if (!$this->model->checkIfEmailAlreadyExists(["id" => $id, "email" => $_POST["email"]])) {
@@ -128,8 +130,8 @@ class UserController extends Controller
         }
 
         $user = Session::get("user");
-        $data["profil"] =  $this->model->find($user["id"]);
-        $this->view("user/updateProfil", $data);
+        $data["profile"] =  $this->model->find($user["id_user"]);
+        $this->view("user/updateProfile", $data);
     }
 
 

@@ -6,24 +6,22 @@ use App\models\Table;
 
 class User extends Table
 {
-    
-    protected string $table = "user";
-    protected string $id = "id";
+
+    protected string $table = "users";
+    protected string $id = "id_user";
 
 
     public function selectUser(array $data): array
     {
-        $sql = "SELECT id, username, email, isAdmin FROM user WHERE email = :email AND password = :password limit 1";
-        $user =  $this->db->readSingleRow($sql, $data);
-        return $user;
+        $sql = "SELECT id_user, username, email, is_admin FROM users WHERE email = :email AND password = :password limit 1";
+        return $this->db->readSingleRow($sql, $data);
     }
 
 
-    public function find(int $id): array
+    public function find(int $id_user): array
     {
-        $sql = "SELECT id, username, email, isAdmin FROM user WHERE id = :id limit 1";
-        $user =  $this->db->readSingleRow($sql, ["id" => $id]);
-        return $user;
+        $sql = "SELECT $this->id, username, email, is_admin FROM $this->table WHERE id_user = :id_user limit 1";
+        return $this->db->readSingleRow($sql, ["id_user" => $id_user]);
     }
 
 
